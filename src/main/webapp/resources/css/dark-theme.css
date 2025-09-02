@@ -1,0 +1,65 @@
+/* dark-theme.css */
+
+/* Estilo general modo oscuro */
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/*centrar el login*/
+body.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    margin: 0;
+}
+
+/* Contenedor de formularios */
+.form-signin {
+    background-color: #1e1e1e;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    max-width: 400px;
+    width: 100%;
+    margin: auto;
+}
+
+/* Títulos */
+h1.title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #4db6ac;
+    font-weight: bold;
+}
+
+/* Inputs */
+.form-control {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    color: #fff;
+}
+.form-control:focus {
+    background-color: #333;
+    border-color: #4db6ac;
+    color: #fff;
+    box-shadow: none;
+}
+
+/* Botón */
+.btn-primary {
+    background-color: #4db6ac;
+    border: none;
+    font-weight: bold;
+}
+.btn-primary:hover {
+    background-color: #399187;
+}
+
+/* Labels */
+label {
+    color: #bbb;
+}
+
