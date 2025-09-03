@@ -17,6 +17,16 @@ body.login-page {
     height: 100vh; 
     margin: 0;
 }
+/* ===== Contenedor de formularios usuarios ===== */
+form.formulariogrande {
+    background-color: #1e1e1e;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    max-width: 1500px; /* <- aquí cambias el ancho máximo */
+    width: 100%;
+    margin: auto;
+}
 
 /* ===== Contenedor de formularios ===== */
 .form-signin {
@@ -37,6 +47,11 @@ h1.title {
     font-weight: bold;
 }
 
+h3.titulosh3 {
+    color: #4db6ac; /* verde acua */
+    font-weight: bold;
+}
+
 /* ===== Inputs ===== */
 .form-control {
     background-color: #2a2a2a;
@@ -49,6 +64,13 @@ h1.title {
     color: #fff;
     box-shadow: none;
 }
+
+/* ===== Placeholders en inputs ===== */
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6); /* blanco opaco */
+    opacity: 1; /* asegúrate que se muestre */
+}
+
 
 /* ===== Botón ===== */
 .btn-primary {
@@ -91,3 +113,46 @@ label {
 .dark-footer .footer-icon:hover {
     color: #399187;
 }
+
+
+/* ===== Sección central (containerAdmin) Dark Theme ===== */
+.containerAdmin {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
+/* ===== Títulos dentro del centro ===== */
+.containerAdmin h2,
+.containerAdmin h3 {
+    color: #4db6ac; /* verde acua */
+    font-weight: bold;
+}
+
+/* ===== Iconos destacados ===== */
+.containerAdmin .feature-icon {
+    background-color: #2a2a2a !important;
+    color: #4db6ac;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+}
+
+/* ===== Texto descriptivo ===== */
+.containerAdmin p {
+    color: #ccc;
+}
+
+/* ===== Enlaces ===== */
+.containerAdmin a {
+    color: #4db6ac;
+    text-decoration: none;
+    font-weight: bold;
+}
+.containerAdmin a:hover {
+    color: #399187;
+}
+
+
