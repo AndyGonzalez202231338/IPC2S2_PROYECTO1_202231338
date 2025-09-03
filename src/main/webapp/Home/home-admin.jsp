@@ -10,8 +10,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <jsp:include page="/includes/resources.jsp"/>
     </head>
     <body>
+        <<main>
+            <jsp:include page="/includes/header.jsp"/>
+        
         <h1>Entraste a administrador!</h1>
+        <jsp:include page="/includes/footer.jsp"/>
+        </main>
     </body>
 </html>
