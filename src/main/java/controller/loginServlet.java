@@ -62,15 +62,13 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     
     try {
     usuario = UsuarioDAO.findById(correo);
-    if (usuario != null 
-            && usuario.getContrasena().equals(password) 
-            && usuario.getCorreo().equals(correo)) {
+    if (usuario != null  && usuario.getContrasena().equals(password)  && usuario.getCorreo().equals(correo)) {
+        System.out.println("si existe");
         
-        // Mensaje de éxito (puedes guardarlo en sesión si quieres mostrar en home)
-        request.getSession().setAttribute("usuario", usuario);
-        request.setAttribute("mensajeExito", "¡Inicio de sesión exitoso!");
         if(usuario.getTipoCuenta().equals("ADMIN")){
-            request.getRequestDispatcher("/Home/home-admin.jsp").forward(request, response);
+        
+            System.out.println("se entro por que es admin");
+        request.getRequestDispatcher("/Home/home-admin.jsp").forward(request, response);
         }else{
             request.getRequestDispatcher("/Home/home-admin.jsp").forward(request, response);
         }
