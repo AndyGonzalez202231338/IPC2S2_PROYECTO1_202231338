@@ -24,7 +24,6 @@ public class UsuarioModel {
 
     /**
      * Crear un objeto modelo
-     * @param id se crea solo
      * @param nombreCompleto del usuario
      * @param correo del usuario
      * @param telefono numero
@@ -32,7 +31,6 @@ public class UsuarioModel {
      * @param numeroIdentificacion puede ser extranjero
      * @param foto url
      * @param contrasena de usuario
-     * @param fechaRegistro en el que se creo usuario
      * @param tipoCuenta  Aministrador, participante
      */
     public UsuarioModel(String nombreCompleto, String correo, String telefono, String organizacion, String numeroIdentificacion, String foto, String contrasena, String tipoCuenta) {

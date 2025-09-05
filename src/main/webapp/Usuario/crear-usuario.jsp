@@ -20,7 +20,7 @@
                 <div class="formulariogrande">
                     <h3 class="titulosh3 text-center mb-4">Formulario de Creación de Usuario</h3>
                     
-                    <form >
+                    <form class="crearUsuario"method="POST" action="${pageContext.servletContext.contextPath}/UsuarioServlet">
                         <div class="mb-3">
                             <label for="nombreCompleto" class="form-label">Nombre Completo</label>
                             <input type="text" class="form-control" id="nombreCompleto" placeholder="Ingrese su nombre completo">
