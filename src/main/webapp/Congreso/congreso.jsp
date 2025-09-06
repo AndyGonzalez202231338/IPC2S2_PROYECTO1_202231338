@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,7 +22,7 @@
             <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
                 <div class="formulariogrande">
                     <h3 class="titulosh3 text-center mb-4">Formulario de Creación de Congreso</h3>
-                    
+
                     <form class="crearCongreso" method="POST" action="${pageContext.servletContext.contextPath}/CongresoServlet">
                         <div class="mb-3">
                             <label for="nombreCongreso" class="form-label">Codigo del Congreso</label>
@@ -59,63 +61,15 @@
                 </div>
             </div>
 
-            <!-- TABLA DE CONGRESOS EXISTENTES -->
-            <div class="containerAdmin mt-5">
-                <h3 class="titulosh3 text-center mb-4">Congresos Registrados</h3>
-
-                <table class="table table-dark table-hover align-middle text-center">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Fecha Inicio</th>
-                            <th>Fecha Fin</th>
-                            <th>Lugar</th>
-                            <th>Precio</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Ejemplo estático -->
-                        <tr>
-                            <td>1</td>
-                            <td>Congreso de Tecnología</td>
-                            <td>Innovaciones en IA y Big Data</td>
-                            <td>2025-10-15</td>
-                            <td>2025-10-17</td>
-                            <td>Ciudad de México</td>
-                            <td>$50.00</td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-info me-2">
-                                    <i class="bi bi-pencil-square"></i> Editar
-                                </button>
-                                <button class="btn btn-sm btn-outline-danger">
-                                    <i class="bi bi-trash"></i> Eliminar
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Congreso de Educación</td>
-                            <td>Tecnología en la enseñanza</td>
-                            <td>2025-11-05</td>
-                            <td>2025-11-07</td>
-                            <td>Buenos Aires</td>
-                            <td>$45.00</td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-info me-2">
-                                    <i class="bi bi-pencil-square"></i> Editar
-                                </button>
-                                <button class="btn btn-sm btn-outline-danger">
-                                    <i class="bi bi-trash"></i> Eliminar
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
+            <!-- Enlace a listado de congresos -->
+                    <div class="mt-4 text-center">
+                        <a href="${pageContext.servletContext.contextPath}/CongresoServlet" class="btn btn-outline-secondary">
+                            Ver todos los congresos
+                        </a>
+                    </div>
+                </div>
+            </div>            
+             
             <jsp:include page="/includes/footer.jsp"/>
         </main>
     </body>

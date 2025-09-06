@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import model.CongresoModel;
@@ -78,39 +79,38 @@ public class CongresosDB {
         return null;
     }
     
-    // Listar todos
     public List<CongresoModel> obtenerTodosLosCongresos() {
-        List<CongresoModel> congresos = new ArrayList<>();
-        Connection connection = DBConnectionSingleton.getInstance().getConnection();
+    System.out.println("nuevo modelo de obtener todos");
+    List<CongresoModel> congresos = new ArrayList<>();
+    Connection connection = DBConnectionSingleton.getInstance().getConnection();
+
+    try (PreparedStatement query = connection.prepareStatement(OBTENER_TODOS_CONGRESOS_QUERY);
+         ResultSet rs = query.executeQuery()) {
         
-        try (PreparedStatement query = connection.prepareStatement(OBTENER_TODOS_CONGRESOS_QUERY)) {
-            ResultSet rs = query.executeQuery();
-            while (rs.next()) {
-                congresos.add(mapResultSetToCongreso(rs));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        while (rs.next()) {
+            System.out.println("→ Leyendo registro con idCongreso=" + rs.getLong("idCongreso"));
+            
+            Timestamp ts = rs.getTimestamp("fechaCreacion");
+            LocalDateTime fechaCreacion = ts != null ? ts.toLocalDateTime() : null;
+
+            CongresoModel congreso = new CongresoModel(
+                rs.getLong("idCongreso"),
+                rs.getString("codigo"),
+                rs.getString("nombre"),
+                rs.getString("descripcion"),
+                rs.getDate("fechaInicio").toLocalDate(),
+                rs.getDate("fechaFin").toLocalDate(),
+                rs.getString("lugar"),
+                rs.getDouble("precio"),
+                fechaCreacion
+            );
+            congresos.add(congreso);
         }
-        return congresos;
+        System.out.println("Total congresos cargados: " + congresos.size());
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
-    
-    // ==== Mapper auxiliar ====
-    private CongresoModel mapResultSetToCongreso(ResultSet rs) throws SQLException {
-        System.out.println("?se entro a map");
-        CongresoModel congreso = new CongresoModel();
-        congreso.setIdCongreso(rs.getLong("idCongreso"));
-        congreso.setCodigo(rs.getString("codigo"));
-        congreso.setNombre(rs.getString("nombre"));
-        congreso.setDescripcion(rs.getString("descripcion"));
-        congreso.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
-        congreso.setFechaFin(rs.getDate("fechaFin").toLocalDate());
-        congreso.setLugar(rs.getString("lugar"));
-        congreso.setPrecio(rs.getDouble("precio"));
-        
-        Timestamp fechaCreacion = rs.getTimestamp("fechaCreacion");
-        if (fechaCreacion != null) {
-            congreso.setFechaCreacion(fechaCreacion.toLocalDateTime());
-        }
-        return congreso;
-    }
+    return congresos;
+}
+
 }

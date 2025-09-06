@@ -6,20 +6,18 @@ package controller;
 
 import Exceptions.CongresoDataInvalidException;
 import Exceptions.EntityAlreadyExistsException;
+import org.apache.commons.lang3.StringUtils;
+import model.CongresoModel;
+import model.ConsultarCongreso;
+import model.CreadorCongresos;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.CongresoModel;
-import model.CreadorCongresos;
-import model.UsuarioModel;
+import java.util.List;
 /**
  *
  * @author andy
@@ -38,8 +36,19 @@ public class CongresoServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Se entro a doGet");
+        ConsultarCongreso consultaCongresos = new ConsultarCongreso();
+        if(obtenerTodos(request)){
+            List<CongresoModel> lista = consultaCongresos.obtenerTodosLosCongresos();
+System.out.println("Cantidad de congresos encontrados: " + lista.size());
+//request.setAttribute("congresos", lista);
+
+            
+            request.setAttribute("congresos", consultaCongresos.obtenerTodosLosCongresos());
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Congreso/lista-congresos.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     /**
@@ -79,5 +88,9 @@ public class CongresoServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
+    private boolean obtenerTodos(HttpServletRequest request){
+        System.out.println("entro a obtenerTodos los congresos");
+        return StringUtils.isBlank(request.getParameter("codigo"));
+    }
 }
