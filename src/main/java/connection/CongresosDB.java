@@ -14,6 +14,7 @@ import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import model.CongresoModel;
 
 /**
@@ -29,6 +30,8 @@ public class CongresosDB {
     
     private static final String OBTENER_TODOS_CONGRESOS_QUERY = 
         "SELECT * FROM Congreso";
+    
+    private static final String ACTUALIZAR_CONGRESO_QUERY = "UPDATE Congreso SET nombre = ?, descripcion = ?, fechaInicio = ?, fechaFin = ?, lugar = ?, precio = ? WHERE codigo = ?";
     
     // Crear congreso
     public void crearCongreso(CongresoModel congreso) {
@@ -79,6 +82,34 @@ public class CongresosDB {
         return null;
     }
     
+    public Optional<CongresoModel> obtenerCongresoPorCodigo(String codigo) {
+        Connection connection = DBConnectionSingleton.getInstance().getConnection();
+        try (PreparedStatement query = connection.prepareStatement(ENCONTRAR_CONGRESO_POR_ID_QUERY);) {
+            query.setString(1, codigo);
+            ResultSet rs = query.executeQuery();
+            if (rs.next()) {
+                CongresoModel congreso = new CongresoModel(
+                        rs.getLong("idCongreso"),
+                        rs.getString("codigo"),
+                        rs.getString("nombre"),
+                        rs.getString("descripcion"),
+                        rs.getDate("fechaInicio").toLocalDate(),
+                        rs.getDate("fechaFin").toLocalDate(),
+                        rs.getString("lugar"),
+                        rs.getDouble("precio"),
+                        rs.getTimestamp("fechaCreacion").toLocalDateTime()
+                );
+
+                return Optional.of(congreso);
+            }
+        } catch (SQLException e) {
+            // manejar o propagar la exception
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
+    }
+    
     public List<CongresoModel> obtenerTodosLosCongresos() {
     System.out.println("nuevo modelo de obtener todos");
     List<CongresoModel> congresos = new ArrayList<>();
@@ -112,5 +143,33 @@ public class CongresosDB {
     }
     return congresos;
 }
+    
+    // Actualizar congreso
+public void actualizarCongreso(CongresoModel congreso) {
+    System.out.println("*** entro a actualizar congreso en la base de datos");
+    Connection connection = DBConnectionSingleton.getInstance().getConnection();
+   
+
+    try (PreparedStatement update = connection.prepareStatement(ACTUALIZAR_CONGRESO_QUERY)) {
+        update.setString(1, congreso.getNombre());
+        update.setString(2, congreso.getDescripcion());
+        update.setDate(3, Date.valueOf(congreso.getFechaInicio()));
+        update.setDate(4, Date.valueOf(congreso.getFechaFin()));
+        update.setString(5, congreso.getLugar());
+        update.setDouble(6, congreso.getPrecio());
+        update.setString(7, congreso.getCodigo());
+
+        int filasAfectadas = update.executeUpdate();
+        if (filasAfectadas > 0) {
+            System.out.println("Congreso actualizado correctamente: " + congreso.getCodigo());
+        } else {
+            System.out.println("No se encontró el congreso con código: " + congreso.getCodigo());
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+
 
 }

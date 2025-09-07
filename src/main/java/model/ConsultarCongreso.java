@@ -4,8 +4,10 @@
  */
 package model;
 
+import Exceptions.EntityNotFoundException;
 import connection.CongresosDB;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -19,4 +21,16 @@ public class ConsultarCongreso {
         
         return congresoDb.obtenerTodosLosCongresos();
     }
+    
+    public CongresoModel obtenerCongresoPorCodigo(String codigo) throws EntityNotFoundException {
+        CongresosDB congresoDb = new CongresosDB();
+        Optional<CongresoModel> congresoOpt = congresoDb.obtenerCongresoPorCodigo(codigo);
+        if(congresoOpt.isEmpty()){
+            throw new EntityNotFoundException(
+                    String.format("El congreso con codigo %s no existe", codigo)
+            );
+        }
+         return congresoOpt.get();
+    }
+    
 }

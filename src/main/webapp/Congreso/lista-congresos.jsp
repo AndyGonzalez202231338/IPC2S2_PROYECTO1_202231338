@@ -16,50 +16,57 @@
     <body>
         <<main>
             <jsp:include page="/includes/header.jsp"/>
-            
-             <!-- TABLA DE CONGRESOS EXISTENTES -->
+
+            <!-- TABLA DE CONGRESOS EXISTENTES -->
             <div class="containerAdmin mt-5">
                 <h3 class="titulosh3 text-center mb-4">Congresos Registrados</h3>
 
                 <table class="table table-dark table-hover align-middle text-center">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Código</th>
                             <th>Nombre</th>
-                            <th>Descripción</th>
                             <th>Fecha Inicio</th>
                             <th>Fecha Fin</th>
-                            <th>Lugar</th>
                             <th>Precio</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${congresos}" var="congreso">
-                        <tr>
-                            <td>${congreso.idCongreso}</td>
-                            <td>${congreso.codigo}</td>
-                            <td>${congreso.nombre}</td>
-                            <td>${congreso.descripcion}</td>
-                            <td>${congreso.fechaInicio}</td>
-                            <td>${congreso.fechaFin}</td>
-                            <td>${congreso.lugar}</td>
-                            <td>$${congreso.precio}</td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-info me-2">
-                                    <i class="bi bi-pencil-square"></i> Editar
-                                </button>
-                                <button class="btn btn-sm btn-outline-danger">
-                                    <i class="bi bi-trash"></i> Eliminar
-                                </button>
-                            </td>
-                        </tr>
-                    </c:forEach>
+                        <c:forEach items="${congresos}" var="congreso">
+                            <tr>
+                                <td>${congreso.codigo}</td>
+                                <td>${congreso.nombre}</td>
+                                <td>${congreso.fechaInicio}</td>
+                                <td>${congreso.fechaFin}</td>
+                                <td>$${congreso.precio}</td>
+                                <td>
+                                    <a href="${pageContext.servletContext.contextPath}/VerCongresoServlet?codigo=${congreso.codigo}" 
+                                       class="btn btn-sm btn-outline-info me-2">
+                                        <i class="bi bi-card-list"></i> Ver mas
+                                    </a>
+                                    
+                                    <a href="${pageContext.servletContext.contextPath}/CongresoServlet?codigo=${congreso.codigo}" 
+                                       class="btn btn-sm btn-outline-info me-2">
+                                        <i class="bi bi-pencil-square"></i> Editar
+                                    </a>
+
+                                    <a class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash"></i> Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
+                <div class="mt-4 text-center">
+                        <a href="${pageContext.servletContext.contextPath}/Congreso/congreso.jsp"
+                           class="btn btn-sm btn-outline-info me-2">
+                            <i class="bi bi-arrow-90deg-left"></i> Regresar al form
+                        </a>
+                    </div>
             </div>
-            
+
             <jsp:include page="/includes/footer.jsp"/>
         </main>
     </body>
