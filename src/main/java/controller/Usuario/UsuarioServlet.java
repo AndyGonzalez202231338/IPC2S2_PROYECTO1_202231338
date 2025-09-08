@@ -55,7 +55,7 @@ public class UsuarioServlet extends HttpServlet {
             } catch (EntityNotFoundException e){
                 request.setAttribute("error", e.getMessage());
             }
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("Usuario/usuario-actualizar.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Usuario/usuario-actualizar.jsp");
             dispatcher.forward(request, response);
         }
     }

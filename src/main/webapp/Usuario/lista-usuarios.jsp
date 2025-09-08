@@ -44,7 +44,7 @@
                                         <i class="bi bi-card-list"></i> Ver mas
                                     </a>
                                     
-                                    <a href="${pageContext.servletContext.contextPath}/CongresoServlet?codigo=${congreso.codigo}" 
+                                    <a href="${pageContext.servletContext.contextPath}/UsuarioServlet?correo=${usuarios.correo}" 
                                        class="btn btn-sm btn-outline-info me-2">
                                         <i class="bi bi-pencil-square"></i> Editar
                                     </a>

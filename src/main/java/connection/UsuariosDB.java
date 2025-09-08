@@ -30,6 +30,12 @@ public class UsuariosDB {
 
     private static final String OBTENER_TODOS_QUERY
             = "SELECT * FROM Usuario";
+    
+    private static final String ACTUALIZAR_USUARIO_QUERY =
+            "UPDATE Usuario SET nombreCompleto = ?, telefono = ?, organizacion = ?, " +
+            "numeroIdentificacion = ?, foto = ?, contrasena = ?, tipoCuenta = ? " +
+            "WHERE correo = ?";
+
 
     /**
      * Inserta un nuevo usuario en la base de datos
@@ -167,6 +173,29 @@ public class UsuariosDB {
             e.printStackTrace();
         }
         return Optional.empty();
+    }
+    
+    public void actualizarUsuarioPorCorreo(UsuarioModel usuario) {
+        Connection connection = DBConnectionSingleton.getInstance().getConnection();
+        try (PreparedStatement update = connection.prepareStatement(ACTUALIZAR_USUARIO_QUERY)) {
+            update.setString(1, usuario.getNombreCompleto());
+            update.setString(2, usuario.getTelefono());
+            update.setString(3, usuario.getOrganizacion());
+            update.setString(4, usuario.getNumeroIdentificacion());
+            update.setString(5, usuario.getFoto());
+            update.setString(6, usuario.getContrasena());
+            update.setString(7, usuario.getTipoCuenta());
+            update.setString(8, usuario.getCorreo()); // condición WHERE
+
+            int filasAfectadas = update.executeUpdate();
+            if (filasAfectadas > 0) {
+            System.out.println("Congreso actualizado correctamente: " + usuario.getCorreo());
+        } else {
+            System.out.println("No se encontró el congreso con código: " + usuario.getCorreo());
+        }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
