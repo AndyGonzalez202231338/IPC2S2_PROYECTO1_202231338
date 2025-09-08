@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model;
+package model.Usuarios;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Clase que modela un objeto usuario
@@ -43,6 +44,22 @@ public class UsuarioModel {
         this.contrasena = contrasena;
         this.tipoCuenta = tipoCuenta;
     }
+
+    public UsuarioModel(Integer id, String nombreCompleto, String correo, String telefono, String organizacion, String numeroIdentificacion, String foto, String contrasena, LocalDateTime fechaRegistro, String tipoCuenta) {
+        this.id = id;
+        this.nombreCompleto = nombreCompleto;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.organizacion = organizacion;
+        this.numeroIdentificacion = numeroIdentificacion;
+        this.foto = foto;
+        this.contrasena = contrasena;
+        this.fechaRegistro = fechaRegistro;
+        this.tipoCuenta = tipoCuenta;
+    }
+    
+    
+    
     /**
      * constructor vacio para recribir datos
      */
@@ -130,8 +147,21 @@ public class UsuarioModel {
     public void setTipoCuenta(String tipoCuenta) {
         this.tipoCuenta = tipoCuenta;
     }
+
+    @Override
+    public String toString() {
+        return "UsuarioModel{" + "id=" + id + ", nombreCompleto=" + nombreCompleto + ", correo=" + correo + ", telefono=" + telefono + ", organizacion=" + organizacion + ", numeroIdentificacion=" + numeroIdentificacion + ", foto=" + foto + ", contrasena=" + contrasena + ", fechaRegistro=" + fechaRegistro + ", tipoCuenta=" + tipoCuenta + '}';
+    }
     
-    
+    /**
+     * Utiliza el LocalDateTime para converitrlo en texto legible con un orden
+     * @return texto de la fecha y hora
+     */
+    public String getFechaRegistroFormatted() {
+        if (fechaRegistro == null) return "";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        return fechaRegistro.format(formatter);
+    }
     
     
 }

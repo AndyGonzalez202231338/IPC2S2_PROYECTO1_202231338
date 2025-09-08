@@ -6,7 +6,7 @@ package connection;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import model.UsuarioModel;
+import model.Usuarios.UsuarioModel;
 
 
 /**

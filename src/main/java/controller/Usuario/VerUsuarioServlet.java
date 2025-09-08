@@ -2,27 +2,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.Usuario;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import Exceptions.EntityNotFoundException;
+import Exceptions.UserDataInvalidException;
+import model.Congresos.CongresoModel;
+import jakarta.servlet.RequestDispatcher;
+import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.UsuarioModel;
+import model.Congresos.ActualizadorCongreso;
+import model.Congresos.ConsultarCongreso;
+import model.Usuarios.ConsultarUsuario;
+import model.Usuarios.UsuarioModel;
 
 /**
  *
  * @author andy
  */
-@WebServlet(name = "UsuarioServlet", urlPatterns = {"/UsuarioServlet"})
-public class UsuarioServlet extends HttpServlet {
-
+@WebServlet(name = "VerUsuarioServlet", urlPatterns = {"/VerUsuarioServlet"})
+public class VerUsuarioServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -36,6 +40,19 @@ public class UsuarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("Ver congreso");
+        String correo = request.getParameter("correo");
+        ConsultarUsuario consultar = new ConsultarUsuario();
+        try {
+            UsuarioModel usuario = consultar.obtenerCongresoPorCodigo(correo);
+            request.setAttribute("usuario", usuario);
+            System.out.println("el usuario se mando al jsp");
+            request.getRequestDispatcher("/Usuario/detalle-usuario.jsp").forward(request, response);
+        } catch (Exception e){
+            System.out.println("no se ecnontro");
+            request.setAttribute("error", "No se encontró el Usuario con Correo " + correo);
+            request.getRequestDispatcher("/Usuario/lista-usuarios.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -49,6 +66,7 @@ public class UsuarioServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
     }
 
     /**

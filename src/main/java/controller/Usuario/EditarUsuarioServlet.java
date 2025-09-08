@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.Usuario;
 
 import Exceptions.EntityNotFoundException;
 import Exceptions.UserDataInvalidException;
-import model.CongresoModel;
+import model.Congresos.CongresoModel;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -14,14 +14,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.ActualizadorCongreso;
+import model.Congresos.ActualizadorCongreso;
+import model.Usuarios.ActualizadorUsuario;
+import model.Usuarios.UsuarioModel;
 
 /**
  *
  * @author andy
  */
-@WebServlet(name = "EditarCongresoServlet", urlPatterns = {"/EditarCongresoServlet"})
-public class EditarCongresoServlet extends HttpServlet {
+@WebServlet(name = "EditarUsuarioServlet", urlPatterns = {"/EditarUsuarioServlet"})
+public class EditarUsuarioServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -48,19 +50,25 @@ public class EditarCongresoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ActualizadorCongreso actualizadorCongresos = new ActualizadorCongreso();
-
+        ActualizadorUsuario actualizadorUsuarios = new ActualizadorUsuario();
         try {
-            CongresoModel congresoActualizado = actualizadorCongresos.actualizar(request);
-
-            request.setAttribute("congresoActualizado", congresoActualizado);
+            UsuarioModel usuarioActualizado = actualizadorUsuarios.actualizar(request);
+            
+            request.setAttribute("usuarioActualizado", usuarioActualizado);
         } catch (UserDataInvalidException | EntityNotFoundException e){
             request.setAttribute("error", e.getMessage());
         }
-            
-        //RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Congreso/congreso-actualizado.jsp");
-        //dispatcher.forward(request, response);
-        response.sendRedirect(request.getContextPath() + "/CongresoServlet");
-
+        response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
     }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
 }
