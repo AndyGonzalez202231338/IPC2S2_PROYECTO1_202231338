@@ -142,6 +142,7 @@ public class UsuariosDB {
     }
     
     public Optional<UsuarioModel> obtenerUsuarioPorCodigo(String correo){
+        System.out.println("obtener por codigo optional");
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
         try (PreparedStatement query = connection.prepareStatement(ENCONTRAR_USUARIO_POR_CORREO_QUERY)) {
             query.setString(1, correo);

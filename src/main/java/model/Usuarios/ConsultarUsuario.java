@@ -21,6 +21,7 @@ public class ConsultarUsuario {
     }
     
     public UsuarioModel obtenerCongresoPorCodigo(String correo) throws EntityNotFoundException{
+        System.out.println("    obtener el congreso");
         UsuariosDB usuarioDB = new UsuariosDB();
         Optional<UsuarioModel> usuarioOpt = usuarioDB.obtenerUsuarioPorCodigo(correo);
         if(usuarioOpt.isEmpty()){

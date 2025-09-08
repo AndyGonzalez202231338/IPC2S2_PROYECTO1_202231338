@@ -58,7 +58,7 @@ public class CreadorUsuarios {
             fechaRegistro,   // <-- ahora es LocalDateTime
             request.getParameter("tipoCuenta")
         );
-
+        
         return usuario;
     } catch (IllegalArgumentException | NullPointerException e) {
         throw new UserDataInvalidException("Error en los datos enviados del usuario");

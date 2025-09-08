@@ -39,7 +39,7 @@
                                 <td>${usuarios.numeroIdentificacion}</td>
                                 <td>${usuarios.tipoCuenta}</td>
                                 <td>
-                                    <a href="${pageContext.servletContext.contextPath}/VerCongresoServlet?codigo=${congreso.codigo}" 
+                                    <a href="${pageContext.servletContext.contextPath}/VerUsuarioServlet?correo=${usuarios.correo}" 
                                        class="btn btn-sm btn-outline-info me-2">
                                         <i class="bi bi-card-list"></i> Ver mas
                                     </a>

@@ -5,6 +5,7 @@
 package model.Usuarios;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Clase que modela un objeto usuario
@@ -152,7 +153,15 @@ public class UsuarioModel {
         return "UsuarioModel{" + "id=" + id + ", nombreCompleto=" + nombreCompleto + ", correo=" + correo + ", telefono=" + telefono + ", organizacion=" + organizacion + ", numeroIdentificacion=" + numeroIdentificacion + ", foto=" + foto + ", contrasena=" + contrasena + ", fechaRegistro=" + fechaRegistro + ", tipoCuenta=" + tipoCuenta + '}';
     }
     
-    
+    /**
+     * Utiliza el LocalDateTime para converitrlo en texto legible con un orden
+     * @return texto de la fecha y hora
+     */
+    public String getFechaRegistroFormatted() {
+        if (fechaRegistro == null) return "";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        return fechaRegistro.format(formatter);
+    }
     
     
 }
