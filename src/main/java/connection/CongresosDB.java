@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import model.CongresoModel;
+import model.Congresos.CongresoModel;
 
 /**
  *

@@ -2,15 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.Congresos;
 
 import Exceptions.CongresoDataInvalidException;
 import Exceptions.EntityAlreadyExistsException;
 import Exceptions.EntityNotFoundException;
 import org.apache.commons.lang3.StringUtils;
-import model.CongresoModel;
-import model.ConsultarCongreso;
-import model.CreadorCongresos;
+import model.Congresos.CongresoModel;
+import model.Congresos.ConsultarCongreso;
+import model.Congresos.CreadorCongresos;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -38,7 +38,6 @@ public class CongresoServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Se entro a doGet");
         ConsultarCongreso consultaCongresos = new ConsultarCongreso();
         if (obtenerTodos(request)) {
             List<CongresoModel> lista = consultaCongresos.obtenerTodosLosCongresos();
