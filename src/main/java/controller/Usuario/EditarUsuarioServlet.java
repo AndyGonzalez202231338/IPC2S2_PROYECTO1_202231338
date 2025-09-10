@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 import model.Congresos.ActualizadorCongreso;
 import model.Usuarios.ActualizadorUsuario;
 import model.Usuarios.UsuarioModel;
@@ -48,18 +49,40 @@ public class EditarUsuarioServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        ActualizadorUsuario actualizadorUsuarios = new ActualizadorUsuario();
-        try {
-            UsuarioModel usuarioActualizado = actualizadorUsuarios.actualizar(request);
-            
-            request.setAttribute("usuarioActualizado", usuarioActualizado);
-        } catch (UserDataInvalidException | EntityNotFoundException e){
-            request.setAttribute("error", e.getMessage());
-        }
-        response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    ActualizadorUsuario actualizadorUsuarios = new ActualizadorUsuario();
+
+    try {
+        UsuarioModel usuarioActualizado = actualizadorUsuarios.actualizar(request);
+
+        // Mensaje de éxito
+        request.setAttribute("mensajeExito", "Usuario actualizado correctamente.");
+        request.setAttribute("usuario", usuarioActualizado);
+
+    } catch (UserDataInvalidException | EntityNotFoundException e) {
+        // Mensaje de error
+        request.setAttribute("error", e.getMessage());
+        
+        // Para no perder los datos ingresados si hubo error
+        UsuarioModel usuarioConDatos = new UsuarioModel(
+            null,
+            request.getParameter("nombreCompleto"),
+            request.getParameter("correo"),
+            request.getParameter("telefono"),
+            request.getParameter("organizacion"),
+            request.getParameter("numeroIdentificacion"),
+            request.getParameter("fechaRegistro"),
+            request.getParameter("tipoCuenta")
+        );
+        request.setAttribute("usuario", usuarioConDatos);
     }
+
+    // 🔹 Forward en vez de Redirect
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/Usuario/usuario-actualizar.jsp");
+    dispatcher.forward(request, response);
+}
+
 
     /**
      * Returns a short description of the servlet.

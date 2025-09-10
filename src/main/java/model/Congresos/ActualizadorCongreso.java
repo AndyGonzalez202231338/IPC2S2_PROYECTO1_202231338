@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
  */
 public class ActualizadorCongreso {
     
-    public CongresoModel actualizar(HttpServletRequest request) throws UserDataInvalidException, EntityNotFoundException{
+    public CongresoModel actualizar(HttpServletRequest request) throws CongresoDataInvalidException, EntityNotFoundException{
         CongresosDB congresosDb = new CongresosDB();
     
         CongresoModel congreso = extraer(request);
@@ -34,7 +34,7 @@ public class ActualizadorCongreso {
         return congreso;
     }
     
-    private CongresoModel extraer(HttpServletRequest request) throws UserDataInvalidException {
+    private CongresoModel extraer(HttpServletRequest request) throws CongresoDataInvalidException {
         System.out.println("--entro a extraer");
         try {
             // Construcción del modelo Congreso directamente desde el request
@@ -57,16 +57,20 @@ public class ActualizadorCongreso {
             );
             System.out.println("se contruyo el objeto congreso");
             System.out.println("" + congreso.toString());
+            
+            if (congreso.getFechaFin().isBefore(congreso.getFechaInicio())) {
+                throw new CongresoDataInvalidException("La fecha de fin no puede ser anterior a la fecha de inicio.");
+            }
 
             if (!congreso.esValido()) {
-                throw new UserDataInvalidException("Error en los datos enviados");
+                throw new CongresoDataInvalidException("Error en los datos enviados");
             }
 
             System.out.println("--logra salir de extraer");
             return congreso;
 
         } catch (IllegalArgumentException | NullPointerException e) {
-            throw new UserDataInvalidException("Error en los datos enviados del congreso");
+            throw new CongresoDataInvalidException("Error en los datos enviados del congreso");
         }
     }
     

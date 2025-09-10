@@ -60,6 +60,10 @@ public class CreadorCongresos {
             System.out.println("se contruyo el objeto congreso");
             System.out.println("" + congreso.toString());
 
+            if (congreso.getFechaFin().isBefore(congreso.getFechaInicio())) {
+                throw new CongresoDataInvalidException("La fecha de fin no puede ser anterior a la fecha de inicio.");
+            }
+
             if (!congreso.esValido()) {
                 throw new CongresoDataInvalidException("Error en los datos enviados");
             }
