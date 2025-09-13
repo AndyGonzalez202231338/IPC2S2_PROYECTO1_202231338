@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import model.Usuarios.UsuarioModel;
 
@@ -58,12 +59,11 @@ public class loginServlet extends HttpServlet {
             } else {
                 // Caso 3: autenticación correcta
                 System.out.println("Usuario autenticado correctamente: " + correo);
-
-                if ("ADMIN".equalsIgnoreCase(usuario.getTipoCuenta())) {
-                    request.getRequestDispatcher("/Home/home-admin.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("/Home/home-admin.jsp").forward(request, response);
-                }
+                // Guardamos en sesión el usuario
+                HttpSession session = request.getSession();
+                session.setAttribute("usuarioLogueado", usuario);
+                request.getRequestDispatcher("/Home/home-admin.jsp").forward(request, response);
+                
             }
 
         } catch (Exception ex) {

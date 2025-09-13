@@ -53,7 +53,6 @@ public class CreadorUsuarios {
             request.getParameter("telefono"),
             request.getParameter("organizacion"),
             request.getParameter("numeroIdentificacion"),
-            request.getParameter("foto"),
             request.getParameter("contrasena"),
             fechaRegistro,   // <-- ahora es LocalDateTime
             request.getParameter("tipoCuenta")

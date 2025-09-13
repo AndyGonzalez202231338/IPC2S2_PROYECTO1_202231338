@@ -18,7 +18,7 @@ public class UsuarioModel {
     private String telefono;
     private String organizacion;
     private String numeroIdentificacion;
-    private String foto;
+    private byte[] foto;
     private String contrasena;
     private LocalDateTime fechaRegistro;
     private String tipoCuenta;
@@ -31,34 +31,31 @@ public class UsuarioModel {
      * @param telefono numero
      * @param organizacion o institucion de donde pertenece
      * @param numeroIdentificacion puede ser extranjero
-     * @param foto url
      * @param contrasena de usuario
      * @param tipoCuenta  Aministrador, participante
-     * @param cartera dinero del usuario
      */
-    public UsuarioModel(String nombreCompleto, String correo, String telefono, String organizacion, String numeroIdentificacion, String foto, String contrasena, String tipoCuenta) {
+    public UsuarioModel(String nombreCompleto, String correo, String telefono, String organizacion, String numeroIdentificacion, String contrasena, String tipoCuenta) {
         this.nombreCompleto = nombreCompleto;
         this.correo = correo;
         this.telefono = telefono;
         this.organizacion = organizacion;
         this.numeroIdentificacion = numeroIdentificacion;
-        this.foto = foto;
         this.contrasena = contrasena;
         this.tipoCuenta = tipoCuenta;
     }
 
-    public UsuarioModel(Integer id, String nombreCompleto, String correo, String telefono, String organizacion, String numeroIdentificacion, String foto, String contrasena, LocalDateTime fechaRegistro, String tipoCuenta) {
+    public UsuarioModel(Integer id, String nombreCompleto, String correo, String telefono, String organizacion, String numeroIdentificacion, String contrasena, LocalDateTime fechaRegistro, String tipoCuenta) {
         this.id = id;
         this.nombreCompleto = nombreCompleto;
         this.correo = correo;
         this.telefono = telefono;
         this.organizacion = organizacion;
         this.numeroIdentificacion = numeroIdentificacion;
-        this.foto = foto;
         this.contrasena = contrasena;
         this.fechaRegistro = fechaRegistro;
         this.tipoCuenta = tipoCuenta;
     }
+    
     
     
     
@@ -94,9 +91,6 @@ public class UsuarioModel {
         return numeroIdentificacion;
     }
 
-    public String getFoto() {
-        return foto;
-    }
 
     public String getContrasena() {
         return contrasena;
@@ -134,10 +128,6 @@ public class UsuarioModel {
         this.numeroIdentificacion = numeroIdentificacion;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
-
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
@@ -158,6 +148,14 @@ public class UsuarioModel {
         this.cartera = cartera;
     }
 
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+    
     @Override
     public String toString() {
         return "UsuarioModel{" + "id=" + id + ", nombreCompleto=" + nombreCompleto + ", correo=" + correo + ", telefono=" + telefono + ", organizacion=" + organizacion + ", numeroIdentificacion=" + numeroIdentificacion + ", foto=" + foto + ", contrasena=" + contrasena + ", fechaRegistro=" + fechaRegistro + ", tipoCuenta=" + tipoCuenta + ", cartera=" + cartera + '}';
