@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,40 +19,86 @@
 
             <div class="containerAdmin">
                 <h1>Sistema de Administrador</h1>
+                <p>DEBUG → Tipo de cuenta: ${usuarioLogueado.tipoCuenta}</p>
 
-                <!-- ===== Sección de Features ===== -->
-                <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-                    <div class="feature col">
-                        <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
-                            <i class="bi bi-calendar-event"></i>
+
+                <!-- Si es ADMIN -->
+                <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">
+                    <div class="alert alert-info">Bienvenido Administrador ${usuarioLogueado.nombreCompleto}</div>
+                    <!-- ===== Sección de Features ===== -->
+                    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+                        <div class="feature col">
+                            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                                <i class="bi bi-calendar-event"></i>
+                            </div>
+                            <h3 class="titulosh3">Congresos</h3>
+                            <p>Administra los congresos disponibles.</p>
+                            <a href="${pageContext.servletContext.contextPath}/Congreso/congreso.jsp" class="icon-link">
+                                Ver congresos <i class="bi bi-chevron-right"></i>
+                            </a>
                         </div>
-                        <h3 class="titulosh3">Congresos</h3>
-                        <p>Administra los congresos disponibles.</p>
-                        <a href="${pageContext.servletContext.contextPath}/Congreso/congreso.jsp" class="icon-link">
-                            Ver congresos <i class="bi bi-chevron-right"></i>
-                        </a>
-                    </div>
-                    <div class="feature col">
-                        <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
-                            <i class="bi bi-people-fill"></i>
+                        <div class="feature col">
+                            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+                            <h3 class="titulosh3">Usuarios</h3>
+                            <p>Gestiona los usuarios y participantes.</p>
+                            <a href="${pageContext.servletContext.contextPath}/Usuario/crear-usuario.jsp" class="icon-link">
+                                Ver usuarios <i class="bi bi-chevron-right"></i>
+                            </a>
                         </div>
-                        <h3 class="titulosh3">Usuarios</h3>
-                        <p>Gestiona los usuarios y participantes.</p>
-                        <a href="${pageContext.servletContext.contextPath}/Usuario/crear-usuario.jsp" class="icon-link">
-                            Ver usuarios <i class="bi bi-chevron-right"></i>
-                        </a>
-                    </div>
-                    <div class="feature col">
-                        <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
-                            <i class="bi bi-cash-stack"></i>
+                        <div class="feature col">
+                            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                                <i class="bi bi-cash-stack"></i>
+                            </div>
+                            <h3 class="titulosh3">Ganancias</h3>
+                            <p>Consulta los reportes de ganancias.</p>
+                            <a href="${pageContext.servletContext.contextPath}/Congreso/congreso.jsp" class="icon-link">
+                                Ver reportes <i class="bi bi-chevron-right"></i>
+                            </a>
                         </div>
-                        <h3 class="titulosh3">Ganancias</h3>
-                        <p>Consulta los reportes de ganancias.</p>
-                        <a href="${pageContext.servletContext.contextPath}/Congreso/congreso.jsp" class="icon-link">
-                            Ver reportes <i class="bi bi-chevron-right"></i>
-                        </a>
                     </div>
-                </div>
+                </c:if>
+
+                <!-- Si es USUARIO normal -->
+                <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('NORMAL')}">
+                    <div class="alert alert-success">Bienvenido ${usuarioLogueado.nombreCompleto}</div>
+                    <!-- ===== Sección de Features ===== -->
+                    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+                        <div class="feature col">
+                            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                                <i class="bi bi-calendar-event"></i>
+                            </div>
+                            <h3 class="titulosh3">Congresos</h3>
+                            <p>Unirse a Congresos y Actividades.</p>
+                            <a href="${pageContext.servletContext.contextPath}/Congreso/congreso.jsp" class="icon-link">
+                                Ver congresos <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </div>
+                        <div class="feature col">
+                            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+                            <h3 class="titulosh3">Usuario</h3>
+                            <p>Administrar tu cuenta.</p>
+                            <a href="${pageContext.servletContext.contextPath}/Usuario/crear-usuario.jsp" class="icon-link">
+                                Ver mi usuario <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </div>
+                        <div class="feature col">
+                            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                                <i class="bi bi-cash-stack"></i>
+                            </div>
+                            <h3 class="titulosh3">Cartera</h3>
+                            <p>Dinero digital del usuario.</p>
+                            <a href="${pageContext.servletContext.contextPath}/Congreso/congreso.jsp" class="icon-link">
+                                Ver cuenta <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </c:if>
+
+
 
                 <!-- ===== Nueva sección: Congresos inscritos ===== -->
                 <div class="congresos-inscritos mt-5">
@@ -86,9 +133,8 @@
                     </table>
                 </div>
             </div>
-
-            <jsp:include page="/includes/footer.jsp"/>
         </main>
+        <jsp:include page="/includes/footer.jsp"/>
     </body>
 </html>
 

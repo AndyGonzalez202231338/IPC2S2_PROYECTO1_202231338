@@ -68,6 +68,10 @@
                             <label for="precio" class="form-label">Precio ($)</label>
                             <input type="number" step="0.01" min="35.00" class="form-control" id="precio" name="precio" placeholder="35.00" value="${congreso.precio}" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="porcentajeGanancia" class="form-label">Porcentaje de Ganacias (%)</label>
+                            <input type="number" step="0.1" max="50.00" class="form-control" id="porcentajeGanancia" name="porcentajeGanancia" placeholder="0.00" value="${congreso.porcentajeGanancia}" required>
+                        </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                         </div>
@@ -81,8 +85,7 @@
                             </div>
                 </div>
             </div>            
-
-            <jsp:include page="/includes/footer.jsp"/>
         </main>
+               <jsp:include page="/includes/footer.jsp"/>
     </body>
 </html>

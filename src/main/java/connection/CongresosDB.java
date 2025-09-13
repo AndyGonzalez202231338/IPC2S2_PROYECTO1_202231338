@@ -23,7 +23,7 @@ import model.Congresos.CongresoModel;
  */
 public class CongresosDB {
     private static final String CREAR_CONGRESO_QUERY =
-    "INSERT INTO Congreso (codigo, nombre, descripcion, fechaInicio, fechaFin, lugar, precio) VALUES (?,?,?,?,?,?,?)";
+    "INSERT INTO Congreso (codigo, nombre, descripcion, fechaInicio, fechaFin, lugar, precio, porcentajeGanancia) VALUES (?,?,?,?,?,?,?,?)";
     
     private static final String ENCONTRAR_CONGRESO_POR_ID_QUERY = 
         "SELECT * FROM Congreso WHERE codigo = ?";
@@ -31,7 +31,7 @@ public class CongresosDB {
     private static final String OBTENER_TODOS_CONGRESOS_QUERY = 
         "SELECT * FROM Congreso";
     
-    private static final String ACTUALIZAR_CONGRESO_QUERY = "UPDATE Congreso SET nombre = ?, descripcion = ?, fechaInicio = ?, fechaFin = ?, lugar = ?, precio = ? WHERE codigo = ?";
+    private static final String ACTUALIZAR_CONGRESO_QUERY = "UPDATE Congreso SET nombre = ?, descripcion = ?, fechaInicio = ?, fechaFin = ?, lugar = ?, precio = ?, porcentajeGanancia = ? WHERE codigo = ?";
     
     // Crear congreso
     public void crearCongreso(CongresoModel congreso) {
@@ -45,7 +45,7 @@ public class CongresosDB {
             insert.setDate(5, Date.valueOf(congreso.getFechaFin()));
             insert.setString(6, congreso.getLugar());
             insert.setDouble(7, congreso.getPrecio());
-            
+            insert.setDouble(8, congreso.getPorcentajeGanancia());
             insert.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,7 +72,8 @@ public class CongresosDB {
                     rs.getDate("fechaFin").toLocalDate(),
                     rs.getString("lugar"),
                     rs.getDouble("precio"),
-                    rs.getTimestamp("fechaCreacion").toLocalDateTime()
+                    rs.getTimestamp("fechaCreacion").toLocalDateTime(),
+                    rs.getDouble("porcentajeGanancia")
                 );
             }
         } catch (SQLException e) {
@@ -97,7 +98,8 @@ public class CongresosDB {
                         rs.getDate("fechaFin").toLocalDate(),
                         rs.getString("lugar"),
                         rs.getDouble("precio"),
-                        rs.getTimestamp("fechaCreacion").toLocalDateTime()
+                        rs.getTimestamp("fechaCreacion").toLocalDateTime(),
+                        rs.getDouble("porcentajeGanancia")
                 );
 
                 return Optional.of(congreso);
@@ -133,7 +135,8 @@ public class CongresosDB {
                 rs.getDate("fechaFin").toLocalDate(),
                 rs.getString("lugar"),
                 rs.getDouble("precio"),
-                fechaCreacion
+                fechaCreacion,
+                rs.getDouble("porcentajeGanancia")
             );
             congresos.add(congreso);
         }
@@ -157,7 +160,8 @@ public void actualizarCongreso(CongresoModel congreso) {
         update.setDate(4, Date.valueOf(congreso.getFechaFin()));
         update.setString(5, congreso.getLugar());
         update.setDouble(6, congreso.getPrecio());
-        update.setString(7, congreso.getCodigo());
+        update.setDouble(7, congreso.getPorcentajeGanancia());
+        update.setString(8, congreso.getCodigo());
 
         int filasAfectadas = update.executeUpdate();
         if (filasAfectadas > 0) {

@@ -55,7 +55,8 @@ public class CreadorCongresos {
                     request.getParameter("lugar"), // lugar
                     Double.valueOf(request.getParameter("precio")), // precioS
 
-                    LocalDateTime.now() // fechaCreacion (desde Java, no del request)
+                    LocalDateTime.now(), // fechaCreacion (desde Java, no del request)
+                    Double.valueOf(request.getParameter("porcentajeGanancia"))
             );
             System.out.println("se contruyo el objeto congreso");
             System.out.println("" + congreso.toString());

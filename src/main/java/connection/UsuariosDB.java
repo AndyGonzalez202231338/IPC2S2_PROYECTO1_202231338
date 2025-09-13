@@ -22,8 +22,8 @@ import model.Usuarios.UsuarioModel;
 public class UsuariosDB {
 
     private static final String CREAR_USUARIO_QUERY
-            = "INSERT INTO Usuario (nombreCompleto, correo, telefono, organizacion, numeroIdentificacion, foto, contrasena, fechaRegistro, tipoCuenta) "
-            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            = "INSERT INTO Usuario (nombreCompleto, correo, telefono, organizacion, numeroIdentificacion, contrasena, fechaRegistro, tipoCuenta) "
+            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String ENCONTRAR_USUARIO_POR_CORREO_QUERY
             = "SELECT * FROM Usuario WHERE correo = ?";
@@ -33,7 +33,7 @@ public class UsuariosDB {
     
     private static final String ACTUALIZAR_USUARIO_QUERY =
             "UPDATE Usuario SET nombreCompleto = ?, telefono = ?, organizacion = ?, " +
-            "numeroIdentificacion = ?, foto = ?, contrasena = ?, tipoCuenta = ? " +
+            "numeroIdentificacion = ?, contrasena = ?, tipoCuenta = ? " +
             "WHERE correo = ?";
 
 
@@ -51,12 +51,11 @@ public class UsuariosDB {
             insert.setString(3, usuario.getTelefono());
             insert.setString(4, usuario.getOrganizacion());
             insert.setString(5, usuario.getNumeroIdentificacion());
-            insert.setString(6, usuario.getFoto());
-            insert.setString(7, usuario.getContrasena());
-            insert.setTimestamp(8, Timestamp.valueOf(
+            insert.setString(6, usuario.getContrasena());
+            insert.setTimestamp(7, Timestamp.valueOf(
                     usuario.getFechaRegistro() != null ? usuario.getFechaRegistro() : LocalDateTime.now()
             ));
-            insert.setString(9, usuario.getTipoCuenta());
+            insert.setString(8, usuario.getTipoCuenta());
 
             insert.executeUpdate();
         } catch (SQLException e) {
@@ -100,7 +99,6 @@ public class UsuariosDB {
                         rs.getString("telefono"),
                         rs.getString("organizacion"),
                         rs.getString("numeroIdentificacion"),
-                        rs.getString("foto"),
                         rs.getString("contrasena"),
                         rs.getString("tipoCuenta")
                 );
@@ -133,7 +131,6 @@ public class UsuariosDB {
                     usuario.setTelefono(rs.getString("telefono"));
                     usuario.setOrganizacion(rs.getString("organizacion"));
                     usuario.setNumeroIdentificacion(rs.getString("numeroIdentificacion"));
-                    usuario.setFoto(rs.getString("foto"));
                     usuario.setContrasena(rs.getString("contrasena"));
                     usuario.setFechaRegistro(rs.getTimestamp("fechaRegistro").toLocalDateTime());
                     usuario.setTipoCuenta(rs.getString("tipoCuenta"));
@@ -161,7 +158,6 @@ public class UsuariosDB {
                     usuario.setTelefono(rs.getString("telefono"));
                     usuario.setOrganizacion(rs.getString("organizacion"));
                     usuario.setNumeroIdentificacion(rs.getString("numeroIdentificacion"));
-                    usuario.setFoto(rs.getString("foto"));
                     usuario.setContrasena(rs.getString("contrasena"));
                     usuario.setFechaRegistro(rs.getTimestamp("fechaRegistro").toLocalDateTime());
                     usuario.setTipoCuenta(rs.getString("tipoCuenta"));
@@ -182,10 +178,9 @@ public class UsuariosDB {
             update.setString(2, usuario.getTelefono());
             update.setString(3, usuario.getOrganizacion());
             update.setString(4, usuario.getNumeroIdentificacion());
-            update.setString(5, usuario.getFoto());
-            update.setString(6, usuario.getContrasena());
-            update.setString(7, usuario.getTipoCuenta());
-            update.setString(8, usuario.getCorreo()); // condición WHERE
+            update.setString(5, usuario.getContrasena());
+            update.setString(6, usuario.getTipoCuenta());
+            update.setString(7, usuario.getCorreo()); // condición WHERE
 
             int filasAfectadas = update.executeUpdate();
             if (filasAfectadas > 0) {

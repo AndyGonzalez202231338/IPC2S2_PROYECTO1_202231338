@@ -17,6 +17,23 @@ body.login-page {
     height: 100vh; 
     margin: 0;
 }
+
+/* ===== Sticky Footer ===== */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* Ocupa todo el espacio disponible */
+}
+
+footer {
+    margin-top: auto; /* Empuja el footer hacia abajo */
+}
+
 /* ===== Contenedor de formularios usuarios ===== */
 form.formulariogrande {
     background-color: #1e1e1e;
@@ -154,5 +171,12 @@ label {
 .containerAdmin a:hover {
     color: #399187;
 }
+
+.dark-footer .footer-icon svg {
+    fill: currentColor;   /* Toma el color del padre */
+    transition: fill 0.3s ease;
+}
+
+
 
 

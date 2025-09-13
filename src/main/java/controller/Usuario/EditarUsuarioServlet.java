@@ -66,7 +66,6 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         
         // Para no perder los datos ingresados si hubo error
         UsuarioModel usuarioConDatos = new UsuarioModel(
-            null,
             request.getParameter("nombreCompleto"),
             request.getParameter("correo"),
             request.getParameter("telefono"),
