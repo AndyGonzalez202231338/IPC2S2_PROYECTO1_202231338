@@ -29,6 +29,7 @@
                         <li class="list-group-item bg-dark text-light"><strong>Fecha Inicio:</strong> ${congreso.fechaInicio}</li>
                         <li class="list-group-item bg-dark text-light"><strong>Fecha Fin:</strong> ${congreso.fechaFin}</li>
                         <li class="list-group-item bg-dark text-light"><strong>Precio:</strong> $${congreso.precio}</li>
+                        <li class="list-group-item bg-dark text-light"><strong>Porcentaje de Ganacias:</strong> ${congreso.porcentajeGanancia}%</li>
                     </ul>
 
                     <div class="mt-4 text-center">
@@ -40,8 +41,8 @@
 
                 </div>
             </div>
-            <jsp:include page="/includes/footer.jsp"/>
         </main>
+                <jsp:include page="/includes/footer.jsp"/>
     </body>
 </html>
 

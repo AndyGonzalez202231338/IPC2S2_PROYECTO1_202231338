@@ -73,7 +73,8 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
                 LocalDate.parse(request.getParameter("fechaFin")),
                 request.getParameter("lugar"),
                 Double.valueOf(request.getParameter("precio")),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                Double.valueOf(request.getParameter("porcentajeGanancia"))
             );
         } catch (Exception ignored) {}
         request.setAttribute("congreso", congresoConDatos);

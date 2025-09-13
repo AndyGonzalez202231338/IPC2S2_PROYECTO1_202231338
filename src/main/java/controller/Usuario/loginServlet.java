@@ -62,7 +62,7 @@ public class loginServlet extends HttpServlet {
                 if ("ADMIN".equalsIgnoreCase(usuario.getTipoCuenta())) {
                     request.getRequestDispatcher("/Home/home-admin.jsp").forward(request, response);
                 } else {
-                    request.getRequestDispatcher("/Home/home-participante.jsp").forward(request, response);
+                    request.getRequestDispatcher("/Home/home-admin.jsp").forward(request, response);
                 }
             }
 

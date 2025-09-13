@@ -22,6 +22,7 @@ public class UsuarioModel {
     private String contrasena;
     private LocalDateTime fechaRegistro;
     private String tipoCuenta;
+    private Double cartera;
 
     /**
      * Crear un objeto modelo
@@ -33,6 +34,7 @@ public class UsuarioModel {
      * @param foto url
      * @param contrasena de usuario
      * @param tipoCuenta  Aministrador, participante
+     * @param cartera dinero del usuario
      */
     public UsuarioModel(String nombreCompleto, String correo, String telefono, String organizacion, String numeroIdentificacion, String foto, String contrasena, String tipoCuenta) {
         this.nombreCompleto = nombreCompleto;
@@ -148,10 +150,20 @@ public class UsuarioModel {
         this.tipoCuenta = tipoCuenta;
     }
 
+    public Double getCartera() {
+        return cartera;
+    }
+
+    public void setCartera(Double cartera) {
+        this.cartera = cartera;
+    }
+
     @Override
     public String toString() {
-        return "UsuarioModel{" + "id=" + id + ", nombreCompleto=" + nombreCompleto + ", correo=" + correo + ", telefono=" + telefono + ", organizacion=" + organizacion + ", numeroIdentificacion=" + numeroIdentificacion + ", foto=" + foto + ", contrasena=" + contrasena + ", fechaRegistro=" + fechaRegistro + ", tipoCuenta=" + tipoCuenta + '}';
+        return "UsuarioModel{" + "id=" + id + ", nombreCompleto=" + nombreCompleto + ", correo=" + correo + ", telefono=" + telefono + ", organizacion=" + organizacion + ", numeroIdentificacion=" + numeroIdentificacion + ", foto=" + foto + ", contrasena=" + contrasena + ", fechaRegistro=" + fechaRegistro + ", tipoCuenta=" + tipoCuenta + ", cartera=" + cartera + '}';
     }
+
+    
     
     /**
      * Utiliza el LocalDateTime para converitrlo en texto legible con un orden

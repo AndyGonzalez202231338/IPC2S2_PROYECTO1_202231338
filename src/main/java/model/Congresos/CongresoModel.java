@@ -20,12 +20,14 @@ public class CongresoModel {
     private LocalDate fechaFin;
     private String lugar;
     private Double precio;
+    private Double porcentajeGanancia;
+    private Double recaudado;
     private LocalDateTime fechaCreacion;
 
     public CongresoModel() {
     }
 
-    public CongresoModel(Long idCongreso, String codigo, String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, String lugar, Double precio, LocalDateTime fechaCreacion) {
+    public CongresoModel(Long idCongreso, String codigo, String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, String lugar, Double precio, LocalDateTime fechaCreacion,Double porcentajeGanancia) {
         this.idCongreso = idCongreso;
         this.codigo = codigo;
         this.nombre = nombre;
@@ -35,6 +37,7 @@ public class CongresoModel {
         this.lugar = lugar;
         this.precio = precio;
         this.fechaCreacion = fechaCreacion;
+        this.porcentajeGanancia = porcentajeGanancia;
     }
 
     public Long getIdCongreso() {
@@ -109,6 +112,23 @@ public class CongresoModel {
         this.fechaCreacion = fechaCreacion;
     }
 
+    public Double getPorcentajeGanancia() {
+        return porcentajeGanancia;
+    }
+
+    public void setPorcentajeGanancia(Double porcentajeGanancia) {
+        this.porcentajeGanancia = porcentajeGanancia;
+    }
+
+    public Double getRecaudado() {
+        return recaudado;
+    }
+
+    public void setRecaudado(Double recaudado) {
+        this.recaudado = recaudado;
+    }
+    
+    
     
     public boolean esValido() {
     return codigo != null && !codigo.isBlank()
@@ -118,14 +138,13 @@ public class CongresoModel {
             && fechaFin != null
             && !fechaFin.isBefore(fechaInicio) // La fecha de fin no puede ser antes de inicio
             && lugar != null && !lugar.isBlank()
-            && precio != null && precio >= 35.0; // precio mínimo según tu constraint
-
+            && precio != null && precio >= 35.0 // precio mínimo según tu constraint
+            && porcentajeGanancia != null;
 }
 
     @Override
     public String toString() {
-        return "CongresoModel{" + "idCongreso=" + idCongreso + ", codigo=" + codigo + ", nombre=" + nombre + ", descripcion=" + descripcion + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", lugar=" + lugar + ", precio=" + precio + ", fechaCreacion=" + fechaCreacion + '}';
+        return "CongresoModel{" + "idCongreso=" + idCongreso + ", codigo=" + codigo + ", nombre=" + nombre + ", descripcion=" + descripcion + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", lugar=" + lugar + ", precio=" + precio + ", porcentajeGanancia=" + porcentajeGanancia + ", recaudado=" + recaudado + ", fechaCreacion=" + fechaCreacion + '}';
     }
-
     
 }
