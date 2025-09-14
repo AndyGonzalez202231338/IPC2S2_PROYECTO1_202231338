@@ -7,7 +7,11 @@ package model.Usuarios;
 import Exceptions.EntityNotFoundException;
 import Exceptions.UserDataInvalidException;
 import connection.UsuariosDB;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Part;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 
 /**
@@ -16,7 +20,7 @@ import java.time.LocalDateTime;
  */
 public class ActualizadorUsuario {
 
-    public UsuarioModel actualizar(HttpServletRequest request) throws UserDataInvalidException, EntityNotFoundException {
+    public UsuarioModel actualizar(HttpServletRequest request) throws UserDataInvalidException, EntityNotFoundException, IOException, ServletException{
         UsuariosDB usuariosDB = new UsuariosDB();
 
         UsuarioModel usuario = extraer(request);
@@ -27,10 +31,9 @@ public class ActualizadorUsuario {
             UsuarioModel usuarioExistente = usuariosDB.buscarPorCorreo(request.getParameter("correo"));
             contrasena = usuarioExistente.getContrasena();
         }
-        
+
         usuario.setContrasena(contrasena);
-        
-        
+
         if (usuariosDB.buscarPorCorreo(usuario.getCorreo()) == null) {
             throw new EntityNotFoundException(
                     String.format("El Usuario con correo %s no existe", usuario.getCorreo()));
@@ -41,7 +44,7 @@ public class ActualizadorUsuario {
         return usuario;
     }
 
-    private UsuarioModel extraer(HttpServletRequest request) throws UserDataInvalidException {
+    private UsuarioModel extraer(HttpServletRequest request) throws UserDataInvalidException, IOException, ServletException {
         try {
             // Obtener la fecha/hora como string
             System.out.println("        extraer");
@@ -66,7 +69,12 @@ public class ActualizadorUsuario {
                     fechaRegistro, // <-- ahora es LocalDateTime
                     request.getParameter("tipoCuenta")
             );
-
+            // 📌 Leer foto del request
+            Part filePart = request.getPart("foto");
+            if (filePart != null && filePart.getSize() > 0) {
+                InputStream inputStream = filePart.getInputStream();
+                usuario.setFoto(inputStream.readAllBytes()); // Guardamos bytes en el modelo
+            }
             return usuario;
         } catch (IllegalArgumentException | NullPointerException e) {
             throw new UserDataInvalidException("Error en los datos enviados del usuario");

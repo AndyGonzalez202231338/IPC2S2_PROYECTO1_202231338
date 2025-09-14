@@ -5,53 +5,45 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<header class="py-3 mb-3 border-bottom">
-  <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: auto 1fr auto;">
+<header class="py-3 mb-3 border-bottom bg-dark">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
     
-    <!-- Dropdown menú principal -->
-    <div class="dropdown">
-      <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        <!-- Icono reemplazado por un círculo simple -->
-        <div style="width: 32px; height: 32px; background-color: #4db6ac; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #121212; font-weight: bold;">
-          ☰
-        </div>
-      </a>
-      <ul class="dropdown-menu text-small shadow">
-        <li><a class="dropdown-item active" href="#" aria-current="page">Descripción general</a></li>
-        <li><a class="dropdown-item" href="#">Inventario</a></li>
-        <li><a class="dropdown-item" href="#">Clientes</a></li>
-        <li><a class="dropdown-item" href="#">Productos</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="#">Informes</a></li>
-        <li><a class="dropdown-item" href="#">Analítica</a></li>
-      </ul>
-    </div>
-
-    <!-- Título / Marca -->
-    <div class="d-flex justify-content-center">
-      <span class="fs-4 fw-bold text-light">CONGRESOS CUNOC</span>
-    </div>
-
-    <!-- Barra de búsqueda y usuario -->
+    <!-- Marca / Título -->
     <div class="d-flex align-items-center">
-      <form class="w-100 me-3" role="search">
-        <input type="search" class="form-control" placeholder="Buscar..." aria-label="Buscar">
-      </form>
+      <h3 class="titulosh3">CONGRESOS CUNOC</h3>
+    </div>
 
-      <div class="flex-shrink-0 dropdown">
-        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/mdo.png" alt="usuario" width="32" height="32" class="rounded-circle">
-        </a>
-        <ul class="dropdown-menu text-small shadow">
-          <li><a class="dropdown-item" href="#">Nuevo proyecto...</a></li>
-          <li><a class="dropdown-item" href="#">Configuración</a></li>
-          <li><a class="dropdown-item" href="#">Perfil</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
-        </ul>
-      </div>
+    <!-- Barra de búsqueda + Navegación -->
+    <div class="d-flex align-items-center gap-3">
+      
+
+      <!-- Botones navegación -->
+      <nav class="d-flex gap-2">
+        <a href="${pageContext.servletContext.contextPath}/Home/home-admin.jsp" class="btn btn-sm btn-outline-info me-2">Home</a>
+        <a href="${pageContext.servletContext.contextPath}/CongresoServlet" class="btn btn-sm btn-outline-info me-2">Congresos</a>
+        <a href="${pageContext.servletContext.contextPath}/UsuarioServlet" class="btn btn-sm btn-outline-info me-2">Usuarios</a>
+      </nav>
+    </div>
+      <!-- Barra de búsqueda -->
+      <form class="d-flex" role="search">
+        <input type="search" class="form-control form-control-sm" placeholder="Buscar..." aria-label="Buscar">
+      </form>
+    <!-- Usuario -->
+    <div class="dropdown">
+      <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" 
+         data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://github.com/mdo.png" alt="usuario" width="35" height="35" 
+             class="rounded-circle border border-2 border-light">
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end text-small shadow">
+        <li><a class="dropdown-item" href="#">Configuración</a></li>
+        <li><a class="dropdown-item" href="#">Perfil</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="${pageContext.servletContext.contextPath}/index.jsp">Cerrar sesión</a></li>
+      </ul>
     </div>
 
   </div>
 </header>
+
 

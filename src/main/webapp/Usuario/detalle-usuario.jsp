@@ -23,7 +23,8 @@
             <div class="text-center mb-4">
                 <c:choose>
                     <c:when test="${not empty usuario.foto}">
-                        <img src="${usuario.foto}" alt="Foto de ${usuario.nombreCompleto}" 
+                        <img src="${pageContext.servletContext.contextPath}/FotoUsuarioServlet?correo=${usuario.correo}" 
+                             alt="Foto de ${usuario.nombreCompleto}" 
                              class="rounded-circle border border-2 border-info" 
                              style="width: 150px; height: 150px; object-fit: cover;">
                     </c:when>
@@ -46,6 +47,9 @@
                         <li class="list-group-item bg-dark text-light"><strong>Teléfono: </strong> ${usuario.telefono}</li>
                         <li class="list-group-item bg-dark text-light"><strong>Organización: </strong> ${usuario.organizacion}</li>
                         <li class="list-group-item bg-dark text-light"><strong>Número Identificación: </strong> ${usuario.numeroIdentificacion}</li>
+                            <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('NORMAL')}">
+                            <li class="list-group-item bg-dark text-light"><strong>Cartera:  </strong> ${usuario.cartera}</li>
+                            </c:if>
                         <li class="list-group-item bg-dark text-light">
                             <strong>Fecha de Creación: </strong> ${usuario.fechaRegistroFormatted}
                         </li>
@@ -54,16 +58,28 @@
                         <li class="list-group-item bg-dark text-light"><strong>Tipo de Cuenta: </strong> ${usuario.tipoCuenta}</li>
                     </ul>
 
-                    <div class="mt-4 text-center">
-                        <a href="${pageContext.servletContext.contextPath}/UsuarioServlet"
-                           class="btn btn-sm btn-outline-info me-2">
-                            <i class="bi bi-arrow-90deg-left"></i> Volver a la lista
-                        </a>
-                    </div>
+                    <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">
+                        <div class="mt-4 text-center">
+                            <a href="${pageContext.servletContext.contextPath}/UsuarioServlet"
+                               class="btn btn-sm btn-outline-info me-2">
+                                <i class="bi bi-arrow-90deg-left"></i> Volver a la lista
+                            </a>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('NORMAL')}">
+                        <div class="mt-4 text-center">
+                            <a href="${pageContext.servletContext.contextPath}/Home/home-admin.jsp"
+                               class="btn btn-sm btn-outline-info me-2">
+                                <i class="bi bi-arrow-90deg-left"></i> Regresar
+                            </a>
+                        </div>
+                    </c:if>
+
 
                 </div>
             </div>
-            
+
         </main>
         <jsp:include page="/includes/footer.jsp"/>
     </body>

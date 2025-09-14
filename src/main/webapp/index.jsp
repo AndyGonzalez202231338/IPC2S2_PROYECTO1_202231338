@@ -20,7 +20,7 @@
             <form class="login" method="POST" action="${pageContext.servletContext.contextPath}/loginServlet">
                 <h2 class="h4 mb-3 fw-normal text-center">Por favor inicia sesión</h2> 
 
-                <!-- 🔔Mensajes del backend -->
+                <!-- Mensajes del backend -->
                 <c:if test="${not empty mensajeError}">
                     <div class="alert alert-danger text-center">
                         ${mensajeError}
@@ -32,7 +32,7 @@
                         ${mensajeExito}
                     </div>
                 </c:if>
-                <!-- 🔔Fin mensajes -->
+                <!-- Fin mensajes -->
 
                 <div class="form-floating mb-3"> 
                     <input type="email" class="form-control" id="floatingInput" name="correo" placeholder="nombre@ejemplo.com"> 
@@ -56,3 +56,7 @@
         </main>
     </body>
 </html>
+
+UPDATE Usuario
+SET foto = NULL
+WHERE idUsuario = 2;

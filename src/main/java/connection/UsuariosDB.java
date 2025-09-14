@@ -30,12 +30,11 @@ public class UsuariosDB {
 
     private static final String OBTENER_TODOS_QUERY
             = "SELECT * FROM Usuario";
-    
-    private static final String ACTUALIZAR_USUARIO_QUERY =
-            "UPDATE Usuario SET nombreCompleto = ?, telefono = ?, organizacion = ?, " +
-            "numeroIdentificacion = ?, contrasena = ?, tipoCuenta = ? " +
-            "WHERE correo = ?";
 
+    private static final String ACTUALIZAR_USUARIO_QUERY
+            = "UPDATE Usuario SET nombreCompleto = ?, telefono = ?, organizacion = ?, "
+            + "numeroIdentificacion = ?, contrasena = ?, tipoCuenta = ?, foto = ? "
+            + "WHERE correo = ?";
 
     /**
      * Inserta un nuevo usuario en la base de datos
@@ -132,6 +131,7 @@ public class UsuariosDB {
                     usuario.setOrganizacion(rs.getString("organizacion"));
                     usuario.setNumeroIdentificacion(rs.getString("numeroIdentificacion"));
                     usuario.setContrasena(rs.getString("contrasena"));
+                    usuario.setFoto(rs.getBytes("foto"));
                     usuario.setFechaRegistro(rs.getTimestamp("fechaRegistro").toLocalDateTime());
                     usuario.setTipoCuenta(rs.getString("tipoCuenta"));
 
@@ -143,8 +143,8 @@ public class UsuariosDB {
         }
         return null;
     }
-    
-    public Optional<UsuarioModel> obtenerUsuarioPorCodigo(String correo){
+
+    public Optional<UsuarioModel> obtenerUsuarioPorCodigo(String correo) {
         System.out.println("obtener por codigo optional");
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
         try (PreparedStatement query = connection.prepareStatement(ENCONTRAR_USUARIO_POR_CORREO_QUERY)) {
@@ -159,9 +159,10 @@ public class UsuariosDB {
                     usuario.setOrganizacion(rs.getString("organizacion"));
                     usuario.setNumeroIdentificacion(rs.getString("numeroIdentificacion"));
                     usuario.setContrasena(rs.getString("contrasena"));
+                    usuario.setFoto(rs.getBytes("foto"));
                     usuario.setFechaRegistro(rs.getTimestamp("fechaRegistro").toLocalDateTime());
                     usuario.setTipoCuenta(rs.getString("tipoCuenta"));
-
+                    usuario.setCartera(rs.getDouble("cartera"));
                     return Optional.of(usuario);
                 }
             }
@@ -170,7 +171,7 @@ public class UsuariosDB {
         }
         return Optional.empty();
     }
-    
+
     public void actualizarUsuarioPorCorreo(UsuarioModel usuario) {
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
         try (PreparedStatement update = connection.prepareStatement(ACTUALIZAR_USUARIO_QUERY)) {
@@ -180,17 +181,23 @@ public class UsuariosDB {
             update.setString(4, usuario.getNumeroIdentificacion());
             update.setString(5, usuario.getContrasena());
             update.setString(6, usuario.getTipoCuenta());
-            update.setString(7, usuario.getCorreo()); // condición WHERE
+            if (usuario.getFoto() != null) {
+                update.setBytes(7, usuario.getFoto());
+            } else {
+                update.setNull(7, java.sql.Types.BLOB);
+            }
+            update.setString(8, usuario.getCorreo()); // condición WHERE
 
             int filasAfectadas = update.executeUpdate();
             if (filasAfectadas > 0) {
-            System.out.println("Congreso actualizado correctamente: " + usuario.getCorreo());
-        } else {
-            System.out.println("No se encontró el congreso con código: " + usuario.getCorreo());
-        }
+                System.out.println("Congreso actualizado correctamente: " + usuario.getCorreo());
+            } else {
+                System.out.println("No se encontró el congreso con código: " + usuario.getCorreo());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
+    
+    
 }
