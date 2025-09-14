@@ -6,6 +6,7 @@ package controller.Usuario;
 
 import Exceptions.EntityNotFoundException;
 import Exceptions.UserDataInvalidException;
+import connection.UsuariosDB;
 import model.Congresos.CongresoModel;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -25,10 +26,8 @@ import jakarta.servlet.http.Part;
  *
  * @author andy
  */
-
-@WebServlet(name = "EditarUsuarioServlet", urlPatterns = {"/EditarUsuarioServlet"})
-@MultipartConfig(maxFileSize = 5000000) // ~5MB
-public class EditarUsuarioServlet extends HttpServlet {
+@WebServlet(name = "FotoUsuarioServlet", urlPatterns = {"/FotoUsuarioServlet"})
+public class FotoUsuarioServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -37,11 +36,24 @@ public class EditarUsuarioServlet extends HttpServlet {
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException if an I/O error occuFotoUsuariors
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("SE ENTRA A DOGAT FOTO ");
+        String correo = request.getParameter("correo");
+        UsuariosDB usuariosDB = new UsuariosDB();
+        UsuarioModel usuario = usuariosDB.buscarPorCorreo(correo);
+
+        if (usuario != null && usuario.getFoto() != null) {
+            System.out.println("la foto si existe en la base de datos");
+            response.setContentType("image/jpeg");
+            response.getOutputStream().write(usuario.getFoto());
+        } else {
+            System.out.println("LA FOTO NO EXISTE");
+            response.sendRedirect(request.getContextPath() + "/resources/default-user.png");
+        }
     }
 
     /**
@@ -53,39 +65,9 @@ public class EditarUsuarioServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    ActualizadorUsuario actualizadorUsuarios = new ActualizadorUsuario();
-
-    try {
-        UsuarioModel usuarioActualizado = actualizadorUsuarios.actualizar(request);
-
-        // Mensaje de éxito
-        request.setAttribute("mensajeExito", "Usuario actualizado correctamente.");
-        request.setAttribute("usuario", usuarioActualizado);
-
-    } catch (UserDataInvalidException | EntityNotFoundException e) {
-        // Mensaje de error
-        request.setAttribute("error", e.getMessage());
-        
-        // Para no perder los datos ingresados si hubo error
-        UsuarioModel usuarioConDatos = new UsuarioModel(
-            request.getParameter("nombreCompleto"),
-            request.getParameter("correo"),
-            request.getParameter("telefono"),
-            request.getParameter("organizacion"),
-            request.getParameter("numeroIdentificacion"),
-            request.getParameter("fechaRegistro"),
-            request.getParameter("tipoCuenta")
-        );
-        request.setAttribute("usuario", usuarioConDatos);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
     }
-
-    // 🔹 Forward en vez de Redirect
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/Usuario/usuario-actualizar.jsp");
-    dispatcher.forward(request, response);
-}
-
 
     /**
      * Returns a short description of the servlet.

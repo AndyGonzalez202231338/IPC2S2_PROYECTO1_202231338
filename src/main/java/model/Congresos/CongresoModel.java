@@ -23,6 +23,7 @@ public class CongresoModel {
     private Double porcentajeGanancia;
     private Double recaudado;
     private LocalDateTime fechaCreacion;
+    private Double cartera;
 
     public CongresoModel() {
     }
@@ -127,8 +128,14 @@ public class CongresoModel {
     public void setRecaudado(Double recaudado) {
         this.recaudado = recaudado;
     }
-    
-    
+
+    public Double getCartera() {
+        return cartera;
+    }
+
+    public void setCartera(Double cartera) {
+        this.cartera = cartera;
+    }
     
     public boolean esValido() {
     return codigo != null && !codigo.isBlank()
