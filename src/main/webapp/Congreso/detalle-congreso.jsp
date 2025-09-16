@@ -29,10 +29,17 @@
                         <li class="list-group-item bg-dark text-light"><strong>Fecha Inicio:</strong> ${congreso.fechaInicio}</li>
                         <li class="list-group-item bg-dark text-light"><strong>Fecha Fin:</strong> ${congreso.fechaFin}</li>
                         <li class="list-group-item bg-dark text-light"><strong>Precio:</strong> $${congreso.precio}</li>
-                        <li class="list-group-item bg-dark text-light"><strong>Porcentaje de Ganacias:</strong> ${congreso.porcentajeGanancia}%</li>
+                            <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">
+                            <li class="list-group-item bg-dark text-light"><strong>Porcentaje de Ganacias:</strong> ${congreso.porcentajeGanancia}%</li>
+                            </c:if>
                     </ul>
 
                     <div class="mt-4 text-center">
+
+                        <a href="${pageContext.servletContext.contextPath}/CongresoServlet"
+                           class="btn btn-sm btn-outline-info me-2">
+                            <i class="bi bi-arrow-90deg-left"></i> Actvidades del Congreso
+                        </a>
                         <a href="${pageContext.servletContext.contextPath}/CongresoServlet"
                            class="btn btn-sm btn-outline-info me-2">
                             <i class="bi bi-arrow-90deg-left"></i> Volver a la lista
@@ -42,7 +49,7 @@
                 </div>
             </div>
         </main>
-                <jsp:include page="/includes/footer.jsp"/>
+        <jsp:include page="/includes/footer.jsp"/>
     </body>
 </html>
 

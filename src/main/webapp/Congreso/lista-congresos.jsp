@@ -14,7 +14,7 @@
         <jsp:include page="/includes/resources.jsp"/>
     </head>
     <body>
-        <<main>
+        <main>
             <jsp:include page="/includes/header.jsp"/>
 
             <!-- TABLA DE CONGRESOS EXISTENTES -->
@@ -45,7 +45,7 @@
                                        class="btn btn-sm btn-outline-info me-2">
                                         <i class="bi bi-card-list"></i> Ver mas
                                     </a>
-                                    
+                                    <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">
                                     <a href="${pageContext.servletContext.contextPath}/CongresoServlet?codigo=${congreso.codigo}" 
                                        class="btn btn-sm btn-outline-info me-2">
                                         <i class="bi bi-pencil-square"></i> Editar
@@ -54,17 +54,28 @@
                                     <a class="btn btn-sm btn-outline-danger">
                                         <i class="bi bi-trash"></i> Eliminar
                                     </a>
+                                    </c:if> 
                                 </td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
-                <div class="mt-4 text-center">
+                <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('NORMAL')}">
+                    <div class="mt-4 text-center">
+                        <a href="${pageContext.servletContext.contextPath}/Home/home-admin.jsp"
+                           class="btn btn-sm btn-outline-info me-2">
+                            <i class="bi bi-arrow-90deg-left"></i> Regresar
+                        </a>
+                    </div>
+                </c:if>
+                <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">
+                 <div class="mt-4 text-center">
                         <a href="${pageContext.servletContext.contextPath}/Congreso/congreso.jsp"
                            class="btn btn-sm btn-outline-info me-2">
                             <i class="bi bi-arrow-90deg-left"></i> Regresar al form
                         </a>
-                    </div>
+                    </div>   
+                </c:if>
             </div>
         </main>
                            <jsp:include page="/includes/footer.jsp"/>

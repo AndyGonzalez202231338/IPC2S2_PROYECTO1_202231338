@@ -29,7 +29,7 @@
                             </div>
                             <h3 class="titulosh3">Congresos</h3>
                             <p>Unirse a Congresos y Actividades.</p>
-                            <a href="${pageContext.servletContext.contextPath}/Congreso/congreso.jsp" class="icon-link">
+                            <a href="${pageContext.servletContext.contextPath}/CongresoServlet" class="icon-link">
                                 Ver congresos <i class="bi bi-chevron-right"></i>
                             </a>
                         </div>
