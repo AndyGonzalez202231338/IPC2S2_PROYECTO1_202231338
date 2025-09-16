@@ -33,7 +33,7 @@ public class UsuariosDB {
 
     private static final String ACTUALIZAR_USUARIO_QUERY
             = "UPDATE Usuario SET nombreCompleto = ?, telefono = ?, organizacion = ?, "
-            + "numeroIdentificacion = ?, contrasena = ?, tipoCuenta = ?, foto = ? "
+            + "numeroIdentificacion = ?, contrasena = ?, tipoCuenta = ?, foto = ?"
             + "WHERE correo = ?";
 
     /**
@@ -134,6 +134,7 @@ public class UsuariosDB {
                     usuario.setFoto(rs.getBytes("foto"));
                     usuario.setFechaRegistro(rs.getTimestamp("fechaRegistro").toLocalDateTime());
                     usuario.setTipoCuenta(rs.getString("tipoCuenta"));
+                    usuario.setCartera(rs.getDouble("cartera"));
 
                     return usuario;
                 }
@@ -159,7 +160,7 @@ public class UsuariosDB {
                     usuario.setOrganizacion(rs.getString("organizacion"));
                     usuario.setNumeroIdentificacion(rs.getString("numeroIdentificacion"));
                     usuario.setContrasena(rs.getString("contrasena"));
-                    usuario.setFoto(rs.getBytes("foto"));
+                    usuario.setFoto(rs.getBytes("foto"));  
                     usuario.setFechaRegistro(rs.getTimestamp("fechaRegistro").toLocalDateTime());
                     usuario.setTipoCuenta(rs.getString("tipoCuenta"));
                     usuario.setCartera(rs.getDouble("cartera"));
@@ -199,5 +200,41 @@ public class UsuariosDB {
         }
     }
     
+    /**
+ * Actualiza la cartera de un usuario en la base de datos usando su correo.
+ * Si la cartera es null, la inicializa en 0.0 antes de guardar.
+ *
+ * @param usuario objeto UsuarioModel con correo y nueva cartera
+ */
+public void actualizarCartera(UsuarioModel usuario) {
+    if (usuario == null || usuario.getCorreo() == null || usuario.getCorreo().isEmpty()) {
+        System.out.println("Usuario o correo inválido.");
+        return;
+    }
+
+    // Asegurarse de que cartera no sea null
+    if (usuario.getCartera() == null) {
+        usuario.setCartera(0.0);
+    }
+
+    String sql = "UPDATE Usuario SET cartera = ? WHERE correo = ?";
+    Connection connection = DBConnectionSingleton.getInstance().getConnection();
+
+    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        stmt.setDouble(1, usuario.getCartera());
+        stmt.setString(2, usuario.getCorreo());
+
+        int filas = stmt.executeUpdate();
+        if (filas > 0) {
+            System.out.println("Cartera actualizada correctamente para: " + usuario.getCorreo());
+        } else {
+            System.out.println("No se encontró usuario con correo: " + usuario.getCorreo());
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
     
 }

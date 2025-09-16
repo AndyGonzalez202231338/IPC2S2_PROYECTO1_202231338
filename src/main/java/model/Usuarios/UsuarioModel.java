@@ -63,8 +63,7 @@ public class UsuarioModel {
      * constructor vacio para recribir datos
      */
     public UsuarioModel() {
-    }
-    
+}
     
 
     public Integer getId() {
@@ -147,6 +146,7 @@ public class UsuarioModel {
     public void setCartera(Double cartera) {
         this.cartera = cartera;
     }
+
 
     public byte[] getFoto() {
         return foto;

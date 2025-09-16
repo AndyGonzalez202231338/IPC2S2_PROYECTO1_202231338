@@ -52,7 +52,7 @@
                             </div>
                             <h3 class="titulosh3">Cartera</h3>
                             <p>Dinero digital del usuario.</p>
-                            <a href="${pageContext.servletContext.contextPath}/Congreso/congreso.jsp" class="icon-link">
+                            <a href="${pageContext.servletContext.contextPath}/AgregarDineroServlet?correo=${usuarioLogueado.correo}" class="icon-link">
                                 Ver cuenta <i class="bi bi-chevron-right"></i>
                             </a>
                         </div>
