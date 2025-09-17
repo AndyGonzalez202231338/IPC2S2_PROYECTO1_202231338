@@ -36,7 +36,7 @@
 
                     <div class="mt-4 text-center">
 
-                        <a href="${pageContext.servletContext.contextPath}/CongresoServlet"
+                        <a href="${pageContext.servletContext.contextPath}/Actividad/crear-actividad.jsp"
                            class="btn btn-sm btn-outline-info me-2">
                             <i class="bi bi-arrow-90deg-left"></i> Actvidades del Congreso
                         </a>

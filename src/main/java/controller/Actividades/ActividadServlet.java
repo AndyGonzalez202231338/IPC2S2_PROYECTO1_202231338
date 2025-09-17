@@ -19,6 +19,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import model.Actividades.ActividadModel;
+import model.Actividades.ConsultarActividad;
+import model.Actividades.CreadorActividades;
 
 /**
  *
@@ -40,7 +43,16 @@ public class ActividadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        ConsultarActividad consultaActividades = new ConsultarActividad();
+        if (obtenerTodos(request)) {
+            List<ActividadModel> lista = consultaActividades.obtenerTodasLasActividades();
+            System.out.println("Cantidad de congresos encontrados: " + lista.size());
+//request.setAttribute("congresos", lista);
+
+            request.setAttribute("congresos", consultaActividades.obtenerTodasLasActividades());
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Congreso/lista-congresos.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     /**
