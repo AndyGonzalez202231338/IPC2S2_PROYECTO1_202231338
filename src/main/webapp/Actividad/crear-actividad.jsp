@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,7 +19,8 @@
             <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
                 <div class="formulariogrande">
                     <h3 class="titulosh3 text-center mb-4">Formulario de Creación de Actividad</h3>
-                    <h3 class="titulosh3 text-center mb-4">congreso: ${congreso.codigo}</h3>
+                    <h3>La actividad creada sera para el congreso ${congreso.nombre}</h3>
+                    <h3>con el código ${congreso.codigo}</h3>
                     <!-- Mensajes de backend --> 
                     <c:if test="${not empty error}">
                         <div class="alert alert-danger text-center" role="alert">
@@ -47,7 +49,7 @@
                             <label for="telefono" class="form-label">Salon</label>
                             <input type="text" class="form-control" id="idSalon" name="idSalon" placeholder="Salon de la actividad" required>
                         </div>
-                        <a href="${pageContext.servletContext.contextPath}/Salon/lista-salones.jsp"
+                        <a href="${pageContext.servletContext.contextPath}/VerSalonServlet?codigo=${congreso.codigo}"
                            class="btn btn-sm btn-outline-info me-2">
                             <i class="bi bi-clipboard2-minus"></i> Ver todos los Salones
                         </a>
@@ -86,6 +88,18 @@
                             <button type="submit" class="btn btn-primary">Crear Actividad</button>
                         </div>
                     </form>
+
+                    <!-- Enlace a listado de Actividades -->
+                    <div class="mt-4 text-center">
+                        <a href="${pageContext.servletContext.contextPath}/UsuarioServlet"
+                           class="btn btn-sm btn-outline-info me-2">
+                            <i class="bi bi-clipboard2-minus"></i> Ver todos los Usuarios
+                        </a>
+                        <a href="${pageContext.servletContext.contextPath}/Home/home-admin.jsp"
+                           class="btn btn-sm btn-outline-info me-2">
+                            <i class="bi bi-arrow-90deg-left"></i> Home
+                        </a>
+                    </div>
 
                 </div>
             </div>

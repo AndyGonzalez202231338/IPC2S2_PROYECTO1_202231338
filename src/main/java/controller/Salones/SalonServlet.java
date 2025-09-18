@@ -2,15 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.Congresos;
+package controller.Salones;
 
-import Exceptions.CongresoDataInvalidException;
 import Exceptions.EntityAlreadyExistsException;
 import Exceptions.EntityNotFoundException;
-import org.apache.commons.lang3.StringUtils;
+import Exceptions.SalonDataInvalidException;
+import Exceptions.UserDataInvalidException;
 import model.Congresos.CongresoModel;
-import model.Congresos.ConsultarCongreso;
-import model.Congresos.CreadorCongresos;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -19,13 +17,19 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import model.Congresos.ActualizadorCongreso;
+import model.Congresos.ConsultarCongreso;
+import model.Salones.ConsultarSalon;
+import model.Salones.CreadorSalones;
+import model.Salones.SalonModel;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author andy
  */
-@WebServlet(name = "CongresoServlet", urlPatterns = {"/CongresoServlet"})
-public class CongresoServlet extends HttpServlet {
+@WebServlet(name = "SalonServlet", urlPatterns = {"/SalonServlet"})
+public class SalonServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -37,26 +41,16 @@ public class CongresoServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ConsultarCongreso consultaCongresos = new ConsultarCongreso();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        ConsultarSalon consultarSalones = new ConsultarSalon();
         if (obtenerTodos(request)) {
-            List<CongresoModel> lista = consultaCongresos.obtenerTodosLosCongresos();
+            List<SalonModel> lista = consultarSalones.obtenerTodosLosSalones();
             System.out.println("Cantidad de congresos encontrados: " + lista.size());
 //request.setAttribute("congresos", lista);
 
-            request.setAttribute("congresos", consultaCongresos.obtenerTodosLosCongresos());
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Congreso/lista-congresos.jsp");
-            dispatcher.forward(request, response);
-        } else {
-            System.out.println("se entro por ");
-            try {
-                CongresoModel congreso = consultaCongresos.obtenerCongresoPorCodigo(request.getParameter("codigo"));
-                request.setAttribute("congreso", congreso);
-            } catch (EntityNotFoundException e) {
-                request.setAttribute("error", e.getMessage());
-            }
-            RequestDispatcher dispatcher = getServletContext()
-                    .getRequestDispatcher("/Congreso/congreso-actualizar.jsp");
+            request.setAttribute("congresos", consultarSalones.obtenerTodosLosSalones());
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Salon/lista-salones.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -70,20 +64,27 @@ public class CongresoServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        CreadorCongresos creadorCongresos = new CreadorCongresos();
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    CreadorSalones creadorSalones = new CreadorSalones();
+    try {
+        SalonModel salonCreado = creadorSalones.crearSalon(request);
+        //Long codigoCongreso = salonCreado.getIdCongreso();
+        //String codigo = String.valueOf(codigoCongreso);
+        
+        // ✅ obtener el código del congreso desde el formulario
+        String codigoCongreso = request.getParameter("codigo");
+        System.out.println("cdoigo"+codigoCongreso);
+        // ✅ Redirigir a VerSalonServlet con el código como parámetro
+        response.sendRedirect(request.getContextPath() + "/VerSalonServlet?codigo=" + codigoCongreso);
 
-        try {
-            CongresoModel congresoCreado = creadorCongresos.crearEvento(request);
-
-            request.setAttribute("congresoCreado", congresoCreado);
-        } catch (CongresoDataInvalidException | EntityAlreadyExistsException e) {
-            request.setAttribute("error", e.getMessage());
-        }
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Congreso/congreso.jsp");
+    } catch (SalonDataInvalidException | EntityAlreadyExistsException e) {
+        request.setAttribute("error", e.getMessage());
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Salon/form-salon.jsp");
         dispatcher.forward(request, response);
     }
+}
+
 
     /**
      * Returns a short description of the servlet.
@@ -94,7 +95,7 @@ public class CongresoServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
     private boolean obtenerTodos(HttpServletRequest request) {
         System.out.println("entro a obtenerTodos los congresos");
         return StringUtils.isBlank(request.getParameter("codigo"));
