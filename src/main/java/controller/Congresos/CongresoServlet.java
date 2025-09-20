@@ -72,15 +72,12 @@ public class CongresoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        System.out.println("entro a crear el congreso a dopost");
         CreadorCongresos creadorCongresos = new CreadorCongresos();
 
         try {
             CongresoModel congresoCreado = creadorCongresos.crearEvento(request);
 
             request.setAttribute("congresoCreado", congresoCreado);
-            System.out.println("devolvio un congreso creado");
         } catch (CongresoDataInvalidException | EntityAlreadyExistsException e) {
             request.setAttribute("error", e.getMessage());
         }

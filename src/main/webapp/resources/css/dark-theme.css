@@ -177,6 +177,37 @@ label {
     transition: fill 0.3s ease;
 }
 
+/* ====== Cards en modo oscuro ====== */
+card.card-desplegado {
+    background-color: #1e1e1e;
+    border: 6px solid #4db6ac; /* borde verde acua */
+    color: #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    margin-bottom: 1rem;
+}
 
+.card-header {
+    background-color: #2a2a2a;
+    color: #4db6ac;
+    font-weight: bold;
+    border-bottom: 1px solid #333;
+}
 
+.card-body {
+    background-color: #1e1e1e;
+    color: #ccc;
+}
 
+.card-title {
+    color: #4db6ac;
+    font-weight: bold;
+}
+
+.card-text {
+    color: #bbb;
+}
+
+.card .btn-primary:hover {
+    background-color: #399187;
+}
