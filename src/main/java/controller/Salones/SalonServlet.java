@@ -44,15 +44,26 @@ public class SalonServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ConsultarSalon consultarSalones = new ConsultarSalon();
-        if (obtenerTodos(request)) {
-            List<SalonModel> lista = consultarSalones.obtenerTodosLosSalones();
-            System.out.println("Cantidad de congresos encontrados: " + lista.size());
-//request.setAttribute("congresos", lista);
-
-            request.setAttribute("congresos", consultarSalones.obtenerTodosLosSalones());
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Salon/lista-salones.jsp");
-            dispatcher.forward(request, response);
+        ConsultarCongreso consultarCongresos = new ConsultarCongreso();
+        try {
+            System.out.println("Parametros de edicion");
+            String codigo = request.getParameter("codigo");
+            String nombreSalon = request.getParameter("nombreSalon");
+            String congresoParam = request.getParameter("idCongreso");
+            Long idCongreso = null;
+            if (congresoParam != null && !congresoParam.isEmpty()) {
+                idCongreso = Long.valueOf(congresoParam); // ✅ convierte el parámetro a Long
+            }
+            SalonModel salon = consultarSalones.obtenerSalonPorCongresoYNombre(idCongreso, nombreSalon);
+            CongresoModel congreso = consultarCongresos.obtenerCongresoPorCodigo(codigo);
+            
+            request.setAttribute("congreso", congreso);
+            request.setAttribute("salon", salon);
+        } catch (EntityNotFoundException e) {
+            request.setAttribute("error", e.getMessage());
         }
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Salon/salon-actualizar.jsp");
+        dispatcher.forward(request, response);
     }
 
     /**
@@ -64,27 +75,26 @@ public class SalonServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    CreadorSalones creadorSalones = new CreadorSalones();
-    try {
-        SalonModel salonCreado = creadorSalones.crearSalon(request);
-        //Long codigoCongreso = salonCreado.getIdCongreso();
-        //String codigo = String.valueOf(codigoCongreso);
-        
-        // ✅ obtener el código del congreso desde el formulario
-        String codigoCongreso = request.getParameter("codigo");
-        System.out.println("cdoigo"+codigoCongreso);
-        // ✅ Redirigir a VerSalonServlet con el código como parámetro
-        response.sendRedirect(request.getContextPath() + "/VerSalonServlet?codigo=" + codigoCongreso);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        CreadorSalones creadorSalones = new CreadorSalones();
+        try {
+            SalonModel salonCreado = creadorSalones.crearSalon(request);
+            //Long codigoCongreso = salonCreado.getIdCongreso();
+            //String codigo = String.valueOf(codigoCongreso);
 
-    } catch (SalonDataInvalidException | EntityAlreadyExistsException e) {
-        request.setAttribute("error", e.getMessage());
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Salon/form-salon.jsp");
-        dispatcher.forward(request, response);
+            // ✅ obtener el código del congreso desde el formulario
+            String codigoCongreso = request.getParameter("codigo");
+            System.out.println("cdoigo" + codigoCongreso);
+            // ✅ Redirigir a VerSalonServlet con el código como parámetro
+            response.sendRedirect(request.getContextPath() + "/VerSalonServlet?codigo=" + codigoCongreso);
+
+        } catch (SalonDataInvalidException | EntityAlreadyExistsException e) {
+            request.setAttribute("error", e.getMessage());
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Salon/form-salon.jsp");
+            dispatcher.forward(request, response);
+        }
     }
-}
-
 
     /**
      * Returns a short description of the servlet.
@@ -95,7 +105,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
     private boolean obtenerTodos(HttpServletRequest request) {
         System.out.println("entro a obtenerTodos los congresos");
         return StringUtils.isBlank(request.getParameter("codigo"));

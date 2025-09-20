@@ -14,8 +14,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 import model.Congresos.ActualizadorCongreso;
 import model.Congresos.ConsultarCongreso;
+import model.Salones.ConsultarSalon;
+import model.Salones.SalonModel;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -37,11 +41,17 @@ public class VerSalonServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String codigo = request.getParameter("codigo");
+        System.out.println("CODIGO"+codigo);
         ConsultarCongreso consultar = new ConsultarCongreso();
         try {
             CongresoModel congreso = consultar.obtenerCongresoPorCodigo(codigo); 
             System.out.println("se encontro");
             request.setAttribute("congreso", congreso);
+            
+            ConsultarSalon consultarSalones = new ConsultarSalon();
+
+            request.setAttribute("salones", consultarSalones.obtenerTodosLosSalonesPorCongresoYNombre(congreso.getIdCongreso()));
+                  
             request.getRequestDispatcher("/Salon/lista-salones.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println("no se ecnontro");
@@ -72,5 +82,10 @@ public class VerSalonServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    private boolean obtenerTodos(HttpServletRequest request) {
+        System.out.println("entro a obtenerTodos los congresos");
+        return StringUtils.isBlank(request.getParameter("codigo"));
+    }
 
 }

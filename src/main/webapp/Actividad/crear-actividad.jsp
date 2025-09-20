@@ -46,9 +46,17 @@
 
 
                         <div class="mb-3">
-                            <label for="telefono" class="form-label">Salon</label>
-                            <input type="text" class="form-control" id="idSalon" name="idSalon" placeholder="Salon de la actividad" required>
-                        </div>
+    <label for="idSalon" class="form-label">Salón</label>
+    <select class="form-select" id="idSalon" name="idSalon" required>
+        <option value="">-- Selecciona un salón --</option>
+        <c:forEach var="salon" items="${salones}">
+            <option value="${salon.idSalon}">
+                ${salon.nombreSalon} - Capacidad: ${salon.capacidad}
+            </option>
+        </c:forEach>
+    </select>
+</div>
+
                         <a href="${pageContext.servletContext.contextPath}/VerSalonServlet?codigo=${congreso.codigo}"
                            class="btn btn-sm btn-outline-info me-2">
                             <i class="bi bi-clipboard2-minus"></i> Ver todos los Salones

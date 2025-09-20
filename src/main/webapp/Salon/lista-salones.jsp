@@ -62,19 +62,78 @@
                             <button type="submit" class="btn btn-primary">Crear Salón</button>
                         </div>
                     </form>
-                        
+
                     <div class="mt-4 text-center">
-                        <a href="${pageContext.servletContext.contextPath}/SalonServlet"
-                           class="btn btn-sm btn-outline-info me-2">
-                            <i class="bi bi-clipboard2-minus"></i> Ver todas los Salones
-                        </a>
                         <a href="${pageContext.servletContext.contextPath}/VerActividadServlet?codigo=${congreso.codigo}"
                            class="btn btn-sm btn-outline-info me-2">
                             <i class="bi bi-arrow-90deg-left"></i> Regresar a Actividades
                         </a>
                     </div>
                 </div>
+                <%-- Lista de Salones Existentes--%>
+
             </div>
+
+            <%-- Lista de Salones Existentes--%>
+            <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+                <div class="formulariogrande">
+                    <h3 class="mt-5 text-center">Lista de Salones Existentes Para este Congreso</h3>
+                    <c:if test="${not empty salones}">
+                        <c:forEach items="${salones}" var="salon">
+                            <div class="card text-white bg-dark mb-3 shadow-lg rounded">
+                                <div class="card-body">
+                                    <h5 class="card-title text-info">${salon.nombreSalon}</h5>
+                                    <p class="card-text">Ubicación: <span>${salon.ubicacion}</span></p>
+                                    <p class="card-text">Capacidad: <span>${salon.capacidad}</span></p>
+                                    <p class="card-text">Recursos del Salón: <span>${salon.recursos}</span></p>
+                                    <a href="${pageContext.servletContext.contextPath}/SalonServlet?nombreSalon=${salon.nombreSalon}&idCongreso=${salon.idCongreso}&codigo=${congreso.codigo}" 
+                                       class="btn btn-outline-info btn-sm">
+                                        <i class="bi bi-pencil-square"></i>Editar Salon
+                                    </a>
+                                    <a class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash"></i> Eliminar
+                                    </a>
+                                </div>
+                            </div>
+
+                        </c:forEach>
+
+                        <table class="table table-striped table-bordered mt-3">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Ubicación</th>
+                                    <th>Capacidad</th>
+                                    <th>Recursos</th>
+                                    <th>ID Congreso</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="salon" items="${salones}">
+                                    <tr>
+                                        <td>${salon.idSalon}</td>
+                                        <td>${salon.nombreSalon}</td>
+                                        <td>${salon.ubicacion}</td>
+                                        <td>${salon.capacidad}</td>
+                                        <td>${salon.recursos}</td>
+                                        <td>${salon.idCongreso}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if>
+
+                    <c:if test="${empty salones}">
+                        <div class="alert alert-warning text-center mt-3">
+                            No hay salones registrados aún.
+                        </div>
+                    </c:if>
+
+                </div>              
+            </div>
+
+
         </main>
         <jsp:include page="/includes/footer.jsp"/>
     </body>

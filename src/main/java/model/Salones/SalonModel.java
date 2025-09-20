@@ -15,6 +15,7 @@ public class SalonModel {
     private String ubicacion;
     private Integer capacidad;
     private String recursos;
+    private String nuevoNombreSalon;
 
     public SalonModel(Long idSalon, Long idCongreso, String nombreSalon, String ubicacion, Integer capacidad, String recursos) {
         this.idSalon = idSalon;
@@ -83,6 +84,14 @@ public class SalonModel {
 
     public boolean esValidoParaActualizar() {
         return idSalon != null && idSalon > 0 && esValidoParaCrear();
+    }
+
+    public String getNuevoNombreSalon() {
+        return nuevoNombreSalon;
+    }
+
+    public void setNuevoNombreSalon(String nuevoNombreSalon) {
+        this.nuevoNombreSalon = nuevoNombreSalon;
     }
 
     @Override

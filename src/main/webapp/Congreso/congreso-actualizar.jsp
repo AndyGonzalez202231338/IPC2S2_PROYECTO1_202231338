@@ -48,7 +48,6 @@
                             <label for="descripcion" class="form-label">Descripción</label>
                             <textarea class="form-control" id="descripcion" name="descripcion" rows="3"
                                       placeholder="Breve descripción del congreso" required>${congreso.descripcion}</textarea>
-
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">

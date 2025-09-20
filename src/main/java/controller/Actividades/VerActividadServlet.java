@@ -14,8 +14,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 import model.Congresos.ActualizadorCongreso;
 import model.Congresos.ConsultarCongreso;
+import model.Salones.ConsultarSalon;
+import model.Salones.SalonModel;
 
 /**
  *
@@ -41,8 +44,9 @@ public class VerActividadServlet extends HttpServlet {
         ConsultarCongreso consultar = new ConsultarCongreso();
         try {
             CongresoModel congreso = consultar.obtenerCongresoPorCodigo(codigo); 
-            System.out.println("se encontro");
             request.setAttribute("congreso", congreso);
+            ConsultarSalon consultarSalones = new ConsultarSalon();
+            request.setAttribute("salones", consultarSalones.obtenerTodosLosSalonesPorCongresoYNombre(congreso.getIdCongreso()));
             request.getRequestDispatcher("/Actividad/crear-actividad.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println("no se ecnontro");
