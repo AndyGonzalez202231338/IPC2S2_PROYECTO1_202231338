@@ -38,7 +38,7 @@
 
                         <a href="${pageContext.servletContext.contextPath}/VerActividadServlet?codigo=${congreso.codigo}"
                            class="btn btn-sm btn-outline-info me-2">
-                            <i class="bi bi-arrow-90deg-left"></i> Actvidades del Congreso
+                            <i class="bi bi-clipboard2-minus"></i> Actividades del Congreso
                         </a>
                         <a href="${pageContext.servletContext.contextPath}/CongresoServlet"
                            class="btn btn-sm btn-outline-info me-2">

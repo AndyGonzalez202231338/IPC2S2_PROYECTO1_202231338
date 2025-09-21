@@ -32,4 +32,18 @@ public class ConsultarUsuario {
         return usuarioOpt.get();
     }
     
+    public UsuarioModel obtenerUsuarioPorIdUsuario(Long idUsuario) throws EntityNotFoundException{
+        System.out.println("    obtener el congreso");
+        UsuariosDB usuarioDB = new UsuariosDB();
+        UsuarioModel usuario = usuarioDB.obtenerUsuarioPorIdUsuario(idUsuario);
+        if(usuario == null){
+            throw new EntityNotFoundException(
+                    String.format("El Usuario con id %s no existe", idUsuario)
+            );
+        }
+        return usuario;
+    }
+    
+    
+    
 }

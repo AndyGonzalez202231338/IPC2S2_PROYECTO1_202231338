@@ -76,7 +76,7 @@ public class CongresoServlet extends HttpServlet {
 
         try {
             CongresoModel congresoCreado = creadorCongresos.crearEvento(request);
-
+            
             request.setAttribute("congresoCreado", congresoCreado);
         } catch (CongresoDataInvalidException | EntityAlreadyExistsException e) {
             request.setAttribute("error", e.getMessage());

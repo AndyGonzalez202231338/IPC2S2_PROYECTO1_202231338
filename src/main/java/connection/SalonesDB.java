@@ -24,6 +24,9 @@ public class SalonesDB {
 
     private static final String ENCONTRAR_SALON_POR_ID_QUERY
             = "SELECT * FROM Salon WHERE idCongreso = ? AND nombreSalon = ?";
+    
+    private static final String ENCONTRAR_SALON_POR_IDSALON_QUERY
+            = "SELECT * FROM Salon WHERE idSalon = ?";
 
     private static final String OBTENER_TODOS_SALONES_QUERY
             = "SELECT * FROM Salon";
@@ -147,7 +150,6 @@ public class SalonesDB {
     }
 
     public List<SalonModel> obtenerTodosLosSalonesPorCongreso(Long idCongreso) {
-        System.out.println("+se busca el salon por congreso y nombre");
         List<SalonModel> salones = new ArrayList<>();
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
         try (PreparedStatement query = connection.prepareStatement(OBTENER_TODOS_SALONES_IDCONGRESO_QUERY)) {
@@ -170,5 +172,28 @@ public class SalonesDB {
         }
         return salones;
     }
+    
+    public SalonModel obtenerSalonPorCongreso(Long idSalon){
+        Connection connection = DBConnectionSingleton.getInstance().getConnection();
+        try (PreparedStatement query = connection.prepareStatement(ENCONTRAR_SALON_POR_IDSALON_QUERY)) {
+            query.setLong(1, idSalon);  // OJO: si idCongreso puede venir null, hay que validarlo antes
+            ResultSet rs = query.executeQuery();
 
+            if (rs.next()) {
+                System.out.println("lo encuentra y lo devuelve");
+                return new SalonModel(
+                        rs.getLong("idSalon"),
+                        rs.getLong("idCongreso"),
+                        rs.getString("nombreSalon"),
+                        rs.getString("ubicacion"),
+                        rs.getInt("capacidad"),
+                        rs.getString("recursos")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("no existe el salon");
+        return null;
+    }
 }

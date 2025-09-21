@@ -27,6 +27,9 @@ public class UsuariosDB {
 
     private static final String ENCONTRAR_USUARIO_POR_CORREO_QUERY
             = "SELECT * FROM Usuario WHERE correo = ?";
+    
+    private static final String ENCONTRAR_USUARIO_POR_IDUSUARIO_QUERY
+            = "SELECT * FROM Usuario WHERE idUsuario = ?";
 
     private static final String OBTENER_TODOS_QUERY
             = "SELECT * FROM Usuario";
@@ -235,6 +238,35 @@ public void actualizarCartera(UsuarioModel usuario) {
         e.printStackTrace();
     }
 }
+
+    
+public UsuarioModel obtenerUsuarioPorIdUsuario(Long idUsuario){
+        Connection connection = DBConnectionSingleton.getInstance().getConnection();
+        try (PreparedStatement query = connection.prepareStatement(ENCONTRAR_USUARIO_POR_IDUSUARIO_QUERY)) {
+            query.setLong(1, idUsuario);  // OJO: si idCongreso puede venir null, hay que validarlo antes
+            ResultSet rs = query.executeQuery();
+
+            if (rs.next()) {
+                System.out.println("lo encuentra y lo devuelve");
+                UsuarioModel usuario = new UsuarioModel(
+                        rs.getString("nombreCompleto"),
+                        rs.getString("correo"),
+                        rs.getString("telefono"),
+                        rs.getString("organizacion"),
+                        rs.getString("numeroIdentificacion"),
+                        rs.getString("contrasena"),
+                        rs.getString("tipoCuenta")
+                );
+                usuario.setId(rs.getInt("idUsuario"));
+                usuario.setFechaRegistro(rs.getTimestamp("fechaRegistro").toLocalDateTime());
+                return usuario;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("no existe el salon");
+        return null;
+    }
 
     
 }

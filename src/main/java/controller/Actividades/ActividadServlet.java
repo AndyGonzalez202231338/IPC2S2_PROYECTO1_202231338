@@ -4,6 +4,7 @@
  */
 package controller.Actividades;
 
+import Exceptions.ActividadDataInvalidException;
 import Exceptions.CongresoDataInvalidException;
 import Exceptions.EntityAlreadyExistsException;
 import Exceptions.EntityNotFoundException;
@@ -18,10 +19,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Actividades.ActividadModel;
 import model.Actividades.ConsultarActividad;
 import model.Actividades.CreadorActividades;
+import model.Usuarios.UsuarioModel;
 
 /**
  *
@@ -29,7 +32,6 @@ import model.Actividades.CreadorActividades;
  */
 @WebServlet(name = "ActividadServlet", urlPatterns = {"/ActividadServlet"})
 public class ActividadServlet extends HttpServlet {
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -45,11 +47,11 @@ public class ActividadServlet extends HttpServlet {
             throws ServletException, IOException {
         ConsultarActividad consultaActividades = new ConsultarActividad();
         if (obtenerTodos(request)) {
-            List<ActividadModel> lista = consultaActividades.obtenerTodasLasActividades();
-            System.out.println("Cantidad de congresos encontrados: " + lista.size());
+            //List<ActividadModel> lista = consultaActividades.obtenerTodasLasActividades();
+            //System.out.println("Cantidad de congresos encontrados: " + lista.size());
 //request.setAttribute("congresos", lista);
 
-            request.setAttribute("congresos", consultaActividades.obtenerTodasLasActividades());
+            //request.setAttribute("congresos", consultaActividades.obtenerTodasLasActividades());
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Congreso/lista-congresos.jsp");
             dispatcher.forward(request, response);
         }
@@ -67,6 +69,15 @@ public class ActividadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CreadorActividades creadorActividades = new CreadorActividades();
+        String codigo = request.getParameter("idCongreso");
+        try {
+            ActividadModel actividadCreada = creadorActividades.crearEvento(request);
+
+            request.setAttribute("actividadCreada", actividadCreada);
+        } catch (ActividadDataInvalidException | EntityNotFoundException | EntityAlreadyExistsException e) {
+            request.setAttribute("error", e.getMessage());
+        }
+        response.sendRedirect(request.getContextPath() + "/VerActividadServlet?codigo=" + codigo);
     }
 
     /**
@@ -78,7 +89,7 @@ public class ActividadServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
     private boolean obtenerTodos(HttpServletRequest request) {
         System.out.println("entro a obtenerTodos los congresos");
         return StringUtils.isBlank(request.getParameter("codigo"));
