@@ -22,6 +22,7 @@
             <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
                 <div class="formulariogrande">
                     <h3 class="titulosh3 text-center mb-4">Formulario de Creación de Congreso</h3>
+                    <h3>id Usuario ${usuario.id}</h3>
                     <!-- Mensajes de backend --> 
                     <c:if test="${not empty error}">
                         <div class="alert alert-danger text-center" role="alert">

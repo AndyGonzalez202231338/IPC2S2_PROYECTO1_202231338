@@ -4,9 +4,14 @@
  */
 package model.Actividades;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import model.Salones.SalonModel;
+import model.Usuarios.UsuarioModel;
 
 public class ActividadModel {
+
     private Long idActividad;
     private String codigo;
     private Long idCongreso;
@@ -14,18 +19,25 @@ public class ActividadModel {
     private String nombreActividad;
     private String descripcion;
     private String tipoActividad; // PONENCIA o TALLER
-    private LocalDateTime horaInicio;
-    private LocalDateTime horaFin;
+    private LocalTime horaInicio;
+    private LocalTime horaFin;
     private Long creadoPor; // id del admin que creó la actividad
-    private LocalDateTime fechaCreacion;
+    private LocalDate fechaCreacion;
+
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
+    
+    private SalonModel salon;
+    private UsuarioModel ponente;
 
     // Constructor vacío
-    public ActividadModel() {}
+    public ActividadModel() {
+    }
 
     // Constructor con todos los campos
-    public ActividadModel(Long idActividad, String codigo,Long idCongreso, Long idSalon, String nombreActividad,
-                          String descripcion, String tipoActividad, LocalDateTime horaInicio,
-                          LocalDateTime horaFin, Long creadoPor, LocalDateTime fechaCreacion) {
+    public ActividadModel(Long idActividad, String codigo, Long idCongreso, Long idSalon, String nombreActividad,
+            String descripcion, String tipoActividad, LocalTime horaInicio,
+            LocalTime horaFin, Long creadoPor, LocalDate fechaCreacion) {
         this.idActividad = idActividad;
         this.codigo = codigo;
         this.idCongreso = idCongreso;
@@ -37,6 +49,24 @@ public class ActividadModel {
         this.horaFin = horaFin;
         this.creadoPor = creadoPor;
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public ActividadModel(Long idActividad, String codigo, Long idCongreso, Long idSalon, String nombreActividad, String descripcion, String tipoActividad, LocalTime horaInicio, LocalTime horaFin, Long creadoPor, LocalDate fechaCreacion, LocalDate fechaInicio, LocalDate fechaFin, SalonModel salon, UsuarioModel ponente) {
+        this.idActividad = idActividad;
+        this.codigo = codigo;
+        this.idCongreso = idCongreso;
+        this.idSalon = idSalon;
+        this.nombreActividad = nombreActividad;
+        this.descripcion = descripcion;
+        this.tipoActividad = tipoActividad;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.creadoPor = creadoPor;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.salon = salon;
+        this.ponente = ponente;
     }
 
     // Getters y Setters
@@ -88,19 +118,19 @@ public class ActividadModel {
         this.tipoActividad = tipoActividad;
     }
 
-    public LocalDateTime getHoraInicio() {
+    public LocalTime getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(LocalDateTime horaInicio) {
+    public void setHoraInicio(LocalTime horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public LocalDateTime getHoraFin() {
+    public LocalTime getHoraFin() {
         return horaFin;
     }
 
-    public void setHoraFin(LocalDateTime horaFin) {
+    public void setHoraFin(LocalTime horaFin) {
         this.horaFin = horaFin;
     }
 
@@ -112,11 +142,11 @@ public class ActividadModel {
         this.creadoPor = creadoPor;
     }
 
-    public LocalDateTime getFechaCreacion() {
+    public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+    public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
@@ -126,6 +156,60 @@ public class ActividadModel {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public SalonModel getSalon() {
+        return salon;
+    }
+
+    public void setSalon(SalonModel salon) {
+        this.salon = salon;
+    }
+
+    public UsuarioModel getPonente() {
+        return ponente;
+    }
+
+    public void setPonente(UsuarioModel ponente) {
+        this.ponente = ponente;
+    }
+    
+    
+    
+    public boolean esValido() {
+        return codigo != null && !codigo.isBlank()
+                && nombreActividad != null && !nombreActividad.isBlank()
+                && descripcion != null && !descripcion.isBlank()
+                && horaInicio != null
+                && horaFin != null
+                && !horaFin.isBefore(horaInicio) // La hora de fin no puede ser antes de inicio
+                && tipoActividad != null && !tipoActividad.isBlank()
+                && fechaCreacion != null
+                && fechaInicio != null
+                && fechaFin != null
+                && ( (fechaCreacion.isEqual(fechaInicio) || fechaCreacion.isAfter(fechaInicio)) 
+              && (fechaCreacion.isEqual(fechaFin) || fechaCreacion.isBefore(fechaFin)) );
+    }
+
+    @Override
+    public String toString() {
+        return "ActividadModel{" + "idActividad=" + idActividad + ", codigo=" + codigo + ", idCongreso=" + idCongreso + ", idSalon=" + idSalon + ", nombreActividad=" + nombreActividad + ", descripcion=" + descripcion + ", tipoActividad=" + tipoActividad + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", creadoPor=" + creadoPor + ", fechaCreacion=" + fechaCreacion + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + '}';
     }
     
     

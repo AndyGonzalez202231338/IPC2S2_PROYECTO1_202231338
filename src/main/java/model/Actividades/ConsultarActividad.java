@@ -4,6 +4,7 @@
  */
 package model.Actividades;
 
+import Exceptions.EntityNotFoundException;
 import connection.ActividadesDB;
 import java.util.List;
 
@@ -12,12 +13,9 @@ import java.util.List;
  * @author andy
  */
 public class ConsultarActividad {
-    public List<ActividadModel> obtenerTodasLasActividades(){
-        System.out.println("* se entro a consultarCongreso");
+    public List<ActividadModel> obtenerTodasLasActividades(Long idCongreso) throws EntityNotFoundException {
+        System.out.println("* se entro a Consultar actvidad por id congreso");
         ActividadesDB actividadDb = new ActividadesDB();
-        
-        return actividadDb.obtenerTodasLasActividades();
+        return actividadDb.obtenerTodosLasActividadesPorCongreso(idCongreso);
     }
-    
-    
 }

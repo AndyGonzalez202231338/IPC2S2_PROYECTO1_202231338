@@ -21,6 +21,7 @@
                     <h3 class="titulosh3 text-center mb-4">Formulario de Creación de Actividad</h3>
                     <h3>La actividad creada sera para el congreso ${congreso.nombre}</h3>
                     <h3>con el código ${congreso.codigo}</h3>
+                    <h3>con el id ${congreso.idCongreso}</h3>
                     <!-- Mensajes de backend --> 
                     <c:if test="${not empty error}">
                         <div class="alert alert-danger text-center" role="alert">
@@ -36,26 +37,24 @@
 
                     <form class="crearUsuario" method="POST" action="${pageContext.servletContext.contextPath}/ActividadServlet">
                         <div class="mb-3">
-                            <label for="nombreCongreso" class="form-label">Codigo del Congreso</label>
+                            <label for="nombreCongreso" class="form-label">Codigo de ls Actividad</label>
                             <input type="text" class="form-control" id="codigo" name="codigo" placeholder="ACT-000000" required>
                         </div>
-
-
-                        <input type="hidden" class="form-control" id="idCongreso" name="idCongreso" required>
-                        <input type="hidden" class="form-control" id="creado_por" name="creado_por" required>
-
+                        
+                        <input type="hidden" class="form-control" id="idCongreso" name="idCongreso" value="${congreso.idCongreso}" required>
+                        <input type="hidden" class="form-control" id="codigoCongreso" name="codigoCongreso" value="${congreso.codigo}" required>
 
                         <div class="mb-3">
-    <label for="idSalon" class="form-label">Salón</label>
-    <select class="form-select" id="idSalon" name="idSalon" required>
-        <option value="">-- Selecciona un salón --</option>
-        <c:forEach var="salon" items="${salones}">
-            <option value="${salon.idSalon}">
-                ${salon.nombreSalon} - Capacidad: ${salon.capacidad}
-            </option>
-        </c:forEach>
-    </select>
-</div>
+                            <label for="idSalon" class="form-label">Salón</label>
+                            <select class="form-select" id="idSalon" name="idSalon" required>
+                                <option value="">-- Selecciona un salón --</option>
+                                <c:forEach var="salon" items="${salones}">
+                                    <option value="${salon.idSalon}">
+                                        ${salon.nombreSalon} - Capacidad: ${salon.capacidad}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
 
                         <a href="${pageContext.servletContext.contextPath}/VerSalonServlet?codigo=${congreso.codigo}"
                            class="btn btn-sm btn-outline-info me-2">
@@ -64,12 +63,12 @@
 
                         <div class="mb-3">
                             <label for="nombreCompleto" class="form-label">Nombre de la Actividad</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" 
+                            <input type="text" class="form-control" id="nombreActividad" name="nombreActividad" 
                                    placeholder="Ingrese el nombre de la actividad" required>
                         </div>
                         <div class="mb-3">
                             <label for="tipoCuenta" class="form-label">Tipo de Actividad</label>
-                            <select class="form-select" id="tipoCuenta" name="tipoCuenta">
+                            <select class="form-select" id="tipoActividad" name="tipoActividad">
                                 <option value="PONENCIA" selected>Ponencia</option>
                                 <option value="TALLER">Taller</option>
                             </select>
@@ -111,6 +110,45 @@
 
                 </div>
             </div>
+                           
+            <%-- Lista de Actividades Existentes--%>
+            <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+                <div class="formulariogrande">
+                    <h3 class="mt-5 text-center">Lista de Actividades para este Congreso</h3>
+                    <c:if test="${not empty actividades}">
+                        <c:forEach items="${actividades}" var="actividad">
+                            <div class="card text-white bg-dark mb-3 shadow-lg rounded">
+                                <div class="card-body">
+                                    <h5 class="card-title text-info">${actividad.codigo}</h5>
+                                    <p class="card-text">Salón: <span>${actividad.salon.nombreSalon}</span></p>
+                                    <p class="card-text">Ubicación del Salón: <span>${actividad.salon.ubicacion}</span></p>
+                                    <p class="card-text">Fecha: <span>${actividad.fechaCreacion}</span></p>
+                                    <p class="card-text">Horario: <span>${actividad.horaInicio}</span> a <span>${actividad.horaFin}</span></p>
+                                    <p class="card-text">Ponente: <span>${actividad.ponente.nombreCompleto}</span></p>
+                                    <p class="card-text">Nombre de la Actividad: <span>${actividad.nombreActividad}</span></p>
+                                    <p class="card-text">Tipo de Actividad: <span>${actividad.tipoActividad}</span></p>
+                                    <p class="card-text">Descripcion de Actividad: <span>${actividad.descripcion}</span></p>
+                                    <a href="${pageContext.servletContext.contextPath}/SalonServlet?" 
+                                       class="btn btn-outline-info btn-sm">
+                                        <i class="bi bi-pencil-square"></i>Editar Actividad
+                                    </a>
+                                    <a class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash"></i> Eliminar
+                                    </a>
+                                </div>
+                            </div>
+
+                        </c:forEach>
+			</c:if>
+                    <c:if test="${empty actividades}">
+                        <div class="alert alert-warning text-center mt-3">
+                            No hay salones registrados aún.
+                        </div>
+                    </c:if>
+
+                </div>              
+            </div>               
+            
         </main>
         <jsp:include page="/includes/footer.jsp"/>
     </body>

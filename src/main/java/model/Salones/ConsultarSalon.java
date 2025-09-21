@@ -21,6 +21,17 @@ public class ConsultarSalon {
         return salonDb.obtenerTodosLosSalones();
     }
     
+    public SalonModel obtenerSalonPorIdSalon(Long idCongreso) throws EntityNotFoundException {
+        SalonesDB salonDb = new SalonesDB();
+        SalonModel salon = salonDb.obtenerSalonPorCongreso(idCongreso);
+        if(salon == null){
+            throw new EntityNotFoundException(
+                    String.format("El congreso con id %s no existe", idCongreso)
+            );
+        }
+         return salon;
+    }
+    
     public SalonModel obtenerSalonPorCongresoYNombre(Long idCongreso, String codigo) throws EntityNotFoundException {
         SalonesDB salonDb = new SalonesDB();
         Optional<SalonModel> congresoOpt = salonDb.obtenerSalonPorCongresoYNombre(idCongreso,codigo);
@@ -33,6 +44,7 @@ public class ConsultarSalon {
     }
     
     public List<SalonModel> obtenerTodosLosSalonesPorCongresoYNombre(Long idCongreso) throws EntityNotFoundException {
+        System.out.println("se buscan todos los salones por el congreso");
         SalonesDB salonDb = new SalonesDB();
         
         return salonDb.obtenerTodosLosSalonesPorCongreso(idCongreso);

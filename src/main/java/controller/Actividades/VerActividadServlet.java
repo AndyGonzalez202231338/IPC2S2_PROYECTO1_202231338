@@ -14,11 +14,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Actividades.ActividadModel;
+import model.Actividades.ConsultarActividad;
 import model.Congresos.ActualizadorCongreso;
 import model.Congresos.ConsultarCongreso;
 import model.Salones.ConsultarSalon;
 import model.Salones.SalonModel;
+import model.Usuarios.ConsultarUsuario;
+import model.Usuarios.UsuarioModel;
 
 /**
  *
@@ -26,7 +31,6 @@ import model.Salones.SalonModel;
  */
 @WebServlet(name = "VerActividadServlet", urlPatterns = {"/VerActividadServlet"})
 public class VerActividadServlet extends HttpServlet {
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -43,10 +47,21 @@ public class VerActividadServlet extends HttpServlet {
         String codigo = request.getParameter("codigo");
         ConsultarCongreso consultar = new ConsultarCongreso();
         try {
-            CongresoModel congreso = consultar.obtenerCongresoPorCodigo(codigo); 
+
+            CongresoModel congreso = consultar.obtenerCongresoPorCodigo(codigo);
             request.setAttribute("congreso", congreso);
+            ConsultarActividad consultarActividades = new ConsultarActividad();
+            List<ActividadModel> actividades = consultarActividades.obtenerTodasLasActividades(congreso.getIdCongreso());
             ConsultarSalon consultarSalones = new ConsultarSalon();
-            request.setAttribute("salones", consultarSalones.obtenerTodosLosSalonesPorCongresoYNombre(congreso.getIdCongreso()));
+            ConsultarUsuario consultarUsuarios = new ConsultarUsuario();
+            for (ActividadModel act : actividades) {
+                SalonModel salon = consultarSalones.obtenerSalonPorIdSalon(act.getIdSalon());
+                act.setSalon(salon);
+                UsuarioModel usuario = consultarUsuarios.obtenerUsuarioPorIdUsuario(act.getCreadoPor());
+                act.setPonente(usuario);
+            }
+
+            request.setAttribute("actividades", actividades);
             request.getRequestDispatcher("/Actividad/crear-actividad.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println("no se ecnontro");
@@ -66,7 +81,7 @@ public class VerActividadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**
