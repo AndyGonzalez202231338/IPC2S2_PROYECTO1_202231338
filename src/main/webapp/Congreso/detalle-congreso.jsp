@@ -15,9 +15,40 @@
         <jsp:include page="/includes/resources.jsp"/>
     </head>
     <body>
+        <jsp:include page="/includes/header.jsp"/>
         <main class="containerAdmin mt-5">
-            <jsp:include page="/includes/header.jsp"/>
+            
             <h2 class="text-center mb-4">Detalle del Congreso</h2>
+            
+            <div class="containerAdmin">
+                    <!-- ===== Sección de Features ===== -->
+                    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+                        <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">
+                        <div class="feature col">
+                            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+                            <h3 class="titulosh3">Participantes</h3>
+                            <p>Participantes en el Congreso.</p>
+                            <a href="${pageContext.servletContext.contextPath}/VerParticipanteServlet?idCongreso=${congreso.idCongreso}" class="icon-link">
+                                Ver usuarios <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </div>
+                        </c:if>
+                        
+                        <div class="feature col">
+                            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                                <i class="bi bi-clipboard2-minus"></i>
+                            </div>
+                            <h3 class="titulosh3">Actividades</h3>
+                            <p>Actividades para este congreso.</p>
+                            <a href="${pageContext.servletContext.contextPath}/VerActividadServlet?codigo=${congreso.codigo}" class="icon-link">
+                                Ver actividades <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </div>
+                        
+                    </div>
+                    </div>
 
             <div class="row justify-content-center">
                 <div class="col-md-8">

@@ -28,6 +28,9 @@ public class CongresosDB {
     private static final String ENCONTRAR_CONGRESO_POR_ID_QUERY = 
         "SELECT * FROM Congreso WHERE codigo = ?";
     
+    private static final String ENCONTRAR_CONGRESO_POR_IDCONGRESO_QUERY = 
+        "SELECT * FROM Congreso WHERE idCongreso = ?";
+    
     private static final String OBTENER_TODOS_CONGRESOS_QUERY = 
         "SELECT * FROM Congreso";
     
@@ -174,6 +177,57 @@ public void actualizarCongreso(CongresoModel congreso) {
     }
 }
 
+public CongresoModel obtenerCongresoPorIdCongreso(Long idCongreso) {
+        System.out.println("+se busca el congreso por codigo");
+        Connection connection = DBConnectionSingleton.getInstance().getConnection();
+        try (PreparedStatement query = connection.prepareStatement(ENCONTRAR_CONGRESO_POR_IDCONGRESO_QUERY)) {
+            query.setLong(1, idCongreso);
+            ResultSet rs = query.executeQuery();
+            
+            if (rs.next()) {
+                System.out.println("lo encuentra y lo busca");
+                //return mapResultSetToCongreso(rs);
+                CongresoModel congreso = new CongresoModel(
+                    rs.getLong("idCongreso"),
+                    rs.getString("codigo"),
+                    rs.getString("nombre"),
+                    rs.getString("descripcion"),
+                    rs.getDate("fechaInicio").toLocalDate(),
+                    rs.getDate("fechaFin").toLocalDate(),
+                    rs.getString("lugar"),
+                    rs.getDouble("precio"),
+                    rs.getTimestamp("fechaCreacion").toLocalDateTime(),
+                    rs.getDouble("porcentajeGanancia")
+                );
+                congreso.setRecaudado(rs.getDouble("recaudado"));
+                return congreso;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("no existe el congreso");
+        return null;
+    }
+    
+public void actualizarCartera(CongresoModel congreso) {
 
+    String sql = "UPDATE Congreso SET recaudado = ? WHERE idCongreso = ?";
+    Connection connection = DBConnectionSingleton.getInstance().getConnection();
+
+    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        stmt.setDouble(1, congreso.getRecaudado());
+        stmt.setLong(2, congreso.getIdCongreso());
+
+        int filas = stmt.executeUpdate();
+        if (filas > 0) {
+            System.out.println("Recaudacion actualizada correctamente para: " + congreso.getIdCongreso());
+        } else {
+            System.out.println("No se encontró usuario con correo: " + congreso.getIdCongreso());
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 
 }

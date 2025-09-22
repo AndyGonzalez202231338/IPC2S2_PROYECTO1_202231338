@@ -34,4 +34,14 @@ public class ConsultarCongreso {
          return congresoOpt.get();
     }
     
+    public CongresoModel obtenerCongresoPorIdCongreso(Long idCongreso) throws EntityNotFoundException {
+        CongresosDB congresoDb = new CongresosDB();
+        CongresoModel congreso = congresoDb.obtenerCongresoPorIdCongreso(idCongreso);
+        if(congreso == null){
+            throw new EntityNotFoundException(
+                    String.format("El congreso con codigo %s no existe", idCongreso)
+            );
+        }
+         return congreso;
+    }
 }

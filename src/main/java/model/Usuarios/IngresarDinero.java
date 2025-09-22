@@ -1,9 +1,12 @@
 package model.Usuarios;
 
 import Exceptions.EntityNotFoundException;
+import Exceptions.ParticipacionDataInvalidException;
 import Exceptions.UserDataInvalidException;
 import connection.UsuariosDB;
 import jakarta.servlet.http.HttpServletRequest;
+import model.Congresos.CongresoModel;
+import model.Congresos.ConsultarCongreso;
 
 public class IngresarDinero {
 
@@ -36,6 +39,39 @@ public class IngresarDinero {
         usuario.setCartera(usuario.getCartera() + monto);
 
         // Guardar en DB
+        db.actualizarCartera(usuario);
+
+        return usuario;
+    }
+    
+    public UsuarioModel descontarDineroUsuario(HttpServletRequest request) 
+            throws UserDataInvalidException, EntityNotFoundException {
+        System.out.println("///// dsecontar dienro usaurio");
+        String id = request.getParameter("idUsuario");
+        System.out.println("idUsario."+id);
+        ConsultarUsuario usarioConsultar = new ConsultarUsuario();
+        UsuarioModel usuario = usarioConsultar.obtenerUsuarioPorIdUsuario(Long.valueOf(request.getParameter("idUsuario")));
+        
+        System.out.println("usuario que se insribe"+usuario.toString());
+        if (usuario.getCartera() == null) usuario.setCartera(0.0);
+        
+        ConsultarCongreso congresoConsultar = new ConsultarCongreso();
+        CongresoModel congreso = congresoConsultar.obtenerCongresoPorIdCongreso(Long.valueOf(request.getParameter("idCongreso")));
+        System.out.println("congreso al que se inscribe"+congreso.toString());
+        Double precioCongreso = congreso.getPrecio();
+        
+        Double carteraActual = usuario.getCartera();
+        
+         if(carteraActual < precioCongreso){
+             throw new UserDataInvalidException("No cuentas con el dinero suficiente para inscribirte al Congreso");
+         }
+
+        // Agregar dinero
+        
+        usuario.setCartera(usuario.getCartera() - congreso.getPrecio());
+
+        // Guardar en DB
+        UsuariosDB db = new UsuariosDB();
         db.actualizarCartera(usuario);
 
         return usuario;

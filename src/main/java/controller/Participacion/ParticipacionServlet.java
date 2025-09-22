@@ -2,16 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.Congresos;
+package controller.Participacion;
 
-import Exceptions.ActividadDataInvalidException;
 import Exceptions.CongresoDataInvalidException;
 import Exceptions.EntityAlreadyExistsException;
 import Exceptions.EntityNotFoundException;
-import org.apache.commons.lang3.StringUtils;
-import model.Congresos.CongresoModel;
-import model.Congresos.ConsultarCongreso;
-import model.Congresos.CreadorCongresos;
+import Exceptions.ParticipacionDataInvalidException;
+import Exceptions.UserDataInvalidException;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -19,16 +16,21 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.Usuarios.UsuarioModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Congresos.CongresoModel;
+import model.Congresos.ConsultarCongreso;
+import model.Participacion.CreadorParticipaciones;
+import model.Participacion.ParticipacionModel;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author andy
  */
-@WebServlet(name = "CongresoServlet", urlPatterns = {"/CongresoServlet"})
-public class CongresoServlet extends HttpServlet {
+@WebServlet(name = "ParticipacionServlet", urlPatterns = {"/ParticipacionServlet"})
+public class ParticipacionServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -40,27 +42,23 @@ public class CongresoServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ConsultarCongreso consultaCongresos = new ConsultarCongreso();
-        if (obtenerTodos(request)) {
-            List<CongresoModel> lista = consultaCongresos.obtenerTodosLosCongresos();
-            System.out.println("Cantidad de congresos encontrados: " + lista.size());
-            
-            request.setAttribute("congresos", consultaCongresos.obtenerTodosLosCongresos());
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Congreso/lista-congresos.jsp");
-            dispatcher.forward(request, response);
-        } else {
-            System.out.println("se entro por ");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        ConsultarCongreso consultarCongresos = new ConsultarCongreso();
+        String idCongresoStr = request.getParameter("idCongreso");
+                Long idCongreso = Long.valueOf(idCongresoStr);
             try {
-                CongresoModel congreso = consultaCongresos.obtenerCongresoPorCodigo(request.getParameter("codigo"));
+                
+                CongresoModel congreso = consultarCongresos.obtenerCongresoPorIdCongreso(idCongreso);
                 request.setAttribute("congreso", congreso);
             } catch (EntityNotFoundException e) {
                 request.setAttribute("error", e.getMessage());
             }
-            RequestDispatcher dispatcher = getServletContext()
-                    .getRequestDispatcher("/Congreso/congreso-actualizar.jsp");
+
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Participacion/participacion.jsp");
             dispatcher.forward(request, response);
-        }
+        
+
     }
 
     /**
@@ -74,16 +72,16 @@ public class CongresoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CreadorCongresos creadorCongresos = new CreadorCongresos();
+        CreadorParticipaciones creadorParticipacion = new CreadorParticipaciones();
 
         try {
-            CongresoModel congresoCreado = creadorCongresos.crearEvento(request);
-            
-            request.setAttribute("congresoCreado", congresoCreado);
-        } catch (CongresoDataInvalidException | EntityAlreadyExistsException e) {
+            ParticipacionModel participacionCreada = creadorParticipacion.crearParticipacion(request);
+
+            request.setAttribute("participacion", participacionCreada);
+        } catch (ParticipacionDataInvalidException | EntityAlreadyExistsException | EntityNotFoundException | UserDataInvalidException | CongresoDataInvalidException e) {
             request.setAttribute("error", e.getMessage());
         }
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Congreso/congreso.jsp");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Participacion/participacion.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -96,9 +94,9 @@ public class CongresoServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
     private boolean obtenerTodos(HttpServletRequest request) {
-        System.out.println("entro a obtenerTodos los congresos");
-        return StringUtils.isBlank(request.getParameter("codigo"));
+        return StringUtils.isBlank(request.getParameter("lista"));
     }
+
 }

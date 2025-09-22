@@ -16,7 +16,8 @@
     <body>
         <main>
             <jsp:include page="/includes/header.jsp"/>
-
+            <a href="lista-congresos.jsp"></a>
+            <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">
             <!-- TABLA DE CONGRESOS EXISTENTES -->
             <div class="containerAdmin mt-5">
                 <h3 class="titulosh3 text-center mb-4">Congresos Registrados</h3>
@@ -60,6 +61,35 @@
                         </c:forEach>
                     </tbody>
                 </table>
+                </c:if>
+                <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('NORMAL')}">
+                    <h3 class="mt-5 text-center">Registrate en un Congreso</h3>
+                    <h4>Saldo en la cuenta: ${usuarioLogueado.cartera}</h4>
+                    <c:if test="${not empty congresos}">
+                        <c:forEach items="${congresos}" var="congreso">
+                            <div class="card text-white bg-dark mb-3 shadow-lg rounded">
+                                <div class="card-body">
+                                    <h5 class="card-title text-info">${congreso.nombre}</h5>
+                                    <p class="card-text">Fecha Inicio: <span>${congreso.fechaInicio}</span></p>
+                                    <p class="card-text">Fecha Fin: <span>${congreso.fechaFin}</span></p>
+                                    <p class="card-text">Lugar: <span>${congreso.lugar}</span></p>
+                                    <p class="card-text">Precio: <span>$${congreso.precio}</span></p>
+                                    <p class="card-text">Descripción: <span>${congreso.descripcion}</span></p>
+                                    <a href="${pageContext.servletContext.contextPath}/VerActividadServlet?codigo=${congreso.codigo}" 
+                                       class="btn btn-sm btn-outline-info me-2">
+                                        <i class="bi bi-card-list"></i> Ver las Actividades
+                                    </a>
+                                    <a href="${pageContext.servletContext.contextPath}/ParticipacionServlet?idCongreso=${congreso.idCongreso}" 
+                                       class="btn btn-sm btn-outline-info me-2">
+                                        <i class="bi bi-card-list"></i> Inscribirse
+                                    </a>
+                                </div>
+                            </div>
+
+                        </c:forEach>
+			</c:if>
+                </c:if>
+                
                 <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('NORMAL')}">
                     <div class="mt-4 text-center">
                         <a href="${pageContext.servletContext.contextPath}/Home/home-admin.jsp"
