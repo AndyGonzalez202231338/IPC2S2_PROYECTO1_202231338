@@ -5,6 +5,7 @@
 package connection;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,7 +25,7 @@ public class ActividadesDB {
     // Crear nueva actividad
 
     private static final String CREAR_ACTIVIDAD_QUERY
-            = "INSERT INTO Actividad (codigo, idCongreso, idSalon, nombreActividad, descripcion, tipoActividad, horaInicio, horaFin, creado_por) VALUES (?,?,?,?,?,?,?,?,?)";
+            = "INSERT INTO Actividad (codigo, idCongreso, idSalon, nombreActividad, descripcion, tipoActividad, horaInicio, horaFin, creado_por, fechaCreacion) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
 // Buscar actividad por ID
     private static final String ENCONTRAR_ACTIVIDAD_POR_ID_QUERY
@@ -58,7 +59,7 @@ public class ActividadesDB {
             insert.setTime(7, java.sql.Time.valueOf(actividad.getHoraInicio()));
             insert.setTime(8, java.sql.Time.valueOf(actividad.getHoraFin()));
             insert.setLong(9, actividad.getCreadoPor());               // creado_por
-
+            insert.setDate(10, Date.valueOf(actividad.getFechaCreacion()));
             insert.executeUpdate();
             System.out.println("*** Actividad creada correctamente");
         } catch (Exception e) {

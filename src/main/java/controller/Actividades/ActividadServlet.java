@@ -5,13 +5,9 @@
 package controller.Actividades;
 
 import Exceptions.ActividadDataInvalidException;
-import Exceptions.CongresoDataInvalidException;
 import Exceptions.EntityAlreadyExistsException;
 import Exceptions.EntityNotFoundException;
 import org.apache.commons.lang3.StringUtils;
-import model.Congresos.CongresoModel;
-import model.Congresos.ConsultarCongreso;
-import model.Congresos.CreadorCongresos;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -19,12 +15,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.List;
 import model.Actividades.ActividadModel;
 import model.Actividades.ConsultarActividad;
 import model.Actividades.CreadorActividades;
-import model.Usuarios.UsuarioModel;
+
 
 /**
  *

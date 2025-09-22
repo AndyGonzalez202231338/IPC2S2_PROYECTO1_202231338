@@ -259,6 +259,7 @@ public UsuarioModel obtenerUsuarioPorIdUsuario(Long idUsuario){
                 );
                 usuario.setId(rs.getInt("idUsuario"));
                 usuario.setFechaRegistro(rs.getTimestamp("fechaRegistro").toLocalDateTime());
+                usuario.setCartera(rs.getDouble("cartera"));
                 return usuario;
             }
         } catch (SQLException e) {
