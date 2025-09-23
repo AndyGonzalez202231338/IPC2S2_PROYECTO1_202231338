@@ -24,10 +24,25 @@ public class CongresoModel {
     private Double recaudado;
     private LocalDateTime fechaCreacion;
     private Double cartera;
-
+    /**
+     * vacio
+     */
     public CongresoModel() {
     }
-
+    
+    /**
+     * Congreso creado 
+     * @param idCongreso auto
+     * @param codigo cod
+     * @param nombre congreso
+     * @param descripcion del congreso
+     * @param fechaInicio dais
+     * @param fechaFin dias
+     * @param lugar donde se realiza
+     * @param precio de inscripcion
+     * @param fechaCreacion de congreso
+     * @param porcentajeGanancia dad en su cosntruccion
+     */
     public CongresoModel(Long idCongreso, String codigo, String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, String lugar, Double precio, LocalDateTime fechaCreacion,Double porcentajeGanancia) {
         this.idCongreso = idCongreso;
         this.codigo = codigo;

@@ -16,7 +16,14 @@ public class ParticipacionModel {
     private Long idCongreso;
     private String tipoParticipacion;
     private LocalDateTime fechaRegistro;
-
+    /**
+     * Una inscripcion
+     * @param idParticipacion se crea solo
+     * @param idUsuario que se iscribe
+     * @param idCongreso al que se isncribe
+     * @param tipoParticipacion en el congreso
+     * @param fechaRegistro de isncripcion
+     */
     public ParticipacionModel(Long idParticipacion, Long idUsuario, Long idCongreso, String tipoParticipacion, LocalDateTime fechaRegistro) {
         this.idParticipacion = idParticipacion;
         this.idUsuario = idUsuario;

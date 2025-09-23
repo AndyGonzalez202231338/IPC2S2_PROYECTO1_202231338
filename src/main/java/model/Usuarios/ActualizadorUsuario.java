@@ -15,11 +15,19 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 
 /**
- *
+ *Actualizar un suario
  * @author andy
  */
 public class ActualizadorUsuario {
-
+    /**
+     * Actualizar con nueva inofrmaocio
+     * @param request jsp actualizar 
+     * @return un usario con cambios
+     * @throws UserDataInvalidException mala infroamcion
+     * @throws EntityNotFoundException ya existe
+     * @throws IOException x
+     * @throws ServletException x
+     */
     public UsuarioModel actualizar(HttpServletRequest request) throws UserDataInvalidException, EntityNotFoundException, IOException, ServletException{
         UsuariosDB usuariosDB = new UsuariosDB();
 
@@ -43,7 +51,14 @@ public class ActualizadorUsuario {
 
         return usuario;
     }
-
+    /**
+     * extraer de la request
+     * @param request jsp actualizar
+     * @return objeto usario
+     * @throws UserDataInvalidException mala inforam
+     * @throws IOException x
+     * @throws ServletException x
+     */
     private UsuarioModel extraer(HttpServletRequest request) throws UserDataInvalidException, IOException, ServletException {
         try {
             // Obtener la fecha/hora como string

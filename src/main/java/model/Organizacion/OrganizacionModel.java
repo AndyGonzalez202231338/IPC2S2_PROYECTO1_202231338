@@ -11,7 +11,11 @@ package model.Organizacion;
 public class OrganizacionModel {
     private Long idOrganizacion;
     private String nombre;
-
+/**
+ * instituciones
+ * @param idOrganizacion atuo
+ * @param nombre de la institucion
+ */
     public OrganizacionModel(Long idOrganizacion, String nombre) {
         this.idOrganizacion = idOrganizacion;
         this.nombre = nombre;

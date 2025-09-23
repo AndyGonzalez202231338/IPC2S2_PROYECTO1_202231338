@@ -14,6 +14,13 @@ import jakarta.servlet.http.HttpServletRequest;
  * @author andy
  */
 public class RecaudarDinero {
+    /**
+     * Aumenta el recaudo de un congreso cuando se iscriben
+     * @param request de inscripcion jsp
+     * @return un congres cambiado
+     * @throws CongresoDataInvalidException x
+     * @throws EntityNotFoundException x
+     */
     public CongresoModel recaudarDineroParticipancion(HttpServletRequest request)throws CongresoDataInvalidException, EntityNotFoundException {
         System.out.println("-----------recaudar dienro");
         ConsultarCongreso congresoConsultar = new ConsultarCongreso();

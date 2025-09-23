@@ -30,7 +30,10 @@ public class InscripcionesTalleresDB {
     
     private static final String Asistencia = "UPDATE InscripcionTaller SET asistencia = 1 " +
              "WHERE idUsuario = ? AND idActividad = ?";
-    
+    /**
+     * crear o insert
+     * @param inscripcionTaller inscripcion actividad
+     */
     public void crearInscripcionTaller(InscripcionTallerModel inscripcionTaller) {
         System.out.println("*** Creando participante en la base de datos");
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -44,7 +47,12 @@ public class InscripcionesTalleresDB {
             e.printStackTrace();
         }
     }
-    
+    /**
+     * Taller por id usario y actividad
+     * @param idUsuario user
+     * @param idActividad a la que se iscribe
+     * @return inscripcion valida
+     */
     public InscripcionTallerModel encontrarInscripcionTallerPorIdUsuarioIdActividad(Long idUsuario, Long idActividad) {
         System.out.println("+se busca el congreso por codigo");
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -70,7 +78,11 @@ public class InscripcionesTalleresDB {
         System.out.println("no existe el congreso");
         return null;
     }
-    
+    /**
+     * Todas las insripciones a una catividad
+     * @param idActividad filtra
+     * @return lsita
+     */
     public List<InscripcionTallerModel> obtenerTodosLasInscripcionesTallerPorIdActividad(Long idActividad) {
         System.out.println("+ Buscando actividades del congreso id = " + idActividad);
     List<InscripcionTallerModel> inscripcionesTaller = new ArrayList<>();
@@ -100,7 +112,11 @@ public class InscripcionesTalleresDB {
         }
         return inscripcionesTaller;
     }
-    
+    /**
+     * buscar su cupo
+     * @param idActividad taller
+     * @return cantidad
+     */
     public Integer obtenerCupoMaximo(Long idActividad) {
     String sql = "SELECT cupoMaximo FROM Taller WHERE idActividad = ?";
     Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -116,7 +132,11 @@ public class InscripcionesTalleresDB {
     return null; // o lanzar excepción si no existe
 }
 
-    
+    /**
+     * buscar cantidad de isncritos
+     * @param idActividad taller
+     * @return cantidad
+     */
     public Integer contarInscritos(Long idActividad) {
     String sql = "SELECT COUNT(*) AS total FROM InscripcionTaller WHERE idActividad = ?";
     Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -131,7 +151,11 @@ public class InscripcionesTalleresDB {
     }
     return 0;
 }
-    
+    /**
+     * registrar una asisatencia
+     * @param idUsuario participante
+     * @param idActividad taller
+     */
     public void confirmarAsistencia(Long idUsuario, Long idActividad) {
     Connection connection = DBConnectionSingleton.getInstance().getConnection();
     try (PreparedStatement query = connection.prepareStatement(Asistencia)) {

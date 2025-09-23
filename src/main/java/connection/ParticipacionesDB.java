@@ -27,7 +27,10 @@ public class ParticipacionesDB {
     
     private static final String PARTICIPANTES_POR_IDCONGRESO_QUERY
             = "SELECT * FROM Participacion WHERE idCongreso = ?";
-    
+    /**
+     * insert una participacion
+     * @param participacion user
+     */
     public void crearParticipacion(ParticipacionModel participacion) {
         System.out.println("*** Creando participante en la base de datos");
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -42,7 +45,12 @@ public class ParticipacionesDB {
             e.printStackTrace();
         }
     }
-    
+    /**
+     * encotrar una particpacion en DB
+     * @param idUsuario particpante
+     * @param idCongreso isnrito
+     * @return 
+     */
     public ParticipacionModel encontrarParticipacionPorIdUsuarioIdCongreso(Long idUsuario, Long idCongreso) {
         System.out.println("+se busca el congreso por codigo");
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -68,7 +76,11 @@ public class ParticipacionesDB {
         System.out.println("no existe el congreso");
         return null;
     }
-    
+    /**
+     * todos los particpante a un
+     * @param idCongreso congreso
+     * @return list
+     */
     public List<ParticipacionModel> obtenerParticipacionPorCongreso(Long idCongreso){
         List<ParticipacionModel> participantes = new ArrayList<>();
         Connection connection = DBConnectionSingleton.getInstance().getConnection();

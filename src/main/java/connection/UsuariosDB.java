@@ -35,9 +35,10 @@ public class UsuariosDB {
             = "SELECT * FROM Usuario";
 
     private static final String ACTUALIZAR_USUARIO_QUERY
-            = "UPDATE Usuario SET nombreCompleto = ?, telefono = ?, "
-            + "numeroIdentificacion = ?, contrasena = ?, tipoCuenta = ?, foto = ?, idOrganizacion = ?"
-            + "WHERE correo = ?";
+    = "UPDATE Usuario SET nombreCompleto = ?, telefono = ?, "
+    + "numeroIdentificacion = ?, contrasena = ?, tipoCuenta = ?, foto = ?, idOrganizacion = ? "
+    + "WHERE correo = ?";
+
 
     /**
      * Inserta un nuevo usuario en la base de datos
@@ -176,30 +177,34 @@ public class UsuariosDB {
     }
 
     public void actualizarUsuarioPorCorreo(UsuarioModel usuario) {
-        Connection connection = DBConnectionSingleton.getInstance().getConnection();
-        try (PreparedStatement update = connection.prepareStatement(ACTUALIZAR_USUARIO_QUERY)) {
-            update.setString(1, usuario.getNombreCompleto());
-            update.setString(2, usuario.getTelefono());
-            update.setString(3, usuario.getNumeroIdentificacion());
-            update.setString(4, usuario.getContrasena());
-            update.setString(5, usuario.getTipoCuenta());
-            if (usuario.getFoto() != null) {
-                update.setBytes(6, usuario.getFoto());
-            } else {
-                update.setNull(6, java.sql.Types.BLOB);
-            }
-            update.setString(7, usuario.getCorreo()); // condición WHERE
-            update.setLong(8, usuario.getOrganizacion());
-            int filasAfectadas = update.executeUpdate();
-            if (filasAfectadas > 0) {
-                System.out.println("Congreso actualizado correctamente: " + usuario.getCorreo());
-            } else {
-                System.out.println("No se encontró el congreso con código: " + usuario.getCorreo());
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    Connection connection = DBConnectionSingleton.getInstance().getConnection();
+    try (PreparedStatement update = connection.prepareStatement(ACTUALIZAR_USUARIO_QUERY)) {
+        update.setString(1, usuario.getNombreCompleto());
+        update.setString(2, usuario.getTelefono());
+        update.setString(3, usuario.getNumeroIdentificacion());
+        update.setString(4, usuario.getContrasena()); // Aquí ya debe venir en Base64
+        update.setString(5, usuario.getTipoCuenta());
+        
+        if (usuario.getFoto() != null) {
+            update.setBytes(6, usuario.getFoto());
+        } else {
+            update.setNull(6, java.sql.Types.BLOB);
         }
+
+        update.setLong(7, usuario.getOrganizacion());
+        update.setString(8, usuario.getCorreo()); // condición WHERE
+
+        int filasAfectadas = update.executeUpdate();
+        if (filasAfectadas > 0) {
+            System.out.println("Usuario actualizado correctamente: " + usuario.getCorreo());
+        } else {
+            System.out.println("No se encontró el usuario con correo: " + usuario.getCorreo());
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
+
     
     /**
  * Actualiza la cartera de un usuario en la base de datos usando su correo.
@@ -266,6 +271,26 @@ public UsuarioModel obtenerUsuarioPorIdUsuario(Long idUsuario){
         System.out.println("no existe el salon");
         return null;
     }
+    
+public void actualizarContrasena(Integer idUsuario, String nuevaContrasena) {
+    String sql = "UPDATE Usuario SET contrasena = ? WHERE idUsuario = ?";
+    try (Connection connection = DBConnectionSingleton.getInstance().getConnection();
+         PreparedStatement ps = connection.prepareStatement(sql)) {
+        
+        ps.setString(1, nuevaContrasena);
+        ps.setInt(2, idUsuario);
+        int filas = ps.executeUpdate();
+        
+        if (filas > 0) {
+            System.out.println("Contraseña actualizada correctamente para el usuario con ID " + idUsuario);
+        } else {
+            System.out.println("No se encontró el usuario con ID " + idUsuario + " para actualizar contraseña.");
+        }
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
 
     
 }

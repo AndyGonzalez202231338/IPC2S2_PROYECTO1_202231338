@@ -26,7 +26,10 @@ public class TalleresDB {
     
     private static final String ENCONTRAR_TALLERES_POR_IDACTIVIDAD_QUERY
             = "SELECT idActividad, cupoMaximo FROM Taller WHERE idActividad = ?";
-    
+    /**
+     * insert de taller
+     * @param taller activdad
+     */
     public void crearTaller(TallerModel taller) {
         System.out.println("*** Creando actividad en la base de datos");
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -40,7 +43,11 @@ public class TalleresDB {
             e.printStackTrace();
         }
     }
-    
+    /**
+     * Ecnotrar por idActivdad
+     * @param idActividad Taller
+     * @return taller
+     */
     public TallerModel encontrarActividadTallerPorId(Long idActividad) {
         System.out.println("+se busca el congreso por codigo");
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -62,7 +69,11 @@ public class TalleresDB {
         System.out.println("no existe el congreso");
         return null;
     }
-    
+    /**
+     * Tofos los salones por una
+     * @param idActividad activdidad
+     * @return list
+     */
     public List<TallerModel> obtenerTodosLasActividadesPorCongreso(Long idActividad) {
         System.out.println("+ Buscando actividades del congreso id = " + idActividad);
     List<TallerModel> talleres = new ArrayList<>();
@@ -90,6 +101,11 @@ public class TalleresDB {
         return talleres;
     }
     
+    /**
+     * un solo taller por su activdad
+     * @param idActividad activdida
+     * @return taller
+     */
     public TallerModel obtenerTallerPorIdActividad(Long idActividad){
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
         try (PreparedStatement query = connection.prepareStatement(ENCONTRAR_TALLERES_POR_IDACTIVIDAD_QUERY)) {

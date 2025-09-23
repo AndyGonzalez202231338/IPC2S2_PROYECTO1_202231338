@@ -94,12 +94,13 @@
                         <!-- Cambio de tipo de cuenta para solo administradores -->
                         <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">
                             <div class="mb-3">
-                                <label for="tipoCuenta" class="form-label">Tipo de Cuenta</label>
-                                <select class="form-select" id="tipoCuenta" name="tipoCuenta">
-                                    <option value="NORMAL" selected>Normal</option>
-                                    <option value="ADMIN">Admin</option>
-                                </select>
-                            </div>
+                            <label for="tipoCuenta" class="form-label">Tipo de Cuenta</label>
+                            <select class="form-select" id="tipoCuenta" name="tipoCuenta">
+                                <option value="NORMAL" selected>Normal</option>
+                                <option value="ADMIN">Admin</option>
+                                <option value="ADMINCONGRESO">Administrador Congreso</option>
+                            </select>
+                        </div>
                         </c:if>
                         <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('NORMAL')}">
                             <input type="hidden" class="form-control" id="tipoCuenta" name="tipoCuenta" value="${usuario.tipoCuenta}" required>

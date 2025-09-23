@@ -43,7 +43,18 @@ public class UsuarioModel {
         this.tipoCuenta = tipoCuenta;
         this.organizacion = organizacion;
     }
-
+    /**
+     * 
+     * @param id user
+     * @param nombreCompleto usario
+     * @param correo unico
+     * @param telefono del usario
+     * @param numeroIdentificacion enn numeros y letras
+     * @param contrasena encripatada
+     * @param fechaRegistro cuadno se cero
+     * @param tipoCuenta admin. ect
+     * @param organizacion a la que pertenece
+     */
     public UsuarioModel(Integer id, String nombreCompleto, String correo, String telefono, String numeroIdentificacion, String contrasena, LocalDateTime fechaRegistro, String tipoCuenta, Long organizacion) {
         this.id = id;
         this.nombreCompleto = nombreCompleto;

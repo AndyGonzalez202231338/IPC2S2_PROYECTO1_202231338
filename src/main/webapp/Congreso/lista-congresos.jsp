@@ -17,7 +17,7 @@
         <main>
             <jsp:include page="/includes/header.jsp"/>
             <a href="lista-congresos.jsp"></a>
-            <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">
+            <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN') || usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMINCONGRESO')}">
             <!-- TABLA DE CONGRESOS EXISTENTES -->
             <div class="containerAdmin mt-5">
                 <h3 class="titulosh3 text-center mb-4">Congresos Registrados</h3>
@@ -46,7 +46,7 @@
                                        class="btn btn-sm btn-outline-info me-2">
                                         <i class="bi bi-card-list"></i> Ver mas
                                     </a>
-                                    <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">
+                                    <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN') || usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMINCONGRESO')}">
                                     <a href="${pageContext.servletContext.contextPath}/CongresoServlet?codigo=${congreso.codigo}" 
                                        class="btn btn-sm btn-outline-info me-2">
                                         <i class="bi bi-pencil-square"></i> Editar

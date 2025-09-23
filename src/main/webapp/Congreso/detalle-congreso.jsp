@@ -23,7 +23,7 @@
             <div class="containerAdmin">
                     <!-- ===== Sección de Features ===== -->
                     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-                        <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">
+                        <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMINCONGRESO')}">
                         <div class="feature col">
                             <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
                                 <i class="bi bi-people-fill"></i>
@@ -42,7 +42,7 @@
                             </div>
                             <h3 class="titulosh3">Actividades</h3>
                             <p>Actividades para este congreso.</p>
-                            <a href="${pageContext.servletContext.contextPath}/VerActividadServlet?codigo=${congreso.codigo}" class="icon-link">
+                            <a href="${pageContext.servletContext.contextPath}/VerActividadServlet?codigo=${congreso.codigo}&idCongreso=${congreso.idCongreso}" class="icon-link">
                                 Ver actividades <i class="bi bi-chevron-right"></i>
                             </a>
                         </div>

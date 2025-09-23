@@ -44,7 +44,7 @@
                     <option value="ASISTENTE">Asistente</option>
                     <option value="PONENTE">Ponente</option>
                     <option value="TALLERISTA">Tallerista</option>
-                    <option value="TALLERISTA">Ponente invitado</option>
+                    <option value="PONENTE_INVITADO">Ponente invitado</option>
                     <option value="PARTICIPANTE">Participante</option>
                 </select>
             </div>

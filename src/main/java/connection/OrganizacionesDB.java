@@ -31,7 +31,10 @@ public class OrganizacionesDB {
     
     private static final String ACTUALIZAR_ORGANIZACION_QUERY
             = "UPDATE Organizacion SET nombre = ? WHERE idOrganizacion = ?";
-    
+    /**
+     * insert organzacion
+     * @param organizacion crear
+     */
     public void crearOrganizacion(OrganizacionModel organizacion) {
     System.out.println("se crea organ " + organizacion.getNombre());
     Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -49,7 +52,11 @@ public class OrganizacionesDB {
     }
 }
 
-    
+    /**
+     * buscar una org por name
+     * @param nombre de la org
+     * @return organizacion creada
+     */
     public OrganizacionModel encontrarOrganizacionPorNombre(String nombre) {
         System.out.println("nombre"+nombre);
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -70,7 +77,10 @@ public class OrganizacionesDB {
         System.out.println("no existe el congreso");
         return null;
     }
-    
+    /**
+     * todos los organizaciones
+     * @return lista
+     */
     public List<OrganizacionModel> obtenerTodasLasOrganizaciones() {
         System.out.println("nuevo modelo de obtener todos");
         List<OrganizacionModel> orgniazaciones = new ArrayList<>();
@@ -92,6 +102,10 @@ public class OrganizacionesDB {
         return orgniazaciones;
     }
     
+    /**
+     * Actualziar o cambiar infro en organizacion
+     * @param organizacion a cambiar
+     */
     public void actualizarOrganizacion(OrganizacionModel organizacion) {
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
         try (PreparedStatement update = connection.prepareStatement(ACTUALIZAR_ORGANIZACION_QUERY)) {

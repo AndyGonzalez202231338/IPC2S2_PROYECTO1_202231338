@@ -67,6 +67,7 @@
                             <select class="form-select" id="tipoCuenta" name="tipoCuenta">
                                 <option value="NORMAL" selected>Normal</option>
                                 <option value="ADMIN">Admin</option>
+                                <option value="ADMINCONGRESO">Administrador Congreso</option>
                             </select>
                         </div>
                         <div class="d-grid">

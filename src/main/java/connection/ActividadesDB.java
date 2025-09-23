@@ -45,7 +45,10 @@ public class ActividadesDB {
     
     private static final String ENCONTRAR_ACTIVIDADES_POR_IDCONGRESO_QUERY
             = "SELECT * FROM Actividad WHERE idCongreso = ?";
-
+/**
+ * insert
+ * @param actividad creada
+ */
     public void crearActividad(ActividadModel actividad) {
         System.out.println("*** Creando actividad en la base de datos");
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -66,7 +69,10 @@ public class ActividadesDB {
             e.printStackTrace();
         }
     }
-
+    /**
+     * select from de todas las actividades
+     * @return lista de actividades
+     */
     public List<ActividadModel> obtenerTodasLasActividades() {
         System.out.println("nuevo modelo de obtener todos");
         List<ActividadModel> congresos = new ArrayList<>();
@@ -102,7 +108,11 @@ public class ActividadesDB {
         }
         return congresos;
     }
-
+    /**
+     * busca una actividad por un codigo de actividad
+     * @param codigo activdiad
+     * @return actividad en DB
+     */
     public ActividadModel encontrarActividadPorId(String codigo) {
         System.out.println("+se busca el congreso por codigo");
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -133,7 +143,14 @@ public class ActividadesDB {
         System.out.println("no existe el congreso");
         return null;
     }
-    
+    /**
+     * valida dia hora y activdad
+     * @param idSalon a buscar
+     * @param fecha del dia
+     * @param horaInicio que no coincida
+     * @param horaFin que no coincida
+     * @return info
+     */
     public boolean salonDisponible(Long idSalon, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin) {
     System.out.println("*** Verificando disponibilidad del salón " + idSalon);
     Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -162,7 +179,11 @@ public class ActividadesDB {
     }
     return false; // Si hubo error, mejor devolver no disponible
 }
-    
+    /**
+     * Obtener todo por congreso
+     * @param idCongreso confreso
+     * @return lista
+     */
     public List<ActividadModel> obtenerTodosLasActividadesPorCongreso(Long idCongreso) {
         System.out.println("+ Buscando actividades del congreso id = " + idCongreso);
     List<ActividadModel> actividades = new ArrayList<>();

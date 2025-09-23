@@ -14,7 +14,13 @@ import jakarta.servlet.http.HttpServletRequest;
  * @author andy
  */
 public class CreadorSalones {
-
+    /**
+     * Crar salones en DB
+     * @param request crear-salon
+     * @return objetos salon
+     * @throws SalonDataInvalidException
+     * @throws EntityAlreadyExistsException 
+     */
     public SalonModel crearSalon(HttpServletRequest request) throws SalonDataInvalidException, EntityAlreadyExistsException {
         SalonesDB salonesDB = new SalonesDB();
 

@@ -16,7 +16,7 @@
     <body>
         <main>
             <jsp:include page="/includes/header.jsp"/>
-            <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">
+            <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMINCONGRESO') || usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">
                 <div class="containerAdmin">
                     <!-- ===== Sección de Features ===== -->
                     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
@@ -36,7 +36,7 @@
                             </div>
                             <h3 class="titulosh3">Participantes</h3>
                             <p>Participantes en el Congreso.</p>
-                            <a href="${pageContext.servletContext.contextPath}/VerUsuarioServlet?correo=${usuarioLogueado.correo}" class="icon-link">
+                            <a href="${pageContext.servletContext.contextPath}/VerParticipanteServlet?idCongreso=${congreso.idCongreso}" class="icon-link">
                                 Ver usuarios <i class="bi bi-chevron-right"></i>
                             </a>
                         </div>
@@ -54,7 +54,7 @@
                 </div>
             </c:if>          
 
-            <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">                
+            <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMINCONGRESO') || usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">                
                 <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
                     <div class="formulariogrande">
                         <h3 class="titulosh3 text-center mb-4">Formulario de Creación de Actividad</h3>
@@ -178,7 +178,7 @@
                                         <p class="card-text">Cupo maximo: <span>${actividad.taller.cupoMaximo}</span></p>
                                     </c:if>
                                     <p class="card-text">Descripcion de Actividad: <span>${actividad.descripcion}</span></p>
-                                    <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">
+                                    <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMINCONGRESO')}">
                                         <a href="${pageContext.servletContext.contextPath}/InscribirseTallerServlet?listado=1&idActividad=${actividad.idActividad}" 
                                            class="btn btn-outline-info btn-sm">
                                             <i class="bi bi-people-fill"></i>Ver Inscritos

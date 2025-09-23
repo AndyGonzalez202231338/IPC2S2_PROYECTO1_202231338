@@ -11,7 +11,11 @@ package model.Actividades;
 public class TallerModel {
     private Long idActividad;
     private Integer cupoMaximo;
-
+    /**
+     * Taller
+     * @param idActividad a la que perteace
+     * @param cupoMaximo por taller
+     */
     public TallerModel(Long idActividad, Integer cupoMaximo) {
         this.idActividad = idActividad;
         this.cupoMaximo = cupoMaximo;

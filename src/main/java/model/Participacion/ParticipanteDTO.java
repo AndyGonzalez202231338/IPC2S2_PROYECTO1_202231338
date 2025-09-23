@@ -14,7 +14,13 @@ public class ParticipanteDTO {
     private String nombreCompleto;
     private String correo;
     private String tipoParticipacion;
-
+    /**
+     * Construccion de inforamcion por dos tablas
+     * @param idUsuario us
+     * @param nombreCompleto usario
+     * @param correo usario
+     * @param tipoParticipacion de la tabla participacion
+     */
     public ParticipanteDTO(Integer idUsuario, String nombreCompleto, String correo, String tipoParticipacion) {
         this.idUsuario = idUsuario;
         this.nombreCompleto = nombreCompleto;

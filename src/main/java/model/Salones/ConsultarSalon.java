@@ -14,13 +14,22 @@ import java.util.Optional;
  * @author andy
  */
 public class ConsultarSalon {
+    /**
+     * todos los salones de la DB
+     * @return una lisat
+     */
     public List<SalonModel> obtenerTodosLosSalones(){
         System.out.println("* se entro a consultarCongreso");
         SalonesDB salonDb = new SalonesDB();
         
         return salonDb.obtenerTodosLosSalones();
     }
-    
+    /**
+     * un solo salon
+     * @param idCongreso al que pertefcen
+     * @return salon
+     * @throws EntityNotFoundException x
+     */
     public SalonModel obtenerSalonPorIdSalon(Long idCongreso) throws EntityNotFoundException {
         SalonesDB salonDb = new SalonesDB();
         SalonModel salon = salonDb.obtenerSalonPorCongreso(idCongreso);

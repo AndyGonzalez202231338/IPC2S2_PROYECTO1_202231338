@@ -71,6 +71,8 @@ public class VerActividadServlet extends HttpServlet {
                 
             }
 
+            request.setAttribute("salones", consultarSalones.obtenerTodosLosSalonesPorCongresoYNombre(congreso.getIdCongreso()));
+
             request.setAttribute("actividades", actividades);
             request.getRequestDispatcher("/Actividad/crear-actividad.jsp").forward(request, response);
         } catch (Exception e) {

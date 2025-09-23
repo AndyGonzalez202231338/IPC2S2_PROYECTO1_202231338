@@ -21,7 +21,14 @@ public class InscripcionTallerModel {
     private UsuarioModel usuario;
     private ActividadModel actividad;
     
-
+/**
+ * inscripcion y asistencia a taller
+ * @param idInscripcion auto
+ * @param idusuario inscrito
+ * @param idActividad pertenece
+ * @param fechaRegistro insrip
+ * @param asistencia a taller
+ */
     public InscripcionTallerModel(Long idInscripcion, Long idusuario, Long idActividad, LocalDateTime fechaRegistro, Integer asistencia) {
         this.idInscripcion = idInscripcion;
         this.idusuario = idusuario;

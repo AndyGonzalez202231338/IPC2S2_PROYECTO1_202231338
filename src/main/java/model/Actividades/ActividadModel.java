@@ -35,7 +35,20 @@ public class ActividadModel {
     public ActividadModel() {
     }
 
-    // Constructor con todos los campos
+    /**
+     * Crear actividad
+     * @param idActividad auto
+     * @param codigo act
+     * @param idCongreso al que pertenece
+     * @param idSalon donde se hace
+     * @param nombreActividad name
+     * @param descripcion actividad
+     * @param tipoActividad taller o poenencia
+     * @param horaInicio meno a fin
+     * @param horaFin mayor a inicio
+     * @param creadoPor usuairo
+     * @param fechaCreacion de actividad
+     */
     public ActividadModel(Long idActividad, String codigo, Long idCongreso, Long idSalon, String nombreActividad,
             String descripcion, String tipoActividad, LocalTime horaInicio,
             LocalTime horaFin, Long creadoPor, LocalDate fechaCreacion) {
@@ -51,7 +64,24 @@ public class ActividadModel {
         this.creadoPor = creadoPor;
         this.fechaCreacion = fechaCreacion;
     }
-
+/**
+ * Agreag info de salon y usario para vista jsp
+ * @param idActividad
+ * @param codigo
+ * @param idCongreso
+ * @param idSalon
+ * @param nombreActividad
+ * @param descripcion
+ * @param tipoActividad
+ * @param horaInicio
+ * @param horaFin
+ * @param creadoPor
+ * @param fechaCreacion
+ * @param fechaInicio
+ * @param fechaFin
+ * @param salon
+ * @param ponente 
+ */
     public ActividadModel(Long idActividad, String codigo, Long idCongreso, Long idSalon, String nombreActividad, String descripcion, String tipoActividad, LocalTime horaInicio, LocalTime horaFin, Long creadoPor, LocalDate fechaCreacion, LocalDate fechaInicio, LocalDate fechaFin, SalonModel salon, UsuarioModel ponente) {
         this.idActividad = idActividad;
         this.codigo = codigo;

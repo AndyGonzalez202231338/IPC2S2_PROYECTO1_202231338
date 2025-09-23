@@ -14,12 +14,22 @@ import java.util.Optional;
  * @author andy
  */
 public class ConsultarUsuario {
+    /**
+     * Lista de todos los usuarios sin filtro
+     * @return una lsita
+     */
     public List<UsuarioModel> obtenerTodosLosUsuarios(){
         UsuariosDB usuarioDB = new UsuariosDB();
         
         return usuarioDB.obtenerTodosLosUsuarios();
     }
     
+    /**
+     * Obtener un suario por 
+     * @param correo personal
+     * @return un usuario
+     * @throws EntityNotFoundException no exsite
+     */
     public UsuarioModel obtenerCongresoPorCodigo(String correo) throws EntityNotFoundException{
         System.out.println("    obtener el congreso");
         UsuariosDB usuarioDB = new UsuariosDB();
@@ -31,7 +41,12 @@ public class ConsultarUsuario {
         }
         return usuarioOpt.get();
     }
-    
+    /**
+     * buscar por id
+     * @param idUsuario id creado en mysal
+     * @return objeto usairo
+     * @throws EntityNotFoundException no existe
+     */
     public UsuarioModel obtenerUsuarioPorIdUsuario(Long idUsuario) throws EntityNotFoundException{
         System.out.println("    obtener el El usaurio dsaf");
         UsuariosDB usuarioDB = new UsuariosDB();

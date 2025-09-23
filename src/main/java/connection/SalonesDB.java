@@ -35,7 +35,10 @@ public class SalonesDB {
     
     private static final String OBTENER_TODOS_SALONES_IDCONGRESO_QUERY
             = "SELECT * FROM Salon WHERE idCongreso = ?";
-    
+    /**
+     * crear un salon
+     * @param salon clase
+     */
     public void crearSalon(SalonModel salon) {
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
         try (PreparedStatement insert = connection.prepareStatement(CREAR_SALON_QUERY)) {
@@ -49,7 +52,12 @@ public class SalonesDB {
             e.printStackTrace();
         }
     }
-
+    /**
+     * obtener todos los salones de un
+     * @param idCongreso congreso
+     * @param nombreSalon usable
+     * @return list
+     */
     public Optional<SalonModel> obtenerSalonPorCongresoYNombre(Long idCongreso, String nombreSalon) {
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
         try (PreparedStatement query = connection.prepareStatement(ENCONTRAR_SALON_POR_ID_QUERY)) {
@@ -74,7 +82,13 @@ public class SalonesDB {
         }
         return Optional.empty();
     }
-
+    
+    /**
+     * encontrar por nombre y congreso de una activdad
+     * @param idCongreso salon
+     * @param nombreSalon activdad
+     * @return  salon
+     */
     public SalonModel encontrarSalonPorCongresoYNombre(Long idCongreso, String nombreSalon) {
         System.out.println("+se busca el salon por congreso y nombre");
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -100,7 +114,10 @@ public class SalonesDB {
         System.out.println("no existe el salon");
         return null;
     }
-
+    /**
+     * todos los salones de DB
+     * @return  list
+     */
     public List<SalonModel> obtenerTodosLosSalones() {
         System.out.println("nuevo modelo de obtener todos los Salones");
         List<SalonModel> salones = new ArrayList<>();
@@ -125,7 +142,10 @@ public class SalonesDB {
         }
         return salones;
     }
-
+    /**
+     * hacer cambios a un salon
+     * @param salon cambiado
+     */
     public void actualizarSalon(SalonModel salon) {
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
 
@@ -148,7 +168,11 @@ public class SalonesDB {
             e.printStackTrace();
         }
     }
-
+    /**
+     * obtener los salones de un congreso
+     * @param idCongreso a bsuacar
+     * @return lsit
+     */
     public List<SalonModel> obtenerTodosLosSalonesPorCongreso(Long idCongreso) {
         List<SalonModel> salones = new ArrayList<>();
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -172,7 +196,11 @@ public class SalonesDB {
         }
         return salones;
     }
-    
+    /**
+     * bsucar slaon
+     * @param idSalon a busacar
+     * @return salon
+     */
     public SalonModel obtenerSalonPorCongreso(Long idSalon){
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
         try (PreparedStatement query = connection.prepareStatement(ENCONTRAR_SALON_POR_IDSALON_QUERY)) {

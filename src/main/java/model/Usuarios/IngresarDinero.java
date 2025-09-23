@@ -9,7 +9,13 @@ import model.Congresos.CongresoModel;
 import model.Congresos.ConsultarCongreso;
 
 public class IngresarDinero {
-
+    /**
+     * Meter dinero a cuenta usuario
+     * @param request de jsp
+     * @return el usuario con cambios
+     * @throws UserDataInvalidException mala infroamcion
+     * @throws EntityNotFoundException no existe
+     */
     public UsuarioModel ingresarDineroUsuario(HttpServletRequest request) 
             throws UserDataInvalidException, EntityNotFoundException {
 
@@ -43,7 +49,13 @@ public class IngresarDinero {
 
         return usuario;
     }
-    
+    /**
+     * Descontar por una inscripcion a congreso
+     * @param request del jsp insricpcion
+     * @return objeto usario con dscuento
+     * @throws UserDataInvalidException mala inforamcion
+     * @throws EntityNotFoundException no existe
+     */
     public UsuarioModel descontarDineroUsuario(HttpServletRequest request) 
             throws UserDataInvalidException, EntityNotFoundException {
         System.out.println("///// dsecontar dienro usaurio");

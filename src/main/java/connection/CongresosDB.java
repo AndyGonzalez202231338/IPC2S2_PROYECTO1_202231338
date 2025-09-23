@@ -36,7 +36,10 @@ public class CongresosDB {
     
     private static final String ACTUALIZAR_CONGRESO_QUERY = "UPDATE Congreso SET nombre = ?, descripcion = ?, fechaInicio = ?, fechaFin = ?, lugar = ?, precio = ?, porcentajeGanancia = ? WHERE codigo = ?";
     
-    // Crear congreso
+    /**
+     * crear un congreso por un objeto
+     * @param congreso objeto
+     */
     public void crearCongreso(CongresoModel congreso) {
         System.out.println("*** entro a crear modelo y comunicarse con la base de datos");
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -55,7 +58,11 @@ public class CongresosDB {
         }
     }
     
-    // Buscar por ID
+    /**
+     * Encontrar un congreso por sucodigo
+     * @param codigo congreso
+     * @return congreso model
+     */
     public CongresoModel encontrarCongresoPorId(String codigo) {
         System.out.println("+se busca el congreso por codigo");
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -85,7 +92,11 @@ public class CongresosDB {
         System.out.println("no existe el congreso");
         return null;
     }
-    
+    /**
+     * una lista de ocngreso por cod
+     * @param codigo con
+     * @return list
+     */
     public Optional<CongresoModel> obtenerCongresoPorCodigo(String codigo) {
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
         try (PreparedStatement query = connection.prepareStatement(ENCONTRAR_CONGRESO_POR_ID_QUERY);) {
@@ -114,7 +125,10 @@ public class CongresosDB {
 
         return Optional.empty();
     }
-    
+    /**
+     * Todos so congresos de la DB
+     * @return llita
+     */
     public List<CongresoModel> obtenerTodosLosCongresos() {
     System.out.println("nuevo modelo de obtener todos");
     List<CongresoModel> congresos = new ArrayList<>();
@@ -150,7 +164,10 @@ public class CongresosDB {
     return congresos;
 }
     
-    // Actualizar congreso
+    /**
+     * Update en DB a un congreso
+     * @param congreso object
+     */
 public void actualizarCongreso(CongresoModel congreso) {
     System.out.println("*** entro a actualizar congreso en la base de datos");
     Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -176,7 +193,11 @@ public void actualizarCongreso(CongresoModel congreso) {
         e.printStackTrace();
     }
 }
-
+/**
+ * Obtener por ud para cambios
+ * @param idCongreso congreso
+ * @return congreso
+ */
 public CongresoModel obtenerCongresoPorIdCongreso(Long idCongreso) {
         System.out.println("+se busca el congreso por codigo");
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
@@ -208,7 +229,10 @@ public CongresoModel obtenerCongresoPorIdCongreso(Long idCongreso) {
         System.out.println("no existe el congreso");
         return null;
     }
-    
+    /**
+     * Cambair solo la cartera del suario
+     * @param congreso preicao
+     */
 public void actualizarCartera(CongresoModel congreso) {
 
     String sql = "UPDATE Congreso SET recaudado = ? WHERE idCongreso = ?";

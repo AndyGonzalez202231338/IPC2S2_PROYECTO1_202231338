@@ -16,7 +16,15 @@ public class SalonModel {
     private Integer capacidad;
     private String recursos;
     private String nuevoNombreSalon;
-
+/**
+ * Salon de congreso
+ * @param idSalon creado en mysql
+ * @param idCongreso al que pertececne
+ * @param nombreSalon que se usa
+ * @param ubicacion de modulo
+ * @param capacidad de particpantes
+ * @param recursos en salon
+ */
     public SalonModel(Long idSalon, Long idCongreso, String nombreSalon, String ubicacion, Integer capacidad, String recursos) {
         this.idSalon = idSalon;
         this.idCongreso = idCongreso;
@@ -73,7 +81,10 @@ public class SalonModel {
     public void setRecursos(String recursos) {
         this.recursos = recursos;
     }
-    
+    /**
+     * revisa que no vengan nnulos
+     * @return validacion
+     */
     public boolean esValidoParaCrear() {
         return idCongreso != null && idCongreso > 0
                 && nombreSalon != null && !nombreSalon.isBlank()

@@ -58,6 +58,48 @@
                         </div>
                     </div>
                 </c:if>
+                    
+                <div class="containerAdmin">
+                <!-- Si es USUARIO normal -->
+                <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMINCONGRESO')}">
+                    <div class="alert alert-success">Bienvenido ${usuarioLogueado.nombreCompleto}</div>
+                    <!-- ===== Sección de Features ===== -->
+                    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+                        <div class="feature col">
+                            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                                <i class="bi bi-calendar-event"></i>
+                            </div>
+                            <h3 class="titulosh3">Congresos</h3>
+                            <p>Unirse a Congresos y Actividades.</p>
+                            <a href="${pageContext.servletContext.contextPath}/CongresoServlet" class="icon-link">
+                                Ver congresos <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </div>
+                        <div class="feature col">
+                            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+                            <h3 class="titulosh3">Usuario</h3>
+                            <p>Administrar tu cuenta.</p>
+                            <a href="${pageContext.servletContext.contextPath}/VerUsuarioServlet?correo=${usuarioLogueado.correo}" class="icon-link">
+                                Ver mi usuario <i class="bi bi-chevron-right"></i>
+                            </a>
+                            <a href="${pageContext.servletContext.contextPath}/UsuarioServlet?correo=${usuarioLogueado.correo}" class="icon-link">
+                                Editar mi usuario <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </div>
+                        <div class="feature col">
+                            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                                <i class="bi bi-cash-stack"></i>
+                            </div>
+                            <h3 class="titulosh3">Cartera</h3>
+                            <p>Dinero digital del usuario.</p>
+                            <a href="${pageContext.servletContext.contextPath}/AgregarDineroServlet?correo=${usuarioLogueado.correo}" class="icon-link">
+                                Ver cuenta <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </c:if>
                 
                 <!-- Si es ADMIN -->
                 <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('ADMIN')}">
