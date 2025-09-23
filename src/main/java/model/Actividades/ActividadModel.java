@@ -29,6 +29,7 @@ public class ActividadModel {
     
     private SalonModel salon;
     private UsuarioModel ponente;
+    private TallerModel taller;
 
     // Constructor vacío
     public ActividadModel() {
@@ -189,7 +190,14 @@ public class ActividadModel {
     public void setPonente(UsuarioModel ponente) {
         this.ponente = ponente;
     }
-    
+
+    public TallerModel getTaller() {
+        return taller;
+    }
+
+    public void setTaller(TallerModel taller) {
+        this.taller = taller;
+    }
     
     
     public boolean esValido() {

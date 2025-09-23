@@ -18,6 +18,8 @@ import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Actividades.ActividadModel;
 import model.Actividades.ConsultarActividad;
+import model.Actividades.ConsultarTaller;
+import model.Actividades.TallerModel;
 import model.Congresos.ActualizadorCongreso;
 import model.Congresos.ConsultarCongreso;
 import model.Salones.ConsultarSalon;
@@ -54,11 +56,19 @@ public class VerActividadServlet extends HttpServlet {
             List<ActividadModel> actividades = consultarActividades.obtenerTodasLasActividades(congreso.getIdCongreso());
             ConsultarSalon consultarSalones = new ConsultarSalon();
             ConsultarUsuario consultarUsuarios = new ConsultarUsuario();
+            ConsultarTaller conultarTallers = new ConsultarTaller();
             for (ActividadModel act : actividades) {
                 SalonModel salon = consultarSalones.obtenerSalonPorIdSalon(act.getIdSalon());
                 act.setSalon(salon);
                 UsuarioModel usuario = consultarUsuarios.obtenerUsuarioPorIdUsuario(act.getCreadoPor());
                 act.setPonente(usuario);
+                
+                if(act.getTipoActividad().equalsIgnoreCase("TALLER")){
+                    System.out.println("                                SSe busca un taller");
+                    TallerModel Taller = conultarTallers.obtenerTallerPorIdActividad(act.getIdActividad());
+                    act.setTaller(Taller);
+                }
+                
             }
 
             request.setAttribute("actividades", actividades);
