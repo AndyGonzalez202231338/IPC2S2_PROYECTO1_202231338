@@ -32,5 +32,11 @@ public class TallerModel {
     public void setCupoMaximo(Integer cupoMaximo) {
         this.cupoMaximo = cupoMaximo;
     }
+
+    @Override
+    public String toString() {
+        return "TallerModel{" + "idActividad=" + idActividad + ", cupoMaximo=" + cupoMaximo + '}';
+    }
+    
     
 }

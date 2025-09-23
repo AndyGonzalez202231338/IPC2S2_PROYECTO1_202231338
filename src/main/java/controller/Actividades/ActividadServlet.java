@@ -18,6 +18,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.Actividades.ActividadModel;
 import model.Actividades.ConsultarActividad;
 import model.Actividades.CreadorActividades;
+import model.Actividades.CreadorTalleres;
+import model.Actividades.TallerModel;
 
 
 /**
@@ -66,6 +68,15 @@ public class ActividadServlet extends HttpServlet {
         String codigo = request.getParameter("idCongreso");
         try {
             ActividadModel actividadCreada = creadorActividades.crearEvento(request);
+            Long idActvidad = actividadCreada.getIdActividad();
+            if(actividadCreada.getTipoActividad().equalsIgnoreCase("TALLER")){
+                System.out.println("        la actividad creadad si es de tipo taller, se crea taller db");
+                Integer cupoMaximo = Integer.valueOf(request.getParameter("cupoMaximo"));
+                CreadorTalleres crearTaller = new CreadorTalleres();
+                TallerModel taller = crearTaller.crearTaller(idActvidad, cupoMaximo);
+                System.out.println("el taller se creo en la base de datos");
+                System.out.println(""+taller.toString());
+            }
 
             request.setAttribute("actividadCreada", actividadCreada);
         } catch (ActividadDataInvalidException | EntityNotFoundException | EntityAlreadyExistsException e) {

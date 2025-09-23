@@ -101,7 +101,6 @@ public class CreadorActividades {
             if (!actividad.esValido()) {
                 throw new ActividadDataInvalidException("Error en los datos enviados");
             }
-
             return actividad;
 
         } catch (IllegalArgumentException | NullPointerException e) {
