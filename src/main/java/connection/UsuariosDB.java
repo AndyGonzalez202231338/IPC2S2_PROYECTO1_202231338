@@ -22,7 +22,7 @@ import model.Usuarios.UsuarioModel;
 public class UsuariosDB {
 
     private static final String CREAR_USUARIO_QUERY
-            = "INSERT INTO Usuario (nombreCompleto, correo, telefono, organizacion, numeroIdentificacion, contrasena, fechaRegistro, tipoCuenta) "
+            = "INSERT INTO Usuario (nombreCompleto, correo, telefono, numeroIdentificacion, contrasena, fechaRegistro, tipoCuenta, idOrganizacion) "
             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String ENCONTRAR_USUARIO_POR_CORREO_QUERY
@@ -35,8 +35,8 @@ public class UsuariosDB {
             = "SELECT * FROM Usuario";
 
     private static final String ACTUALIZAR_USUARIO_QUERY
-            = "UPDATE Usuario SET nombreCompleto = ?, telefono = ?, organizacion = ?, "
-            + "numeroIdentificacion = ?, contrasena = ?, tipoCuenta = ?, foto = ?"
+            = "UPDATE Usuario SET nombreCompleto = ?, telefono = ?, "
+            + "numeroIdentificacion = ?, contrasena = ?, tipoCuenta = ?, foto = ?, idOrganizacion = ?"
             + "WHERE correo = ?";
 
     /**
@@ -51,14 +51,13 @@ public class UsuariosDB {
             insert.setString(1, usuario.getNombreCompleto());
             insert.setString(2, usuario.getCorreo());
             insert.setString(3, usuario.getTelefono());
-            insert.setString(4, usuario.getOrganizacion());
-            insert.setString(5, usuario.getNumeroIdentificacion());
-            insert.setString(6, usuario.getContrasena());
-            insert.setTimestamp(7, Timestamp.valueOf(
+            insert.setString(4, usuario.getNumeroIdentificacion());
+            insert.setString(5, usuario.getContrasena());
+            insert.setTimestamp(6, Timestamp.valueOf(
                     usuario.getFechaRegistro() != null ? usuario.getFechaRegistro() : LocalDateTime.now()
             ));
-            insert.setString(8, usuario.getTipoCuenta());
-
+            insert.setString(7, usuario.getTipoCuenta());
+            insert.setLong(8, usuario.getOrganizacion());
             insert.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace(); // aquí podrías propagar la excepción personalizada
@@ -99,10 +98,10 @@ public class UsuariosDB {
                         rs.getString("nombreCompleto"),
                         rs.getString("correo"),
                         rs.getString("telefono"),
-                        rs.getString("organizacion"),
                         rs.getString("numeroIdentificacion"),
                         rs.getString("contrasena"),
-                        rs.getString("tipoCuenta")
+                        rs.getString("tipoCuenta"),
+                        rs.getLong("idOrganizacion")
                 );
                 usuario.setId(rs.getInt("idUsuario"));
                 usuario.setFechaRegistro(rs.getTimestamp("fechaRegistro").toLocalDateTime());
@@ -131,13 +130,13 @@ public class UsuariosDB {
                     usuario.setNombreCompleto(rs.getString("nombreCompleto")); // columna exacta
                     usuario.setCorreo(rs.getString("correo"));
                     usuario.setTelefono(rs.getString("telefono"));
-                    usuario.setOrganizacion(rs.getString("organizacion"));
                     usuario.setNumeroIdentificacion(rs.getString("numeroIdentificacion"));
                     usuario.setContrasena(rs.getString("contrasena"));
                     usuario.setFoto(rs.getBytes("foto"));
                     usuario.setFechaRegistro(rs.getTimestamp("fechaRegistro").toLocalDateTime());
                     usuario.setTipoCuenta(rs.getString("tipoCuenta"));
                     usuario.setCartera(rs.getDouble("cartera"));
+                    usuario.setOrganizacion(rs.getLong("idOrganizacion"));
 
                     return usuario;
                 }
@@ -160,13 +159,13 @@ public class UsuariosDB {
                     usuario.setNombreCompleto(rs.getString("nombreCompleto")); // columna exacta
                     usuario.setCorreo(rs.getString("correo"));
                     usuario.setTelefono(rs.getString("telefono"));
-                    usuario.setOrganizacion(rs.getString("organizacion"));
                     usuario.setNumeroIdentificacion(rs.getString("numeroIdentificacion"));
                     usuario.setContrasena(rs.getString("contrasena"));
                     usuario.setFoto(rs.getBytes("foto"));  
                     usuario.setFechaRegistro(rs.getTimestamp("fechaRegistro").toLocalDateTime());
                     usuario.setTipoCuenta(rs.getString("tipoCuenta"));
                     usuario.setCartera(rs.getDouble("cartera"));
+                    usuario.setOrganizacion(rs.getLong("idOrganizacion"));
                     return Optional.of(usuario);
                 }
             }
@@ -181,17 +180,16 @@ public class UsuariosDB {
         try (PreparedStatement update = connection.prepareStatement(ACTUALIZAR_USUARIO_QUERY)) {
             update.setString(1, usuario.getNombreCompleto());
             update.setString(2, usuario.getTelefono());
-            update.setString(3, usuario.getOrganizacion());
-            update.setString(4, usuario.getNumeroIdentificacion());
-            update.setString(5, usuario.getContrasena());
-            update.setString(6, usuario.getTipoCuenta());
+            update.setString(3, usuario.getNumeroIdentificacion());
+            update.setString(4, usuario.getContrasena());
+            update.setString(5, usuario.getTipoCuenta());
             if (usuario.getFoto() != null) {
-                update.setBytes(7, usuario.getFoto());
+                update.setBytes(6, usuario.getFoto());
             } else {
-                update.setNull(7, java.sql.Types.BLOB);
+                update.setNull(6, java.sql.Types.BLOB);
             }
-            update.setString(8, usuario.getCorreo()); // condición WHERE
-
+            update.setString(7, usuario.getCorreo()); // condición WHERE
+            update.setLong(8, usuario.getOrganizacion());
             int filasAfectadas = update.executeUpdate();
             if (filasAfectadas > 0) {
                 System.out.println("Congreso actualizado correctamente: " + usuario.getCorreo());
@@ -252,10 +250,10 @@ public UsuarioModel obtenerUsuarioPorIdUsuario(Long idUsuario){
                         rs.getString("nombreCompleto"),
                         rs.getString("correo"),
                         rs.getString("telefono"),
-                        rs.getString("organizacion"),
                         rs.getString("numeroIdentificacion"),
                         rs.getString("contrasena"),
-                        rs.getString("tipoCuenta")
+                        rs.getString("tipoCuenta"),
+                        rs.getLong("idOrganizacion")
                 );
                 usuario.setId(rs.getInt("idUsuario"));
                 usuario.setFechaRegistro(rs.getTimestamp("fechaRegistro").toLocalDateTime());

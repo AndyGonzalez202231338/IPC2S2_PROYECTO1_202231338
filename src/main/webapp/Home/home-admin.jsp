@@ -76,11 +76,21 @@
                         </div>
                         <div class="feature col">
                             <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                                <i class="bi bi-bank"></i>
+                            </div>
+                            <h3 class="titulosh3">Instituciones</h3>
+                            <p>Organizaciones o Instituciones encargadas de Congresos.</p>
+                            <a href="${pageContext.servletContext.contextPath}/OrganizacionServlet" class="icon-link">
+                                Ver Organizaciones <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </div>
+                        <div class="feature col">
+                            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
                                 <i class="bi bi-people-fill"></i>
                             </div>
                             <h3 class="titulosh3">Usuarios</h3>
                             <p>Gestiona los usuarios y participantes.</p>
-                            <a href="${pageContext.servletContext.contextPath}/Usuario/crear-usuario.jsp" class="icon-link">
+                            <a href="${pageContext.servletContext.contextPath}/VerOrganizacionesServlet" class="icon-link">
                                 Ver usuarios <i class="bi bi-chevron-right"></i>
                             </a>
                         </div>

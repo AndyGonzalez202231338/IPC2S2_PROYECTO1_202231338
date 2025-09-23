@@ -16,13 +16,13 @@ public class UsuarioModel {
     private String nombreCompleto;
     private String correo;
     private String telefono;
-    private String organizacion;
     private String numeroIdentificacion;
     private byte[] foto;
     private String contrasena;
     private LocalDateTime fechaRegistro;
     private String tipoCuenta;
     private Double cartera;
+    private Long organizacion;
 
     /**
      * Crear un objeto modelo
@@ -34,26 +34,26 @@ public class UsuarioModel {
      * @param contrasena de usuario
      * @param tipoCuenta  Aministrador, participante
      */
-    public UsuarioModel(String nombreCompleto, String correo, String telefono, String organizacion, String numeroIdentificacion, String contrasena, String tipoCuenta) {
+    public UsuarioModel(String nombreCompleto, String correo, String telefono, String numeroIdentificacion, String contrasena, String tipoCuenta, Long organizacion) {
         this.nombreCompleto = nombreCompleto;
         this.correo = correo;
         this.telefono = telefono;
-        this.organizacion = organizacion;
         this.numeroIdentificacion = numeroIdentificacion;
         this.contrasena = contrasena;
         this.tipoCuenta = tipoCuenta;
+        this.organizacion = organizacion;
     }
 
-    public UsuarioModel(Integer id, String nombreCompleto, String correo, String telefono, String organizacion, String numeroIdentificacion, String contrasena, LocalDateTime fechaRegistro, String tipoCuenta) {
+    public UsuarioModel(Integer id, String nombreCompleto, String correo, String telefono, String numeroIdentificacion, String contrasena, LocalDateTime fechaRegistro, String tipoCuenta, Long organizacion) {
         this.id = id;
         this.nombreCompleto = nombreCompleto;
         this.correo = correo;
         this.telefono = telefono;
-        this.organizacion = organizacion;
         this.numeroIdentificacion = numeroIdentificacion;
         this.contrasena = contrasena;
         this.fechaRegistro = fechaRegistro;
         this.tipoCuenta = tipoCuenta;
+        this.organizacion = organizacion;
     }
     
     
@@ -82,9 +82,6 @@ public class UsuarioModel {
         return telefono;
     }
 
-    public String getOrganizacion() {
-        return organizacion;
-    }
 
     public String getNumeroIdentificacion() {
         return numeroIdentificacion;
@@ -119,10 +116,6 @@ public class UsuarioModel {
         this.telefono = telefono;
     }
 
-    public void setOrganizacion(String organizacion) {
-        this.organizacion = organizacion;
-    }
-
     public void setNumeroIdentificacion(String numeroIdentificacion) {
         this.numeroIdentificacion = numeroIdentificacion;
     }
@@ -155,11 +148,23 @@ public class UsuarioModel {
     public void setFoto(byte[] foto) {
         this.foto = foto;
     }
-    
+
+    public Long getOrganizacion() {
+        return organizacion;
+    }
+
+    public void setOrganizacion(Long organizacion) {
+        this.organizacion = organizacion;
+    }
+
     @Override
     public String toString() {
-        return "UsuarioModel{" + "id=" + id + ", nombreCompleto=" + nombreCompleto + ", correo=" + correo + ", telefono=" + telefono + ", organizacion=" + organizacion + ", numeroIdentificacion=" + numeroIdentificacion + ", foto=" + foto + ", contrasena=" + contrasena + ", fechaRegistro=" + fechaRegistro + ", tipoCuenta=" + tipoCuenta + ", cartera=" + cartera + '}';
+        return "UsuarioModel{" + "id=" + id + ", nombreCompleto=" + nombreCompleto + ", correo=" + correo + ", telefono=" + telefono + ", numeroIdentificacion=" + numeroIdentificacion + ", foto=" + foto + ", contrasena=" + contrasena + ", fechaRegistro=" + fechaRegistro + ", tipoCuenta=" + tipoCuenta + ", cartera=" + cartera + ", organizacion=" + organizacion + '}';
     }
+    
+    
+    
+    
 
     
     

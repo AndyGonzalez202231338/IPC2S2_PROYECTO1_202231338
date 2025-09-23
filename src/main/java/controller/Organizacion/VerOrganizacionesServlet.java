@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.Usuario;
+package controller.Organizacion;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import Exceptions.EntityAlreadyExistsException;
 import Exceptions.EntityNotFoundException;
 import Exceptions.UserDataInvalidException;
+import connection.OrganizacionesDB;
 import model.Congresos.CongresoModel;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -16,20 +16,24 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.time.LocalDateTime;
 import model.Congresos.ActualizadorCongreso;
-import model.Congresos.ConsultarCongreso;
-import model.Organizacion.ConsultarOrganizacion;
-import model.Organizacion.OrganizacionModel;
-import model.Usuarios.ConsultarUsuario;
+import model.Usuarios.ActualizadorUsuario;
 import model.Usuarios.UsuarioModel;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.Part;
+import java.util.List;
+import model.Organizacion.ActualizadorOrganizacion;
+import model.Organizacion.ConsultarOrganizacion;
+import model.Organizacion.CreadorOrganizaciones;
+import model.Organizacion.OrganizacionModel;
 
 /**
  *
  * @author andy
  */
-@WebServlet(name = "VerUsuarioServlet", urlPatterns = {"/VerUsuarioServlet"})
-public class VerUsuarioServlet extends HttpServlet {
+@WebServlet(name = "VerOrganizacionesServlet", urlPatterns = {"/VerOrganizacionesServlet"})
+public class VerOrganizacionesServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -43,22 +47,15 @@ public class VerUsuarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Ver congreso");
-        String correo = request.getParameter("correo");
-        ConsultarUsuario consultar = new ConsultarUsuario();
-        try {
-            ConsultarOrganizacion consultarOrganizacion = new ConsultarOrganizacion();
-            List<OrganizacionModel> organizaciones = consultarOrganizacion.obtenerTodasLasOrganizaciones();
+        ConsultarOrganizacion consultarOrganizacion = new ConsultarOrganizacion();
+        try{
+                List<OrganizacionModel> organizaciones = consultarOrganizacion.obtenerTodasLasOrganizaciones();
                 request.setAttribute("organizaciones", organizaciones);
-            UsuarioModel usuario = consultar.obtenerCongresoPorCodigo(correo);
-            request.setAttribute("usuario", usuario);
-            System.out.println("el usuario se mando al jsp");
-            request.getRequestDispatcher("/Usuario/detalle-usuario.jsp").forward(request, response);
-        } catch (Exception e){
-            System.out.println("no se ecnontro");
-            request.setAttribute("error", "No se encontró el Usuario con Correo " + correo);
-            request.getRequestDispatcher("/Usuario/lista-usuarios.jsp").forward(request, response);
-        }
+            } catch (EntityNotFoundException e){
+                request.setAttribute("error", e.getMessage());
+            }
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Usuario/crear-usuario.jsp");
+            dispatcher.forward(request, response);
     }
 
     /**

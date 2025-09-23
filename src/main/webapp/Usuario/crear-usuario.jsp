@@ -26,7 +26,7 @@
                             ${mensajeExito}
                         </div>
                     </c:if>
-                        
+
                     <form class="crearUsuario" method="POST" action="${pageContext.servletContext.contextPath}/UsuarioServlet">
                         <div class="mb-3">
                             <label for="nombreCompleto" class="form-label">Nombre Completo</label>
@@ -43,10 +43,17 @@
                             <label for="telefono" class="form-label">Teléfono</label>
                             <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Número de contacto" required>
                         </div>
+                        
                         <div class="mb-3">
                             <label for="organizacion" class="form-label">Organización</label>
-                            <input type="text" class="form-control" id="organizacion" name="organizacion" placeholder="Organización o empresa" required>
+                            <select class="form-select" id="organizacion" name="organizacion" required>
+                                <option value="" disabled selected>Seleccione una organización</option>
+                                <c:forEach var="org" items="${organizaciones}">
+                                    <option value="${org.idOrganizacion}">${org.nombre}</option>
+                                </c:forEach>
+                            </select>
                         </div>
+
                         <div class="mb-3">
                             <label for="numeroIdentificacion" class="form-label">Número de Identificación</label>
                             <input type="text" class="form-control" id="numeroIdentificacion" name="numeroIdentificacion" placeholder="DPI o identificación" required>
@@ -84,6 +91,6 @@
         </div>
     </div>    
 </main>
-                   <jsp:include page="/includes/footer.jsp"/>
+<jsp:include page="/includes/footer.jsp"/>
 </body>
 </html>

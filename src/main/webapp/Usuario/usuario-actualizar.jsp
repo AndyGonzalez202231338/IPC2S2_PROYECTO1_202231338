@@ -80,7 +80,12 @@
                         </div>
                         <div class="mb-3">
                             <label for="organizacion" class="form-label">Organización</label>
-                            <input type="text" class="form-control" id="organizacion" name="organizacion" placeholder="Organización o empresa" value="${usuario.organizacion}" required>
+                            <select class="form-select" id="organizacion" name="organizacion" required>
+                                <option value="" disabled selected>Seleccione una organización</option>
+                                <c:forEach var="org" items="${organizaciones}">
+                                    <option value="${org.idOrganizacion}">${org.nombre}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="numeroIdentificacion" class="form-label">Número de Identificación</label>

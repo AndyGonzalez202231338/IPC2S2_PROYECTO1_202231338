@@ -63,11 +63,11 @@ public class ActualizadorUsuario {
                     request.getParameter("nombreCompleto"),
                     request.getParameter("correo"),
                     request.getParameter("telefono"),
-                    request.getParameter("organizacion"),
                     request.getParameter("numeroIdentificacion"),
                     request.getParameter("contrasena"),
                     fechaRegistro, // <-- ahora es LocalDateTime
-                    request.getParameter("tipoCuenta")
+                    request.getParameter("tipoCuenta"),
+                    Long.valueOf(request.getParameter("organizacion"))
             );
             // 📌 Leer foto del request
             Part filePart = request.getPart("foto");
