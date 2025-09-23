@@ -73,10 +73,10 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
             request.getParameter("nombreCompleto"),
             request.getParameter("correo"),
             request.getParameter("telefono"),
-            request.getParameter("organizacion"),
             request.getParameter("numeroIdentificacion"),
             request.getParameter("fechaRegistro"),
-            request.getParameter("tipoCuenta")
+            request.getParameter("tipoCuenta"),
+            Long.valueOf(request.getParameter("organizacion"))
         );
         request.setAttribute("usuario", usuarioConDatos);
     }

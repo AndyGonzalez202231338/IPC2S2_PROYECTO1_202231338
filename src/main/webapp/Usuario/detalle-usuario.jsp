@@ -45,7 +45,15 @@
                         <li class="list-group-item bg-dark text-light"><strong>Nombre: </strong> ${usuario.nombreCompleto}</li>
                         <li class="list-group-item bg-dark text-light"><strong>Correo: </strong> ${usuario.correo}</li>
                         <li class="list-group-item bg-dark text-light"><strong>Teléfono: </strong> ${usuario.telefono}</li>
-                        <li class="list-group-item bg-dark text-light"><strong>Organización: </strong> ${usuario.organizacion}</li>
+                        <li class="list-group-item bg-dark text-light">
+                            <strong>Organización: </strong>
+                            <c:forEach var="org" items="${organizaciones}">
+                                <c:if test="${org.idOrganizacion == usuario.organizacion}">
+                                    ${org.nombre}
+                                </c:if>
+                            </c:forEach>
+                        </li>
+
                         <li class="list-group-item bg-dark text-light"><strong>Número Identificación: </strong> ${usuario.numeroIdentificacion}</li>
                             <c:if test="${usuarioLogueado.tipoCuenta.equalsIgnoreCase('NORMAL')}">
                             <li class="list-group-item bg-dark text-light"><strong>Cartera:  </strong> ${usuario.cartera}</li>

@@ -17,6 +17,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Set;
+import model.Organizacion.ConsultarOrganizacion;
+import model.Organizacion.OrganizacionModel;
 import org.apache.commons.lang3.StringUtils;
 import model.Usuarios.ConsultarUsuario;
 import model.Usuarios.CreadorUsuarios;
@@ -52,6 +54,9 @@ public class UsuarioServlet extends HttpServlet {
             try{
                 UsuarioModel usuario = consultaUsuarios.obtenerCongresoPorCodigo(request.getParameter("correo"));
                 request.setAttribute("usuario", usuario);
+                ConsultarOrganizacion consultarOrganizacion = new ConsultarOrganizacion();
+                List<OrganizacionModel> organizaciones = consultarOrganizacion.obtenerTodasLasOrganizaciones();
+                request.setAttribute("organizaciones", organizaciones);
             } catch (EntityNotFoundException e){
                 request.setAttribute("error", e.getMessage());
             }
